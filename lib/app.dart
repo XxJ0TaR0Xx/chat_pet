@@ -1,3 +1,4 @@
+import 'package:chat_pet/theme/ui_kit_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -11,7 +12,7 @@ class App extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp(
-        theme: ThemeData(fontFamily: 'CircularStd'),
+        theme: UiKitThemes().defaultThemeData,
         home: StartPage(),
       ),
     );

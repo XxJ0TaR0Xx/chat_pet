@@ -3,27 +3,27 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 abstract class UiKitTextTheme {}
 
-class CarosTextTheme extends UiKitTextTheme {
+class UiKitCarosTextTheme extends UiKitTextTheme {
   final Color foregroundColor;
 
   TextStyle get captionSmall => TextStyle(
-        fontFamily: 'Manrope',
+        fontFamily: 'Caros',
         fontSize: 9.w,
         fontWeight: FontWeight.w400,
         color: foregroundColor,
       );
 
   TextStyle get captionMedium => TextStyle(
-        fontFamily: 'Manrope',
+        fontFamily: 'Caros',
         fontSize: 16.w,
         fontWeight: FontWeight.w400,
         color: foregroundColor,
       );
 
-  CarosTextTheme({this.foregroundColor = Colors.black});
+  UiKitCarosTextTheme({this.foregroundColor = Colors.black});
 }
 
-class CircularStdTextTheme extends UiKitTextTheme {
+class UiKitCircularStdTextTheme extends UiKitTextTheme {
   final Color foregroundColor;
 
   TextStyle get captionMedium => TextStyle(
@@ -42,5 +42,5 @@ class CircularStdTextTheme extends UiKitTextTheme {
         package: 'package',
       );
 
-  CircularStdTextTheme({this.foregroundColor = Colors.black});
+  UiKitCircularStdTextTheme({this.foregroundColor = Colors.black});
 }
