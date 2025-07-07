@@ -1,4 +1,5 @@
 import 'package:chat_pet/theme/ui_kit_themes.dart';
+import 'package:chat_pet/ui_klt/ui_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -12,7 +13,7 @@ class App extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp(
-        theme: UiKitThemes().defaultThemeData,
+        theme: UiKitThemes().lightThemeData,
         home: StartPage(),
       ),
     );
@@ -24,10 +25,15 @@ class StartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme;
+
+    logNoStack.d('theme == null ${theme == null}');
+
     return Scaffold(
       body: Center(
         child: Text(
           'Hello World!',
+          style: theme?.circularStdTextTheme.captionMedium,
         ),
       ),
     );
