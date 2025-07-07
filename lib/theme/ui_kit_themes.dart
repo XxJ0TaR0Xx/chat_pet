@@ -36,7 +36,7 @@ class UiKitThemes {
         color: Color(0x00000000),
       ),
     ),
-    scaffoldBackgroundColor: Colors.black,
+    scaffoldBackgroundColor: ColorsFoundation.surfaceBase,
     useMaterial3: false,
     // splashFactory: WaveSplash.splashFactory,
     bottomSheetTheme: const BottomSheetThemeData(
