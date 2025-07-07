@@ -13,6 +13,6 @@ class CarosTextTheme extends UiKitTextTheme {
         color: foregroundColor,
         package: 'aviation_uikit',
       );
-  //Test
+
   CarosTextTheme({this.foregroundColor = Colors.black});
 }
