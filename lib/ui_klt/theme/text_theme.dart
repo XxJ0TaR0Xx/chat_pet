@@ -11,8 +11,36 @@ class CarosTextTheme extends UiKitTextTheme {
         fontSize: 9.w,
         fontWeight: FontWeight.w400,
         color: foregroundColor,
-        package: 'aviation_uikit',
+      );
+
+  TextStyle get captionMedium => TextStyle(
+        fontFamily: 'Manrope',
+        fontSize: 16.w,
+        fontWeight: FontWeight.w400,
+        color: foregroundColor,
       );
 
   CarosTextTheme({this.foregroundColor = Colors.black});
+}
+
+class CircularStdTextTheme extends UiKitTextTheme {
+  final Color foregroundColor;
+
+  TextStyle get captionMedium => TextStyle(
+        fontFamily: 'CircularStd',
+        fontSize: 14.w,
+        fontWeight: FontWeight.w400,
+        color: foregroundColor,
+      );
+
+  TextStyle get captionBook => TextStyle(
+        fontFamily: 'CircularStd',
+        fontSize: 16.w,
+        fontWeight: FontWeight.w400,
+        color: foregroundColor,
+        //TODO think
+        package: 'package',
+      );
+
+  CircularStdTextTheme({this.foregroundColor = Colors.black});
 }
