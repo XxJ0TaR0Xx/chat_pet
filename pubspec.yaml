@@ -13,17 +13,27 @@ dependencies:
   #ui utils
   flutter_screenutil: ^5.9.3
   awesome_extensions:
+  flutter_svg: ^2.0.17
+  auto_size_text: ^3.0.0
+  
+  #localization
+  intl: ^0.20.2
+  flutter_localization: ^0.3.3
+
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
-  logger: ^2.6.0
+  flutter_gen_runner: ^5.8.0
+  build_runner: ^2.4.14
+  icon_font_generator: ^4.0.0
 
 flutter:
   assets:
     - assets/images/
+    - assets/images/svg/
     - assets/fonts/
 
   fonts:
@@ -33,4 +43,42 @@ flutter:
     - family: CircularStd
       fonts:
         - asset: assets/fonts/CircularStd-Black.otf
+    - family: ChatPetIcons
+      fonts:
+        - asset: assets/fonts/chat_pet_icons.otf
   uses-material-design: true
+
+
+flutter_gen:
+  output: lib/ui_kit/tokens
+  line_length: 120
+  integrations:
+    flutter_svg: true
+    lottie: true
+  assets:
+    enabled: true
+    outputs:
+      style: dot-delimiter
+      package_parameter_enabled: true
+
+# extensions
+flutter_intl:
+  enabled: true
+  arb_dir: lib/localization/arb
+  output_dir: lib/localization
+
+icon_font:
+  input_svg_dir: "assets/images/svg/"
+  output_font_file: "assets/fonts/chat_pet_icons.otf"
+
+  output_class_file: "lib/ui_kit/tokens/chat_pet_icons.dart"
+  class_name: "ChatPetIcons"
+  package: null
+  format: true
+
+  font_name: "ChatPetIcons"
+  normalize: false
+  ignore_shapes: false
+
+  recursive: true
+  verbose: false
