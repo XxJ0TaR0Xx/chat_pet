@@ -9,6 +9,9 @@ class ColorsFoundation {
   static const Color backNeutral1 = Color(0xFF797C7B);
   static const Color backNeutral2 = Color(0xFF9A9E9C);
   static const Color backNeutral3 = Color(0xFFCDD1D0);
+  static const Color mutedText = Color(0xFFB9C1BE);
+  static const Color grayColor = Color(0xFFA8B0AF);
+  static const Color textColor = Color(0xFFD6E4E0);
   static const Color primary = Color(0xFF24786D);
   static const Color primary2 = Color(0xFF20A090);
   static const Color primary3 = Color(0xFF8DEEE2);
