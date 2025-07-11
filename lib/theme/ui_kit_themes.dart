@@ -1,4 +1,4 @@
-import 'package:chat_pet/ui_klt/ui_kit.dart';
+import 'package:chat_pet/ui_kit/ui_kit.dart';
 
 import 'theme.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ class UiKitThemes {
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(elevation: 0, backgroundColor: Colors.transparent),
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
-        foregroundColor: WidgetStateProperty.resolveWith((_) => ColorsFoundation.primary),
+        foregroundColor: WidgetStateProperty.resolveWith((_) => ColorsFoundation.surfaceBase),
         overlayColor: WidgetStateProperty.resolveWith((_) => Colors.transparent),
         textStyle: WidgetStateTextStyle.resolveWith(
           (_) => UiKitCarosTextTheme(foregroundColor: ColorsFoundation.primary).captionMedium,

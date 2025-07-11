@@ -1,6 +1,6 @@
 import 'package:chat_pet/theme/ui_kit_text_theme.dart';
 import 'package:chat_pet/theme/ui_kit_color_scheme.dart';
-import 'package:chat_pet/ui_klt/foundation/colors_foundation.dart';
+import 'package:chat_pet/ui_kit/foundation/colors_foundation.dart';
 import 'package:flutter/material.dart';
 
 class UiKitThemeData extends ThemeExtension<UiKitThemeData> {
