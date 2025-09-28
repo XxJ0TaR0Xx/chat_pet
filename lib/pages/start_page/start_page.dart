@@ -71,10 +71,10 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
-                      ChatPetIcons.subtract,
+                    ChatPetIcon.icon(
+                      AppIcons.chatBox,
                       color: Colors.white,
-                      weight: 16.w,
+                      size: 16.w,
                     ),
                     SpacingFoundation.horizontalSpace6,
                     Text(

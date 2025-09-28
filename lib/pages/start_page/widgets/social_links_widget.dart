@@ -1,6 +1,5 @@
 import 'package:chat_pet/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class SocialLinksWidget extends StatelessWidget {
   const SocialLinksWidget({
@@ -11,7 +10,7 @@ class SocialLinksWidget extends StatelessWidget {
   });
 
   final Color borderColor;
-  final ValueChanged<String>? onSocialLinkTap;
+  final ValueChanged<AppIcons>? onSocialLinkTap;
   final bool isWhiteBackground;
 
   @override
@@ -19,9 +18,9 @@ class SocialLinksWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Assets.images.svg.facebookLogo.path,
-        Assets.images.svg.googleLogo.path,
-        Assets.images.svg.appleLogo.path
+        AppIcons.facebook,
+        AppIcons.google,
+        AppIcons.apple,
       ].map(
         (e) {
           return DecoratedBox(
@@ -36,18 +35,14 @@ class SocialLinksWidget extends StatelessWidget {
               onTap: () {
                 onSocialLinkTap?.call(e);
               },
-              child: SvgPicture.asset(
+              child: ChatPetIcon.socialIcon(
                 e,
-                width: 42.w,
-                height: 42.w,
-                colorFilter: e == Assets.images.svg.appleLogo.path && isWhiteBackground
-                    ? ColorFilter.mode(Colors.black, BlendMode.srcIn)
-                    : null,
-                fit: BoxFit.fill,
+                size: 42.w,
+                isWhiteBackground: isWhiteBackground,
               ).paddingAll(EdgeInsetsFoundation.all4),
             ),
           ).paddingOnly(
-            right: e != Assets.images.svg.appleLogo.path ? SpacingFoundation.horizontalSpacing20 : 0,
+            right: e != AppIcons.apple ? SpacingFoundation.horizontalSpacing20 : 0,
           );
         },
       ).toList(),

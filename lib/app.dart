@@ -1,5 +1,9 @@
+import 'package:chat_pet/localization/l10n.dart';
+import 'package:chat_pet/ui_kit/theme/ui_kit_theme.dart';
+import 'package:chat_pet/ui_kit/ui_kit.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:chat_pet/pages/start_page/start_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -11,23 +15,14 @@ class App extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp(
-        theme: ThemeData(fontFamily: 'CircularStd'),
+        localizationsDelegates: [
+          S.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        theme: UiKitThemes().defaultThemeData,
         home: StartPage(),
-      ),
-    );
-  }
-}
-
-class StartPage extends StatelessWidget {
-  const StartPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          'Hello World!',
-        ),
       ),
     );
   }

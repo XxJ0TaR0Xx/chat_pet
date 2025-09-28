@@ -9,7 +9,6 @@ environment:
 dependency_overrides: 
   dart_style: 3.1.2
 
-
 dependencies:
   flutter:
     sdk: flutter
@@ -38,8 +37,6 @@ dev_dependencies:
   flutter_gen_runner: ^5.9.0
   build_runner: ^2.4.9
   bloc_lint: ^0.3.1
-  icon_font_generator: ^4.0.0
-
 
 flutter:
   assets:
@@ -75,18 +72,20 @@ flutter_intl:
   arb_dir: lib/localization/arb
   output_dir: lib/localization
 
-icon_font:
-  input_svg_dir: "assets/images/svg/"
-  output_font_file: "assets/fonts/chat_pet.otf"
 
-  output_class_file: "lib/tokens/chat_pet_icons.dart"
-  class_name: "ChatPetIcons"
-  package: chat_pet
-  format: true
 
-  font_name: "ChatPet Icons"
-  normalize: false
-  ignore_shapes: false
+# icon_font:
+#   input_svg_dir: "assets/images/svg/"
+#   output_font_file: "assets/fonts/chat_pet.otf"
 
-  recursive: true
-  verbose: false  
+#   output_class_file: "lib/tokens/chat_pet_icons.dart"
+#   class_name: "ChatPetIcons"
+#   package: chat_pet
+#   format: true
+
+#   font_name: "ChatPet Icons"
+#   normalize: false
+#   ignore_shapes: false
+
+#   recursive: true
+#   verbose: false  
