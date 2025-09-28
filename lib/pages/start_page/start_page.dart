@@ -79,7 +79,7 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                     SpacingFoundation.horizontalSpace6,
                     Text(
                       S.of(context).Chatbox,
-                      style: theme?.circularStdTextTheme.captionMedium.copyWith(
+                      style: theme?.circularStdTextTheme.medium.copyWith(
                         color: ColorsFoundation.lightSurface,
                       ),
                     ),
@@ -90,7 +90,7 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                   S.of(context).ConnectFriendsEasilyQuickly,
                   maxLines: 4,
                   wrapWords: false,
-                  style: theme?.carosTextTheme.captionMedium.copyWith(
+                  style: theme?.carosTextTheme.medium.copyWith(
                     fontSize: 68.w,
                     color: ColorsFoundation.lightSurface,
                   ),
@@ -98,7 +98,7 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                 SpacingFoundation.verticalSpace16,
                 Text(
                   S.of(context).OurChatAppIsThePerfectWay,
-                  style: theme?.circularStdTextTheme.captionBook.copyWith(
+                  style: theme?.circularStdTextTheme.medium.copyWith(
                     letterSpacing: 1.5,
                     fontSize: 18.w,
                     color: ColorsFoundation.mutedText,
@@ -145,7 +145,7 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                   children: [
                     Text(
                       S.of(context).ExistingAccount,
-                      style: theme?.circularStdTextTheme.captionMedium.copyWith(
+                      style: theme?.circularStdTextTheme.medium.copyWith(
                         color: ColorsFoundation.mutedText,
                         fontSize: 13.w,
                       ),
@@ -154,7 +154,7 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                       onTap: () => context.push(LoginPage()),
                       child: Text(
                         S.of(context).LogIn,
-                        style: theme?.circularStdTextTheme.captionMedium.copyWith(
+                        style: theme?.circularStdTextTheme.medium.copyWith(
                           color: ColorsFoundation.surfaceBase,
                           fontSize: 13.w,
                         ),

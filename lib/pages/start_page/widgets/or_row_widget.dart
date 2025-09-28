@@ -23,7 +23,7 @@ class OrRowWidget extends StatelessWidget {
         SpacingFoundation.horizontalSpace16,
         Text(
           S.of(context).Or.toUpperCase(),
-          style: context.uiKitTheme?.circularStdTextTheme.captionBook.copyWith(
+          style: context.uiKitTheme?.circularStdTextTheme.book.copyWith(
             fontSize: 14.w,
             color: textColor,
           ),

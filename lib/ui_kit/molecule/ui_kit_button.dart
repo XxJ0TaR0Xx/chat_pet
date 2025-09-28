@@ -48,7 +48,7 @@ class UiKitButton extends StatelessWidget {
           return textColor;
         }),
         textStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
-          return context.uiKitTheme?.carosTextTheme.captionMedium.copyWith(fontWeight: FontWeight.w900) ??
+          return context.uiKitTheme?.carosTextTheme.medium.copyWith(fontWeight: FontWeight.w900) ??
               TextStyle(color: textColor);
         }),
         backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {

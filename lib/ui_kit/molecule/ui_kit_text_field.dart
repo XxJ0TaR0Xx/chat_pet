@@ -66,16 +66,16 @@ class _UiKitTextFieldState extends State<UiKitTextField> {
       onEditingComplete: widget.onEditingComplete,
       onSubmitted: widget.onSubmitted,
       cursorColor: ColorsFoundation.primary,
-      style: theme?.carosTextTheme.captionMedium,
+      style: theme?.carosTextTheme.medium,
       cursorErrorColor: ColorsFoundation.error,
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: widget.label,
-        labelStyle: theme?.circularStdTextTheme.captionMedium.copyWith(
+        labelStyle: theme?.circularStdTextTheme.medium.copyWith(
           color: ColorsFoundation.primary,
           fontSize: 16.w,
         ),
-        floatingLabelStyle: theme?.circularStdTextTheme.captionMedium.copyWith(
+        floatingLabelStyle: theme?.circularStdTextTheme.medium.copyWith(
           color: ColorsFoundation.primary,
           fontSize: 16.w,
         ),

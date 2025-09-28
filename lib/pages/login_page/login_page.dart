@@ -37,7 +37,7 @@ class LoginPage extends StatelessWidget {
                             final TextPainter painter = TextPainter(
                               text: TextSpan(
                                 text: S.of(context).LogIn,
-                                style: theme?.circularStdTextTheme.captionMedium.copyWith(
+                                style: theme?.circularStdTextTheme.medium.copyWith(
                                   fontWeight: FontWeight.w800,
                                   fontSize: 18.w,
                                 ),
@@ -56,7 +56,7 @@ class LoginPage extends StatelessWidget {
                       ),
                       Text(
                         S.of(context).LogInToChatbox,
-                        style: theme?.circularStdTextTheme.captionMedium.copyWith(
+                        style: theme?.circularStdTextTheme.medium.copyWith(
                           fontWeight: FontWeight.w800,
                           fontSize: 18.w,
                         ),
@@ -67,7 +67,7 @@ class LoginPage extends StatelessWidget {
                   Text(
                     S.of(context).WelcomeBackSignInUsing,
                     textAlign: TextAlign.center,
-                    style: theme?.circularStdTextTheme.captionBook.copyWith(
+                    style: theme?.circularStdTextTheme.book.copyWith(
                       color: ColorsFoundation.backNeutral1,
                       fontSize: 14.w,
                     ),
@@ -110,7 +110,7 @@ class LoginPage extends StatelessWidget {
                     ),
                     child: Text(
                       S.of(context).ForgotPassword,
-                      style: theme?.circularStdTextTheme.captionBook.copyWith(
+                      style: theme?.circularStdTextTheme.book.copyWith(
                         color: ColorsFoundation.primary,
                         fontSize: 14.w,
                         fontWeight: FontWeight.w600,

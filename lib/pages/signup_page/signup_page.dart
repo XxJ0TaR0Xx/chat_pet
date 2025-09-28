@@ -34,7 +34,7 @@ class SignupPage extends StatelessWidget {
                             final TextPainter painter = TextPainter(
                               text: TextSpan(
                                 text: S.of(context).Email,
-                                style: theme?.circularStdTextTheme.captionMedium.copyWith(
+                                style: theme?.circularStdTextTheme.medium.copyWith(
                                   fontWeight: FontWeight.w800,
                                   fontSize: 18.w,
                                 ),
@@ -47,7 +47,7 @@ class SignupPage extends StatelessWidget {
                               children: [
                                 Text(
                                   S.of(context).SignUpWith,
-                                  style: theme?.circularStdTextTheme.captionMedium.copyWith(
+                                  style: theme?.circularStdTextTheme.medium.copyWith(
                                     fontWeight: FontWeight.w800,
                                     fontSize: 18.w,
                                     color: Colors.transparent,
@@ -65,7 +65,7 @@ class SignupPage extends StatelessWidget {
                       ),
                       Text(
                         S.of(context).SignUpWithEmail,
-                        style: theme?.circularStdTextTheme.captionMedium.copyWith(
+                        style: theme?.circularStdTextTheme.medium.copyWith(
                           fontWeight: FontWeight.w800,
                           fontSize: 18.w,
                         ),
@@ -75,7 +75,7 @@ class SignupPage extends StatelessWidget {
                   SpacingFoundation.verticalSpace16,
                   Text(
                     S.of(context).GetChattingWithFriends,
-                    style: theme?.circularStdTextTheme.captionBook.copyWith(
+                    style: theme?.circularStdTextTheme.book.copyWith(
                       fontSize: 14.w,
                       color: ColorsFoundation.mutedText,
                     ),
