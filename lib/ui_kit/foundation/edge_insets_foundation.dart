@@ -1,5 +1,4 @@
-import 'package:chat_pet/ui_kit/foundation/spacing_foundation.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:chat_pet/ui_kit/ui_kit.dart';
 
 class EdgeInsetsFoundation {
   static final zero = 0.w;

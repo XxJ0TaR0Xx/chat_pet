@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:chat_pet/ui_kit/theme/ui_kit_theme.dart';
+import 'package:chat_pet/ui_kit/ui_kit.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:chat_pet/pages/start_page/start_page.dart';
-import 'package:chat_pet/theme/ui_kit_themes.dart';
-
-import 'localization/l10n.dart';
+import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -23,7 +21,7 @@ class App extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
         ],
-        theme: UiKitThemes().lightThemeData,
+        theme: UiKitThemes().defaultThemeData,
         home: StartPage(),
       ),
     );

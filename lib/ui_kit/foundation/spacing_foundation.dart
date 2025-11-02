@@ -1,6 +1,5 @@
-import 'package:awesome_extensions/awesome_extensions.dart';
+import 'package:chat_pet/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SpacingFoundation {
   static double get zero => 0.sp;

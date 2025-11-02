@@ -12,10 +12,11 @@ class ColorsFoundation {
   static const Color mutedText = Color(0xFFB9C1BE);
   static const Color grayColor = Color(0xFFA8B0AF);
   static const Color textColor = Color(0xFFD6E4E0);
-  static const Color primary = Color(0xFF24786D);
-  static const Color primary2 = Color(0xFF20A090);
-  static const Color primary3 = Color(0xFF8DEEE2);
-  static const Color primary4 = Color(0xFF051D13);
+  static const Color primary = Color(0xAA24786D);
+  static const Color primary2 = Color(0xAA20A090);
+  static const Color primary3 = Color(0xAA8DEEE2);
+  static const Color primary4 = Color(0xAA58C3B6);
+  static const Color primary5 = Color(0xFF051D13);
   static const Color red = Color(0xFFF04A4C);
   static const Color error = Color(0xFFFF2D1B);
   static const Color yellow = Colors.yellow;

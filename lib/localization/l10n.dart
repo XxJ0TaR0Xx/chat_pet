@@ -59,21 +59,66 @@ class S {
     return Intl.message('Chatbox', name: 'Chatbox', desc: '', args: []);
   }
 
-  /// `Connect friends easily & quickly`
+  /// `Confirm password`
+  String get ConfirmPassword {
+    return Intl.message(
+      'Confirm password',
+      name: 'ConfirmPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connect friends easily quickly`
   String get ConnectFriendsEasilyQuickly {
     return Intl.message(
-      'Connect friends easily & quickly',
+      'Connect friends easily quickly',
       name: 'ConnectFriendsEasilyQuickly',
       desc: '',
       args: [],
     );
   }
 
-  /// `Existing account? `
+  /// `Create an account`
+  String get CreateAnAccount {
+    return Intl.message(
+      'Create an account',
+      name: 'CreateAnAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email`
+  String get Email {
+    return Intl.message('Email', name: 'Email', desc: '', args: []);
+  }
+
+  /// `Existing account`
   String get ExistingAccount {
     return Intl.message(
-      'Existing account? ',
+      'Existing account',
       name: 'ExistingAccount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Forgot password`
+  String get ForgotPassword {
+    return Intl.message(
+      'Forgot password',
+      name: 'ForgotPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Get chatting with friends`
+  String get GetChattingWithFriends {
+    return Intl.message(
+      'Get chatting with friends',
+      name: 'GetChattingWithFriends',
       desc: '',
       args: [],
     );
@@ -82,6 +127,16 @@ class S {
   /// `Log in`
   String get LogIn {
     return Intl.message('Log in', name: 'LogIn', desc: '', args: []);
+  }
+
+  /// `Log in to Chatbox`
+  String get LogInToChatbox {
+    return Intl.message(
+      'Log in to Chatbox',
+      name: 'LogInToChatbox',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Or`
@@ -99,6 +154,26 @@ class S {
     );
   }
 
+  /// `Password`
+  String get Password {
+    return Intl.message('Password', name: 'Password', desc: '', args: []);
+  }
+
+  /// `Sign up with`
+  String get SignUpWith {
+    return Intl.message('Sign up with', name: 'SignUpWith', desc: '', args: []);
+  }
+
+  /// `Sign up with email`
+  String get SignUpWithEmail {
+    return Intl.message(
+      'Sign up with email',
+      name: 'SignUpWithEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Sign up with mail`
   String get SignUpWithMail {
     return Intl.message(
@@ -107,6 +182,26 @@ class S {
       desc: '',
       args: [],
     );
+  }
+
+  /// `Welcome back sign in using`
+  String get WelcomeBackSignInUsing {
+    return Intl.message(
+      'Welcome back sign in using',
+      name: 'WelcomeBackSignInUsing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your email`
+  String get YourEmail {
+    return Intl.message('Your email', name: 'YourEmail', desc: '', args: []);
+  }
+
+  /// `Your name`
+  String get YourName {
+    return Intl.message('Your name', name: 'YourName', desc: '', args: []);
   }
 }
 

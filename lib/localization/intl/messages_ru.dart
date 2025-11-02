@@ -23,19 +23,37 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "Chatbox": MessageLookupByLibrary.simpleMessage("Chatbox"),
+    "ConfirmPassword": MessageLookupByLibrary.simpleMessage("Confirm password"),
     "ConnectFriendsEasilyQuickly": MessageLookupByLibrary.simpleMessage(
-      "Легко и быстро подключайте друзей",
+      "Connect friends easily quickly",
     ),
+    "CreateAnAccount": MessageLookupByLibrary.simpleMessage(
+      "Create an account",
+    ),
+    "Email": MessageLookupByLibrary.simpleMessage("Email"),
     "ExistingAccount": MessageLookupByLibrary.simpleMessage(
-      "Аккаунт уже есть?",
+      "Existing account? ",
     ),
-    "LogIn": MessageLookupByLibrary.simpleMessage("Залогиниться"),
-    "Or": MessageLookupByLibrary.simpleMessage("Или"),
+    "ForgotPassword": MessageLookupByLibrary.simpleMessage("Forgot password"),
+    "GetChattingWithFriends": MessageLookupByLibrary.simpleMessage(
+      "Get chatting with friends",
+    ),
+    "LogIn": MessageLookupByLibrary.simpleMessage("Log in"),
+    "LogInToChatbox": MessageLookupByLibrary.simpleMessage("Log in to Chatbox"),
+    "Or": MessageLookupByLibrary.simpleMessage("Or"),
     "OurChatAppIsThePerfectWay": MessageLookupByLibrary.simpleMessage(
-      "Наше приложение для общения в чате - это идеальный способ оставаться на связи с друзьями и семьей.",
+      "Our chat app is the perfect way to stay connected with friends and family.",
     ),
-    "SignUpWithMail": MessageLookupByLibrary.simpleMessage(
-      "Регистрация с почтой",
+    "Password": MessageLookupByLibrary.simpleMessage("Password"),
+    "SignUpWith": MessageLookupByLibrary.simpleMessage("Sign up with"),
+    "SignUpWithEmail": MessageLookupByLibrary.simpleMessage(
+      "Sign up with email",
     ),
+    "SignUpWithMail": MessageLookupByLibrary.simpleMessage("Sign up with mail"),
+    "WelcomeBackSignInUsing": MessageLookupByLibrary.simpleMessage(
+      "Welcome back sign in using",
+    ),
+    "YourEmail": MessageLookupByLibrary.simpleMessage("Your email"),
+    "YourName": MessageLookupByLibrary.simpleMessage("Your name"),
   };
 }
