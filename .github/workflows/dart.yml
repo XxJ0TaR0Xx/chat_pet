@@ -13,21 +13,27 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Устанавливаем Flutter вместо Dart
-      - uses: subosito/flutter-action@v2
+      - name: Set up Java
+        uses: actions/setup-java@v4
         with:
-          flutter-version: 'stable'  # или конкретная версия
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.35.1' 
+          cache: true
 
       - name: Install dependencies
-        run: flutter pub get  # ← исправлено на flutter pub get
+        run: flutter pub get 
 
       - name: Analyze project source
-        run: flutter analyze  # ← исправлено на flutter analyze
+        run: flutter analyze  
 
       - name: Run tests
-        run: flutter test  # ← исправлено на flutter test
+        run: flutter test 
 
-      # Дополнительные полезные шаги для Flutter:
       - name: Check formatting
         run: flutter format --set-exit-if-changed .
 
