@@ -38,8 +38,8 @@ class GradientEllipsePainter extends CustomPainter {
       const Offset(308.715, 127.731),
       const Offset(-100.812, 107.022),
       [
-        color1.withOpacity(opacity),
-        color2.withOpacity(opacity),
+        color1.withValues(alpha: opacity),
+        color2.withValues(alpha: opacity),
       ],
     );
 
