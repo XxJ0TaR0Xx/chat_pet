@@ -1,6 +1,5 @@
 import 'package:chat_pet/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class UiKitAppBar extends PreferredSize {
   const UiKitAppBar({
@@ -26,12 +25,11 @@ class UiKitAppBar extends PreferredSize {
             () {
               context.pop();
             },
-        icon: SvgPicture.asset(
-          Assets.images.svg.backArrow.path,
-          width: 24.w,
-          height: 24.w,
+        icon: ChatPetIcon.icon(
+          AppIcons.arrowBack,
+          size: 24,
+          color: ColorsFoundation.darkNeutral,
         ),
-        color: ColorsFoundation.darkNeutral,
       ),
     );
   }

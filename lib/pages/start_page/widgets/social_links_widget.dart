@@ -17,12 +17,15 @@ class SocialLinksWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
+      spacing: SpacingFoundation.horizontalSpacing20,
       children: [
         AppIcons.facebook,
         AppIcons.google,
         AppIcons.apple,
       ].map(
         (e) {
+          final itApple = e == AppIcons.apple;
+
           return DecoratedBox(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -37,12 +40,10 @@ class SocialLinksWidget extends StatelessWidget {
               },
               child: ChatPetIcon.socialIcon(
                 e,
-                size: 42.w,
+                size: itApple ? 32.w : 24.w,
                 isWhiteBackground: isWhiteBackground,
               ).paddingAll(EdgeInsetsFoundation.all4),
-            ),
-          ).paddingOnly(
-            right: e != AppIcons.apple ? SpacingFoundation.horizontalSpacing20 : 0,
+            ).paddingAll(itApple ? EdgeInsetsFoundation.all4 : EdgeInsetsFoundation.all8),
           );
         },
       ).toList(),

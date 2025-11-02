@@ -18,8 +18,10 @@ class S {
   static S? _current;
 
   static S get current {
-    assert(_current != null,
-        'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
+    assert(
+      _current != null,
+      'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.',
+    );
     return _current!;
   }
 
@@ -41,8 +43,10 @@ class S {
 
   static S of(BuildContext context) {
     final instance = S.maybeOf(context);
-    assert(instance != null,
-        'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
+    assert(
+      instance != null,
+      'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?',
+    );
     return instance!;
   }
 
@@ -52,12 +56,7 @@ class S {
 
   /// `Chatbox`
   String get Chatbox {
-    return Intl.message(
-      'Chatbox',
-      name: 'Chatbox',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Chatbox', name: 'Chatbox', desc: '', args: []);
   }
 
   /// `Confirm password`
@@ -92,12 +91,7 @@ class S {
 
   /// `Email`
   String get Email {
-    return Intl.message(
-      'Email',
-      name: 'Email',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Email', name: 'Email', desc: '', args: []);
   }
 
   /// `Existing account`
@@ -132,12 +126,7 @@ class S {
 
   /// `Log in`
   String get LogIn {
-    return Intl.message(
-      'Log in',
-      name: 'LogIn',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Log in', name: 'LogIn', desc: '', args: []);
   }
 
   /// `Log in to Chatbox`
@@ -152,18 +141,13 @@ class S {
 
   /// `Or`
   String get Or {
-    return Intl.message(
-      'Or',
-      name: 'Or',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Or', name: 'Or', desc: '', args: []);
   }
 
-  /// `Our chat appIs the perfect way`
+  /// `Our chat app is the perfect way to stay connected with friends and family.`
   String get OurChatAppIsThePerfectWay {
     return Intl.message(
-      'Our chat appIs the perfect way',
+      'Our chat app is the perfect way to stay connected with friends and family.',
       name: 'OurChatAppIsThePerfectWay',
       desc: '',
       args: [],
@@ -172,22 +156,12 @@ class S {
 
   /// `Password`
   String get Password {
-    return Intl.message(
-      'Password',
-      name: 'Password',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Password', name: 'Password', desc: '', args: []);
   }
 
   /// `Sign up with`
   String get SignUpWith {
-    return Intl.message(
-      'Sign up with',
-      name: 'SignUpWith',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Sign up with', name: 'SignUpWith', desc: '', args: []);
   }
 
   /// `Sign up with email`
@@ -222,22 +196,12 @@ class S {
 
   /// `Your email`
   String get YourEmail {
-    return Intl.message(
-      'Your email',
-      name: 'YourEmail',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Your email', name: 'YourEmail', desc: '', args: []);
   }
 
   /// `Your name`
   String get YourName {
-    return Intl.message(
-      'Your name',
-      name: 'YourName',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Your name', name: 'YourName', desc: '', args: []);
   }
 }
 

@@ -37,6 +37,7 @@ dev_dependencies:
   flutter_gen_runner: ^5.9.0
   build_runner: ^2.4.9
   bloc_lint: ^0.3.1
+  intl_utils: ^2.8.12
 
 flutter:
   assets:
@@ -51,6 +52,8 @@ flutter:
       fonts:
         - asset: assets/fonts/CircularStd-Black.otf
   uses-material-design: true
+  generate: true
+
 
 flutter_gen:
   output: lib/tokens
@@ -71,21 +74,3 @@ flutter_intl:
   enabled: true
   arb_dir: lib/localization/arb
   output_dir: lib/localization
-
-
-
-# icon_font:
-#   input_svg_dir: "assets/images/svg/"
-#   output_font_file: "assets/fonts/chat_pet.otf"
-
-#   output_class_file: "lib/tokens/chat_pet_icons.dart"
-#   class_name: "ChatPetIcons"
-#   package: chat_pet
-#   format: true
-
-#   font_name: "ChatPet Icons"
-#   normalize: false
-#   ignore_shapes: false
-
-#   recursive: true
-#   verbose: false  

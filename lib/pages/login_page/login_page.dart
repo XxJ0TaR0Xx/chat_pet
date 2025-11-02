@@ -101,7 +101,7 @@ class LoginPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SpacingFoundation.verticalSpace16,
+                  SpacingFoundation.verticalSpace12,
                   TextButton(
                     onPressed: () {},
                     style: ButtonStyle(

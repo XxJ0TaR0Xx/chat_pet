@@ -3,7 +3,6 @@ import 'package:chat_pet/pages/login_page/login_page.dart';
 import 'package:chat_pet/pages/signup_page/signup_page.dart';
 import 'package:chat_pet/pages/start_page/widgets/or_row_widget.dart';
 import 'package:chat_pet/pages/start_page/widgets/social_links_widget.dart';
-import 'package:chat_pet/ui_kit/molecule/ui_kit_button.dart';
 import 'package:flutter/material.dart';
 
 import 'package:chat_pet/pages/start_page/widgets/gradient_ellipse_painter.dart';
@@ -101,6 +100,7 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                   style: theme?.circularStdTextTheme.medium.copyWith(
                     letterSpacing: 1.5,
                     fontSize: 18.w,
+                    height: 1.5,
                     color: ColorsFoundation.mutedText,
                     shadows: [
                       Shadow(

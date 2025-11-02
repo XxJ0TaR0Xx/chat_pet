@@ -13,6 +13,7 @@ class OrRowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
+      spacing: SpacingFoundation.horizontalSpacing16,
       children: [
         Expanded(
           child: Divider(
@@ -20,7 +21,6 @@ class OrRowWidget extends StatelessWidget {
             thickness: 0.5.w,
           ),
         ),
-        SpacingFoundation.horizontalSpace16,
         Text(
           S.of(context).Or.toUpperCase(),
           style: context.uiKitTheme?.circularStdTextTheme.book.copyWith(
@@ -28,7 +28,6 @@ class OrRowWidget extends StatelessWidget {
             color: textColor,
           ),
         ),
-        SpacingFoundation.horizontalSpace16,
         Expanded(
           child: Divider(
             color: ColorsFoundation.backNeutral3,
