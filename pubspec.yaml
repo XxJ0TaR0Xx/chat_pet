@@ -42,6 +42,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/images/
+    - assets/images/svg/
     - assets/fonts/
 
   fonts:
@@ -51,6 +52,9 @@ flutter:
     - family: CircularStd
       fonts:
         - asset: assets/fonts/CircularStd-Black.otf
+    - family: ChatPetIcons
+      fonts:
+        - asset: assets/fonts/chat_pet_icons.otf
   uses-material-design: true
   generate: true
 
@@ -70,7 +74,13 @@ flutter_gen:
       package_parameter_enabled: true
 #      synthetic-package: false
 
+# extensions
 flutter_intl:
   enabled: true
   arb_dir: lib/localization/arb
   output_dir: lib/localization
+
+
+
+
+
