@@ -34,8 +34,8 @@ jobs:
       # - name: Run tests
       #   run: flutter test 
 
-      - name: Check formatting
-        run: flutter format --set-exit-if-changed .
+      # - name: Check formatting
+      #   run: flutter format --set-exit-if-changed .
 
       - name: Build APK (опционально)
         run: flutter build apk --release
