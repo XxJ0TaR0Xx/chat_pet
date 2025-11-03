@@ -26,6 +26,10 @@ dependencies:
   intl: ^0.20.2
   flutter_localization: ^0.3.3
   firebase_core: ^4.2.0
+
+  #env
+  flutter_dotenv: ^6.0.0
+
   
 
 
@@ -42,6 +46,7 @@ dev_dependencies:
 
 flutter:
   assets:
+    - general_configs.env
     - assets/fonts/
 
   fonts:
