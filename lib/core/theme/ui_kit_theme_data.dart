@@ -1,5 +1,5 @@
-import 'package:chat_pet/presentation/theme/ui_kit_text_theme.dart';
-import 'package:chat_pet/presentation/theme/ui_kit_color_scheme.dart';
+import 'package:chat_pet/core/theme/ui_kit_text_theme.dart';
+import 'package:chat_pet/core/theme/ui_kit_color_scheme.dart';
 import 'package:chat_pet/presentation/ui_kit/foundation/colors_foundation.dart';
 import 'package:flutter/material.dart';
 
