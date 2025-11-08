@@ -9,7 +9,9 @@ import 'package:chat_pet/domain/repositories/auth_repository.dart';
 
 // ignore: implementation_imports
 import 'package:fpdart/src/either.dart';
+import 'package:injectable/injectable.dart';
 
+@Singleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<void> checkAuthStatus(String userId) async {

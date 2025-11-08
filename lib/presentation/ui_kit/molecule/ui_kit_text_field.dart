@@ -17,6 +17,8 @@ class UiKitTextField extends StatefulWidget {
   final ValueChanged<String>? onSubmitted;
   final String? Function(String? p1)? validator;
 
+  final Widget? suffixIcon;
+
   const UiKitTextField({
     super.key,
     required this.controller,
@@ -31,6 +33,7 @@ class UiKitTextField extends StatefulWidget {
     this.onEditingComplete,
     this.onSubmitted,
     this.validator,
+    this.suffixIcon,
   });
 
   @override
@@ -71,6 +74,7 @@ class _UiKitTextFieldState extends State<UiKitTextField> {
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.always,
         labelText: widget.label,
+        suffixIcon: widget.suffixIcon,
         labelStyle: theme?.circularStdTextTheme.medium.copyWith(
           color: ColorsFoundation.primary,
           fontSize: 16.w,
