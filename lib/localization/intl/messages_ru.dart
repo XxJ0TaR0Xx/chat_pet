@@ -22,11 +22,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "Calls": MessageLookupByLibrary.simpleMessage("Calls"),
     "Chatbox": MessageLookupByLibrary.simpleMessage("Chatbox"),
     "ConfirmPassword": MessageLookupByLibrary.simpleMessage("Confirm password"),
     "ConnectFriendsEasilyQuickly": MessageLookupByLibrary.simpleMessage(
       "Connect friends easily quickly",
     ),
+    "Contacts": MessageLookupByLibrary.simpleMessage("Contacts"),
     "CreateAnAccount": MessageLookupByLibrary.simpleMessage(
       "Create an account",
     ),
@@ -40,11 +42,13 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "LogIn": MessageLookupByLibrary.simpleMessage("Log in"),
     "LogInToChatbox": MessageLookupByLibrary.simpleMessage("Log in to Chatbox"),
+    "Message": MessageLookupByLibrary.simpleMessage("Message"),
     "Or": MessageLookupByLibrary.simpleMessage("Or"),
     "OurChatAppIsThePerfectWay": MessageLookupByLibrary.simpleMessage(
       "Our chat app is the perfect way to stay connected with friends and family.",
     ),
     "Password": MessageLookupByLibrary.simpleMessage("Password"),
+    "Settings": MessageLookupByLibrary.simpleMessage("Settings"),
     "SignUpWith": MessageLookupByLibrary.simpleMessage("Sign up with"),
     "SignUpWithEmail": MessageLookupByLibrary.simpleMessage(
       "Sign up with email",
