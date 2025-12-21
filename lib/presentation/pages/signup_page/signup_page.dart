@@ -1,3 +1,4 @@
+import 'package:chat_pet/presentation/pages/home_page/home_page.dart';
 import 'package:chat_pet/presentation/pages/signup_page/bloc/signup_bloc.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
@@ -156,13 +157,14 @@ class _SignupPageState extends State<SignupPage> {
                               text: S.of(context).CreateAnAccount,
                               isDisable: false,
                               onTap: () {
-                                context.read<SignupBloc>().add(
-                                      SignupSubmittedEvent(
-                                        name: nameController.text,
-                                        email: emailController.text,
-                                        password: passwordController.text,
-                                      ),
-                                    );
+                                context.push(HomePage());
+                                // context.read<SignupBloc>().add(
+                                //       SignupSubmittedEvent(
+                                //         name: nameController.text,
+                                //         email: emailController.text,
+                                //         password: passwordController.text,
+                                //       ),
+                                //     );
                               },
                             ),
                           ),
