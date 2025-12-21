@@ -6,7 +6,8 @@ class ColorsFoundation {
   static const Color lightSurface2 = Color(0xFFF2F7FB);
   static const Color darkNeutral = Color(0xFF000E08);
   static const Color backHelloPage = Color(0xFF1A1A1A);
-  static const Color backNeutral1 = Color(0xFF797C7B);
+  static const Color backNeutral1 = Color(0xAA797C7B);
+  static const Color grey = Color(0xAAF1F6FA);
   static const Color backNeutral2 = Color(0xFF9A9E9C);
   static const Color backNeutral3 = Color(0xFFCDD1D0);
   static const Color mutedText = Color(0xFFB9C1BE);
@@ -17,6 +18,7 @@ class ColorsFoundation {
   static const Color primary3 = Color(0xAA8DEEE2);
   static const Color primary4 = Color(0xAA58C3B6);
   static const Color primary5 = Color(0xFF051D13);
+  static const Color borderColor = Color(0xFF363F3B);
   static const Color red = Color(0xFFF04A4C);
   static const Color error = Color(0xFFFF2D1B);
   static const Color yellow = Colors.yellow;
