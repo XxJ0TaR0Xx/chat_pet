@@ -17,5 +17,9 @@
   "SignUpWithMail": "Sign up with mail",
   "WelcomeBackSignInUsing": "Welcome back sign in using",
   "YourEmail": "Your email",
-  "YourName": "Your name"
+  "YourName": "Your name",
+  "Message": "Message",
+  "Calls": "Calls",
+  "Contacts": "Contacts",
+  "Settings" : "Settings"
 }

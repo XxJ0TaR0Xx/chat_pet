@@ -203,6 +203,26 @@ class S {
   String get YourName {
     return Intl.message('Your name', name: 'YourName', desc: '', args: []);
   }
+
+  /// `Message`
+  String get Message {
+    return Intl.message('Message', name: 'Message', desc: '', args: []);
+  }
+
+  /// `Calls`
+  String get Calls {
+    return Intl.message('Calls', name: 'Calls', desc: '', args: []);
+  }
+
+  /// `Contacts`
+  String get Contacts {
+    return Intl.message('Contacts', name: 'Contacts', desc: '', args: []);
+  }
+
+  /// `Settings`
+  String get Settings {
+    return Intl.message('Settings', name: 'Settings', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
