@@ -142,6 +142,7 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                 Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: SpacingFoundation.horizontalSpacing4,
                   children: [
                     Text(
                       S.of(context).ExistingAccount,
