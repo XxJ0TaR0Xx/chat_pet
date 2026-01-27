@@ -3,6 +3,13 @@ import 'package:chat_pet/presentation/ui_kit/theme/ui_kit_color_scheme.dart';
 import 'package:flutter/material.dart';
 
 class UiKitThemeData extends ThemeExtension<UiKitThemeData> {
+  const UiKitThemeData({
+    required this.colorScheme,
+    required this.carosTextTheme,
+    required this.circularStdTextTheme,
+    required this.themeMode,
+    this.customColor,
+  });
   final Color? customColor;
   final UiKitColorScheme colorScheme;
 
@@ -12,30 +19,21 @@ class UiKitThemeData extends ThemeExtension<UiKitThemeData> {
   final ThemeMode themeMode;
 
   ButtonStyle textButtonStyle([Color textColor = Colors.white]) => ButtonStyle(
-        textStyle: WidgetStateTextStyle.resolveWith((states) {
-          return circularStdTextTheme.medium;
-        }),
-        foregroundColor: WidgetStateProperty.resolveWith((states) => textColor),
-        overlayColor: WidgetStateProperty.resolveWith((states) => Colors.transparent),
-      );
+    textStyle: WidgetStateTextStyle.resolveWith((states) {
+      return circularStdTextTheme.medium;
+    }),
+    foregroundColor: WidgetStateProperty.resolveWith((states) => textColor),
+    overlayColor: WidgetStateProperty.resolveWith((states) => Colors.transparent),
+  );
   ButtonStyle textButtonLabelSmallStyle([Color textColor = Colors.white]) => ButtonStyle(
-        textStyle: WidgetStateTextStyle.resolveWith((states) {
-          return circularStdTextTheme.medium;
-        }),
-        foregroundColor: WidgetStateProperty.resolveWith((states) => textColor),
-        overlayColor: WidgetStateProperty.resolveWith((states) => Colors.transparent),
-      );
-
-  const UiKitThemeData({
-    this.customColor,
-    required this.colorScheme,
-    required this.carosTextTheme,
-    required this.circularStdTextTheme,
-    required this.themeMode,
-  });
+    textStyle: WidgetStateTextStyle.resolveWith((states) {
+      return circularStdTextTheme.medium;
+    }),
+    foregroundColor: WidgetStateProperty.resolveWith((states) => textColor),
+    overlayColor: WidgetStateProperty.resolveWith((states) => Colors.transparent),
+  );
 
   @override
-  //ignore: long-parameter-list
   ThemeExtension<UiKitThemeData> copyWith({
     Color? customColor,
     Color? cardColor,
@@ -84,19 +82,17 @@ class UiKitThemeData extends ThemeExtension<UiKitThemeData> {
 }
 
 class UiKitChipThemeData {
-  final Color backgroundColor;
-  final Border? border;
-
   const UiKitChipThemeData({
     required this.backgroundColor,
     this.border,
   });
+  final Color backgroundColor;
+  final Border? border;
 }
 
 class BlurredBottomNavigationBarTheme {
-  final Color iconColors;
-
   const BlurredBottomNavigationBarTheme({
     required this.iconColors,
   });
+  final Color iconColors;
 }

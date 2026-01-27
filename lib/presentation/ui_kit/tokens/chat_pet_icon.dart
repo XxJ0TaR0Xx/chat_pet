@@ -7,14 +7,14 @@ class ChatPetIcon {
   static Widget icon(
     AppIcons icon, {
     double size = 24,
-    Color color = Colors.black,
+    Color? color,
   }) {
     return SizedBox(
       width: size,
       height: size,
       child: SvgPicture.string(
         _iconsMap[icon]!,
-        colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+        colorFilter: ColorFilter.mode(color ?? Colors.black, BlendMode.srcIn),
       ),
     );
   }

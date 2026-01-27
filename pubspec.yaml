@@ -4,10 +4,10 @@ publish_to: 'none'
 version: 0.1.0
 
 environment:
-  sdk: ">=3.6.0 <4.0.0"
+  sdk: ">=3.10.0 <4.0.0"
 
-dependency_overrides: 
-  dart_style: 3.1.2
+# dependency_overrides: 
+#   dart_style: 3.1.2
 
 dependencies:
   flutter:
@@ -29,6 +29,7 @@ dependencies:
   #firebase
   firebase_core: ^4.2.0
   firebase_auth: ^6.1.1
+  cloud_firestore: ^6.1.1
 
   #env
   flutter_dotenv: ^6.0.0
@@ -40,6 +41,9 @@ dependencies:
   injectable: ^2.5.2
   avatar_plus: ^0.0.5
   flutter_color_extractor: ^1.0.0+1
+
+  image_picker: ^1.2.1
+  widget_tooltip: ^1.2.1
   
 
 
@@ -59,6 +63,7 @@ flutter:
   assets:
     - general_configs.env
     - assets/fonts/
+    - assets/images/
 
   fonts:
     - family: Caros

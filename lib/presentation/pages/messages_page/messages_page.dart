@@ -11,7 +11,6 @@ class MessagesPage extends StatelessWidget {
     final theme = context.uiKitTheme;
 
     return CustomScrollView(
-      physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
       slivers: [
         SliverAppBar(
           automaticallyImplyLeading: false,
@@ -22,7 +21,10 @@ class MessagesPage extends StatelessWidget {
             children: [
               UiKitHomeAppBar(),
               SizedBox(height: SpacingFoundation.verticalSpacing30),
-              SizedBox(height: 72.h, child: HistoryRow(context: context)),
+              SizedBox(
+                height: 72.h,
+                child: HistoryRow(context: context),
+              ),
             ],
           ),
         ),
@@ -36,7 +38,6 @@ class MessagesPage extends StatelessWidget {
             ),
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SpacingFoundation.verticalSpace14,
               Container(

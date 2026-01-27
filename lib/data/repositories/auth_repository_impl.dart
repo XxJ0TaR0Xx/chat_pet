@@ -1,51 +1,56 @@
 import 'dart:developer';
 
+import 'package:chat_pet/core/firebase/storage/firebase_db.dart';
+import 'package:chat_pet/core/injectable/injectable.dart';
 import 'package:chat_pet/data/models/user.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:chat_pet/domain/entities/user_entity.dart';
 import 'package:chat_pet/domain/failures/auth_failures/auth_failure.dart';
 import 'package:chat_pet/domain/repositories/auth_repository.dart';
-
+import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 // ignore: implementation_imports
 import 'package:fpdart/src/either.dart';
 import 'package:injectable/injectable.dart';
 
 @Singleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
+  const AuthRepositoryImpl();
+
   @override
   Future<void> checkAuthStatus(String userId) async {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      if (user != null) {
-        print(user.uid);
-      }
-    });
+    // FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    //   if (user != null) {}
+    // });
   }
 
   @override
   Future<Either<AuthFailure, UserEntity>> login(String email, String password) async {
     try {
+      final FirebaseDB firebaseDB = FirebaseDB();
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
 
       if (credential.user != null) {
-        return Right(UserModel(
-          id: credential.user!.uid,
-          avatarUrl: credential.user!.photoURL,
-          email: credential.user!.email,
-          name: credential.user!.displayName,
-        ));
+        final user = await firebaseDB.getCurrentUser();
+        if (user == null) return Left(ServerFailure());
+
+        getIt<UserCubit>().setUser = user;
+        return Right(user);
       } else {
         return Left(ServerFailure());
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        log('No user found for that email.');
-        Left(UserNotFoundFailure());
-      } else if (e.code == 'wrong-password') {
-        log('Wrong password provided for that user.');
-        Left(WrongPasswordFailure());
+        log('[AUTH_REPO] No user found for that email.');
+        return Left(UserNotFoundFailure());
+      } else if (e.code == 'wrong-password' || e.code == 'invalid-credential') {
+        log('[AUTH_REPO] Wrong password provided for that user.');
+        return Left(WrongPasswordFailure());
       }
+    } catch (e, stackTrace) {
+      log('[AUTH_REPO] GENERAL ERROR (Not FirebaseAuthException): $e', error: e, stackTrace: stackTrace);
+      return Left(ServerFailure());
     }
+
     return Left(ServerFailure());
   }
 
@@ -68,6 +73,8 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<Either<AuthFailure, UserEntity>> register(String name, String email, String password) async {
+    final FirebaseDB firebaseDB = FirebaseDB();
+
     try {
       final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
@@ -75,12 +82,23 @@ class AuthRepositoryImpl implements AuthRepository {
       );
 
       if (credential.user != null) {
-        return Right(UserModel(
+        if (FirebaseAuth.instance.currentUser?.uid == null) {
+          log('[Create User] FirebaseAuth.instance.currentUser?.uid == null');
+          return Left(UserDisabledFailure());
+        }
+
+        final user = UserModel(
           id: credential.user!.uid,
           avatarUrl: credential.user!.photoURL,
           email: credential.user!.email,
           name: credential.user!.displayName,
-        ));
+        );
+
+        final correctUser = await firebaseDB.createUser(user, FirebaseAuth.instance.currentUser!.uid);
+        if (correctUser == null) return Left(ServerFailure());
+        getIt<UserCubit>().setUser = correctUser;
+
+        return Right(correctUser);
       } else {
         return Left(ServerFailure());
       }

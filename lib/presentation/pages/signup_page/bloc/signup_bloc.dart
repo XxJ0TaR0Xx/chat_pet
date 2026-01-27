@@ -8,11 +8,11 @@ part 'signup_state.dart';
 
 @Singleton()
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
-  final RegisterUseCase registerUseCase;
-
   SignupBloc(this.registerUseCase) : super(SignupInitial()) {
     on<SignupSubmittedEvent>(_onSignupSubmittedEvent);
   }
+
+  final RegisterUseCase registerUseCase;
 
   Future<void> _onSignupSubmittedEvent(SignupSubmittedEvent event, Emitter<SignupState> emit) async {
     emit(SignupLoading());

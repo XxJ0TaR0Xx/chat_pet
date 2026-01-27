@@ -6,10 +6,14 @@ class UiKitAppBar extends PreferredSize {
     super.key,
     super.preferredSize = const Size(double.infinity, 84),
     super.child = const SizedBox(),
+    this.leadingColor,
     this.onTap,
+    this.centerTitle = true,
   });
 
   final VoidCallback? onTap;
+  final Color? leadingColor;
+  final bool centerTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -17,20 +21,22 @@ class UiKitAppBar extends PreferredSize {
       backgroundColor: ColorsFoundation.transparent,
       shadowColor: ColorsFoundation.transparent,
       automaticallyImplyLeading: false,
+      centerTitle: centerTitle,
       leading: IconButton(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
         style: ElevatedButton.styleFrom(splashFactory: NoSplash.splashFactory),
-        onPressed: onTap ??
+        onPressed:
+            onTap ??
             () {
               context.pop();
             },
         icon: ChatPetIcon.icon(
           AppIcons.arrowBack,
-          size: 24,
-          color: ColorsFoundation.darkNeutral,
+          color: leadingColor ?? ColorsFoundation.darkNeutral,
         ),
       ),
+      title: child,
     );
   }
 }

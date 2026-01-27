@@ -6,11 +6,11 @@ import 'package:injectable/injectable.dart';
 
 @Injectable()
 class LoginUseCase {
-  final AuthRepository repository;
+  const LoginUseCase(this._repository);
 
-  LoginUseCase(this.repository);
+  final AuthRepository _repository;
 
   Future<Either<AuthFailure, UserEntity>> call({required String email, required String password}) {
-    return repository.login(email, password);
+    return _repository.login(email, password);
   }
 }

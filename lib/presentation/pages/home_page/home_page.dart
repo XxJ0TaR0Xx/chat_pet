@@ -1,4 +1,5 @@
 import 'package:chat_pet/presentation/pages/messages_page/messages_page.dart';
+import 'package:chat_pet/presentation/pages/settings_page/settings_page.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 
@@ -22,58 +23,59 @@ class _HomePageState extends State<HomePage> {
         decoration: BoxDecoration(
           color: theme?.colorScheme.surfaceBase,
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            BottomNavigationBarItem(
-              icon: AppIcons.message,
-              title: S.of(context).Message,
-              isActive: index == 0,
-              onTap: () {
-                index = 0;
-                setState(() {});
-              },
+        child:
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                BottomNavigationBarItem(
+                  icon: AppIcons.message,
+                  title: S.of(context).Message,
+                  isActive: index == 0,
+                  onTap: () {
+                    index = 0;
+                    setState(() {});
+                  },
+                ),
+                BottomNavigationBarItem(
+                  icon: AppIcons.calls,
+                  title: S.of(context).Calls,
+                  isActive: index == 1,
+                  onTap: () {
+                    index = 1;
+                    setState(() {});
+                  },
+                ),
+                BottomNavigationBarItem(
+                  icon: AppIcons.contacts,
+                  title: S.of(context).Contacts,
+                  isActive: index == 2,
+                  onTap: () {
+                    index = 2;
+                    setState(() {});
+                  },
+                ),
+                BottomNavigationBarItem(
+                  icon: AppIcons.settings,
+                  title: S.of(context).Settings,
+                  isActive: index == 3,
+                  onTap: () {
+                    index = 3;
+                    setState(() {});
+                  },
+                ),
+              ],
+            ).paddingOnly(
+              left: SpacingFoundation.horizontalSpacing24,
+              right: SpacingFoundation.horizontalSpacing24,
+              top: SpacingFoundation.verticalSpacing16,
+              bottom: SpacingFoundation.verticalSpacing24,
             ),
-            BottomNavigationBarItem(
-              icon: AppIcons.calls,
-              title: S.of(context).Calls,
-              isActive: index == 1,
-              onTap: () {
-                index = 1;
-                setState(() {});
-              },
-            ),
-            BottomNavigationBarItem(
-              icon: AppIcons.contacts,
-              title: S.of(context).Contacts,
-              isActive: index == 2,
-              onTap: () {
-                index = 2;
-                setState(() {});
-              },
-            ),
-            BottomNavigationBarItem(
-              icon: AppIcons.settings,
-              title: S.of(context).Settings,
-              isActive: index == 3,
-              onTap: () {
-                index = 3;
-                setState(() {});
-              },
-            ),
-          ],
-        ).paddingOnly(
-          left: SpacingFoundation.horizontalSpacing24,
-          right: SpacingFoundation.horizontalSpacing24,
-          top: SpacingFoundation.verticalSpacing16,
-          bottom: SpacingFoundation.verticalSpacing24,
-        ),
       ),
       body: switch (index) {
         0 => MessagesPage(),
         1 => Placeholder(),
         2 => Placeholder(),
-        3 => Placeholder(),
+        3 => SettingsPage(),
         _ => Placeholder(),
       },
     );
@@ -82,9 +84,9 @@ class _HomePageState extends State<HomePage> {
 
 class BottomNavigationBarItem extends StatelessWidget {
   const BottomNavigationBarItem({
-    super.key,
     required this.title,
     required this.icon,
+    super.key,
     this.isActive = false,
     this.onTap,
   });
@@ -98,7 +100,7 @@ class BottomNavigationBarItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = isActive ? ColorsFoundation.primary : ColorsFoundation.backNeutral1;
 
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
       child: Column(
         mainAxisSize: MainAxisSize.min,

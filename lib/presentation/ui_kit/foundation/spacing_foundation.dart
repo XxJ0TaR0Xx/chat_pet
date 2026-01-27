@@ -2,6 +2,7 @@ import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 
 class SpacingFoundation {
+  SpacingFoundation._();
   static double get zero => 0.sp;
 
   static double get horizontalSpacing2 => 2.w;
@@ -98,11 +99,11 @@ class SpacingFoundation {
 
   static Widget get verticalSpace16 => verticalSpacing16.heightBox;
 
+  static Widget get verticalSpace20 => verticalSpacing20.heightBox;
+
   static Widget get verticalSpace24 => verticalSpacing24.heightBox;
 
   static Widget get verticalSpace30 => verticalSpacing30.heightBox;
 
   static Widget get bottomNavigationBarSpacing => kBottomNavigationBarHeight.verticalSpace;
-
-  SpacingFoundation._();
 }

@@ -6,9 +6,9 @@ import 'package:injectable/injectable.dart';
 
 @Injectable()
 class RegisterUseCase {
-  final AuthRepository repository;
+  const RegisterUseCase(this.repository);
 
-  RegisterUseCase(this.repository);
+  final AuthRepository repository;
 
   Future<Either<AuthFailure, UserEntity>> call({
     required String name,

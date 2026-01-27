@@ -2,25 +2,20 @@ import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 
 class UiKitButton extends StatelessWidget {
-  final Color backgroundColor;
-  final VoidCallback? onTap;
-  final String text;
-  final Color textColor;
-  final bool isDisable;
-
   const UiKitButton({
-    super.key,
     required this.text,
+    super.key,
     this.onTap,
     this.backgroundColor = ColorsFoundation.surfaceBase,
     this.textColor = ColorsFoundation.darkNeutral,
     this.isDisable = false,
+    this.isLoading = false,
   });
-
   factory UiKitButton.primary({
-    required final String text,
-    final VoidCallback? onTap,
-    final bool isDisable = false,
+    required String text,
+    VoidCallback? onTap,
+    bool isDisable = false,
+    bool isLoading = false,
   }) {
     return UiKitButton(
       text: text,
@@ -28,8 +23,15 @@ class UiKitButton extends StatelessWidget {
       onTap: onTap,
       textColor: ColorsFoundation.surfaceBase,
       isDisable: isDisable,
+      isLoading: isLoading,
     );
   }
+  final Color backgroundColor;
+  final VoidCallback? onTap;
+  final String text;
+  final Color textColor;
+  final bool isDisable;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +50,7 @@ class UiKitButton extends StatelessWidget {
           return textColor;
         }),
         textStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
-          return context.uiKitTheme?.carosTextTheme.medium.copyWith(fontWeight: FontWeight.w900) ??
-              TextStyle(color: textColor);
+          return context.uiKitTheme?.carosTextTheme.medium.copyWith(fontWeight: FontWeight.w900) ?? TextStyle(color: textColor);
         }),
         backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
           if (states.contains(WidgetState.disabled) || isDisable) {
@@ -58,7 +59,19 @@ class UiKitButton extends StatelessWidget {
           return backgroundColor;
         }),
       ),
-      child: Text(text).paddingVertical(SpacingFoundation.verticalSpacing16),
+      child:
+          (isLoading
+                  ? SizedBox(
+                      height: 24.h,
+                      width: 24.h,
+                      child: CircularProgressIndicator(
+                        color: context.uiKitTheme?.colorScheme.inverseSurface,
+                      ),
+                    )
+                  : Text(text))
+              .paddingVertical(
+                SpacingFoundation.verticalSpacing16,
+              ),
     );
   }
 }
