@@ -9,6 +9,8 @@ abstract class AuthRepository {
 
   Future<Either<AuthFailure, UserEntity>> register(String name, String email, String password);
 
+  Future<Either<AuthFailure, UserEntity>> loadUserData(String userId);
+
   //TODO think
   Future<void> checkAuthStatus(String userId);
 }

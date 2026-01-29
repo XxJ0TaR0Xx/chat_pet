@@ -21,6 +21,10 @@ class _SettingsPageState extends State<SettingsPage> {
     super.initState();
   }
 
+  Future<void> updatePhoto() async {
+    await cubit.updateUserImage();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = context.uiKitTheme;
@@ -32,9 +36,13 @@ class _SettingsPageState extends State<SettingsPage> {
           slivers: [
             UiKitAppBar(
               leadingColor: theme?.colorScheme.surfaceBase,
+              // showLeading: false,
               child: Text(
                 'Setting',
-                style: theme?.carosTextTheme.medium.copyWith(fontSize: 20.w, color: theme.colorScheme.surfaceBase),
+                style: theme?.carosTextTheme.medium.copyWith(
+                  fontSize: 20.w,
+                  color: theme.colorScheme.surfaceBase,
+                ),
               ),
             ).sliver,
             SizedBox(height: 52.h).sliver,
@@ -79,12 +87,14 @@ class _SettingsPageState extends State<SettingsPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SpacingFoundation.verticalSpace24,
-
                         Row(
                           children: [
-                            CircleAvatar(
-                              radius: 30.w,
-                              backgroundImage: AssetImage('assets/images/orig.png'),
+                            InkWell(
+                              onTap: updatePhoto,
+                              child: CircleAvatar(
+                                radius: 30.w,
+                                backgroundImage: AssetImage('assets/images/orig.png'),
+                              ),
                             ),
                             SpacingFoundation.horizontalSpace24,
                             Column(

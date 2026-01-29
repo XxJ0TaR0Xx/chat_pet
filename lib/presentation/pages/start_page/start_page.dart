@@ -1,12 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:chat_pet/presentation/pages/login_page/login_page.dart';
 import 'package:chat_pet/presentation/pages/signup_page/signup_page.dart';
+import 'package:chat_pet/presentation/pages/start_page/widgets/gradient_ellipse_painter.dart';
 import 'package:chat_pet/presentation/pages/start_page/widgets/or_row_widget.dart';
 import 'package:chat_pet/presentation/pages/start_page/widgets/social_links_widget.dart';
-import 'package:flutter/material.dart';
-
-import 'package:chat_pet/presentation/pages/start_page/widgets/gradient_ellipse_painter.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
+import 'package:flutter/material.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -133,8 +132,8 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                   children: [
                     Expanded(
                       child: UiKitButton(
-                        text: S.of(context).SignUpWithMail,
-                        onTap: () => context.push(SignupPage()),
+                        text: S.of(context).LogIn,
+                        onTap: () => context.push(LoginPage()),
                       ),
                     ),
                   ],
@@ -145,16 +144,16 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                   spacing: SpacingFoundation.horizontalSpacing4,
                   children: [
                     Text(
-                      S.of(context).ExistingAccount,
+                      'Нет аккаута?',
                       style: theme?.circularStdTextTheme.medium.copyWith(
                         color: ColorsFoundation.mutedText,
                         fontSize: 13.w,
                       ),
                     ),
                     GestureDetector(
-                      onTap: () => context.push(LoginPage()),
+                      onTap: () => context.push(SignupPage()),
                       child: Text(
-                        S.of(context).LogIn,
+                        S.of(context).SignUpWithEmail,
                         style: theme?.circularStdTextTheme.medium.copyWith(
                           color: ColorsFoundation.surfaceBase,
                           fontSize: 13.w,

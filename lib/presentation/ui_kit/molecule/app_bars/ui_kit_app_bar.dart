@@ -9,11 +9,13 @@ class UiKitAppBar extends PreferredSize {
     this.leadingColor,
     this.onTap,
     this.centerTitle = true,
+    this.showLeading = true,
   });
 
   final VoidCallback? onTap;
   final Color? leadingColor;
   final bool centerTitle;
+  final bool showLeading;
 
   @override
   Widget build(BuildContext context) {
@@ -22,20 +24,22 @@ class UiKitAppBar extends PreferredSize {
       shadowColor: ColorsFoundation.transparent,
       automaticallyImplyLeading: false,
       centerTitle: centerTitle,
-      leading: IconButton(
-        splashColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        style: ElevatedButton.styleFrom(splashFactory: NoSplash.splashFactory),
-        onPressed:
-            onTap ??
-            () {
-              context.pop();
-            },
-        icon: ChatPetIcon.icon(
-          AppIcons.arrowBack,
-          color: leadingColor ?? ColorsFoundation.darkNeutral,
-        ),
-      ),
+      leading: showLeading
+          ? IconButton(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              style: ElevatedButton.styleFrom(splashFactory: NoSplash.splashFactory),
+              onPressed:
+                  onTap ??
+                  () {
+                    context.pop();
+                  },
+              icon: ChatPetIcon.icon(
+                AppIcons.arrowBack,
+                color: leadingColor ?? ColorsFoundation.darkNeutral,
+              ),
+            )
+          : null,
       title: child,
     );
   }

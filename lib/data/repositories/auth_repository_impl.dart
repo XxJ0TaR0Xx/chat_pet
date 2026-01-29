@@ -24,6 +24,31 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<Either<AuthFailure, UserEntity>> loadUserData(String userId) async {
+    try {
+      final userCubit = getIt<UserCubit>();
+      final FirebaseDB firebaseDB = FirebaseDB();
+
+      final currentUser = userCubit.currentUser;
+      if (currentUser != null && currentUser.id == userId) {
+        return Right(currentUser);
+      }
+
+      final user = await firebaseDB.getCurrentUser();
+
+      if (user == null) {
+        return Left(UserNotFoundFailure());
+      }
+
+      userCubit.setUser(user);
+      return Right(user);
+    } catch (e) {
+      log('[AUTH_REPO] Error loading user data: $e');
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
   Future<Either<AuthFailure, UserEntity>> login(String email, String password) async {
     try {
       final FirebaseDB firebaseDB = FirebaseDB();
@@ -33,7 +58,7 @@ class AuthRepositoryImpl implements AuthRepository {
         final user = await firebaseDB.getCurrentUser();
         if (user == null) return Left(ServerFailure());
 
-        getIt<UserCubit>().setUser = user;
+        getIt<UserCubit>().setUser(user);
         return Right(user);
       } else {
         return Left(ServerFailure());
@@ -96,7 +121,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
         final correctUser = await firebaseDB.createUser(user, FirebaseAuth.instance.currentUser!.uid);
         if (correctUser == null) return Left(ServerFailure());
-        getIt<UserCubit>().setUser = correctUser;
+        getIt<UserCubit>().setUser(correctUser);
 
         return Right(correctUser);
       } else {

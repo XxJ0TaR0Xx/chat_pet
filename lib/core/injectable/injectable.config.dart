@@ -33,7 +33,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i461.LoginUseCase>(
       () => _i461.LoginUseCase(gh<_i1073.AuthRepository>()),
     );
-    gh.singleton<_i80.LoginCubit>(
+    gh.factory<_i80.LoginCubit>(
       () => _i80.LoginCubit(gh<_i461.LoginUseCase>()),
     );
     gh.factory<_i320.LogoutUseCase>(

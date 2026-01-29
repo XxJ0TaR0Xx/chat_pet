@@ -3,7 +3,7 @@ import 'package:chat_pet/domain/usecases/auth/login_usecase.dart';
 import 'package:chat_pet/domain/usecases/auth/register_usecase.dart';
 import 'package:chat_pet/presentation/pages/login_page/cubit/login_cubit.dart';
 import 'package:chat_pet/presentation/pages/signup_page/bloc/signup_bloc.dart';
-import 'package:chat_pet/presentation/pages/start_page/start_page.dart';
+import 'package:chat_pet/presentation/pages/start_page/auth_wrapper.dart';
 import 'package:chat_pet/presentation/ui_kit/theme/ui_kit_theme.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:chat_pet/presentation/utils/my_behavior.dart';
@@ -39,7 +39,7 @@ class App extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
           ],
           theme: UiKitThemes().defaultThemeData,
-          home: StartPage(),
+          home: AuthWrapper(),
         ),
       ),
     );

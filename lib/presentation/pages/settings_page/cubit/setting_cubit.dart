@@ -18,7 +18,7 @@ class SettingCubit extends Cubit<SettingState> {
 
   void initialize() {
     emit(SettingLoading());
-    final user = _userCubit.getUser;
+    final user = _userCubit.currentUser;
 
     if (user != null) {
       emit(SettingLoaded(userModel: user));
