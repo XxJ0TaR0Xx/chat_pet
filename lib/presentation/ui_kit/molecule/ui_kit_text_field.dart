@@ -20,6 +20,7 @@ class UiKitTextField extends StatefulWidget {
     this.suffixIcon,
     this.minLines,
     this.maxLength,
+    this.hintText,
   });
 
   final TextEditingController controller;
@@ -37,6 +38,7 @@ class UiKitTextField extends StatefulWidget {
   final int? minLines;
   final int? maxLength;
   final Widget? suffixIcon;
+  final String? hintText;
 
   @override
   State<UiKitTextField> createState() => _UiKitTextFieldState();
@@ -84,6 +86,11 @@ class _UiKitTextFieldState extends State<UiKitTextField> {
         cursorErrorColor: ColorsFoundation.error,
 
         decoration: InputDecoration(
+          hintText: widget.hintText,
+          hintStyle: theme?.circularStdTextTheme.medium.copyWith(
+            color: theme.colorScheme.mutedColor,
+            fontSize: 16.w,
+          ),
           errorText: fieldState.errorText,
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: widget.label,

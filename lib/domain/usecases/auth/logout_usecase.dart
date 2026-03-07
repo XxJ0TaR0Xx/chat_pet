@@ -5,11 +5,11 @@ import 'package:injectable/injectable.dart';
 
 @Injectable()
 class LogoutUseCase {
-  const LogoutUseCase(this.repository);
+  const LogoutUseCase(this._repository);
 
-  final AuthRepository repository;
+  final AuthRepository _repository;
 
   Future<Either<AuthFailure, bool>> call({required String userId}) {
-    return repository.logout(userId);
+    return _repository.logout(userId);
   }
 }

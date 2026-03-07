@@ -1,8 +1,7 @@
 import 'package:chat_pet/presentation/ui_kit/foundation/colors_foundation.dart';
-import 'package:chat_pet/presentation/ui_kit/theme/text_theme.dart';
-import 'package:chat_pet/presentation/ui_kit/theme/ui_kit_color_scheme.dart';
-import 'package:chat_pet/presentation/ui_kit/theme/ui_kit_theme_data.dart';
 import 'package:flutter/material.dart';
+
+import 'theme.dart';
 
 class UiKitThemes {
   late final lightThemeData = defaultThemeData.copyWith(
@@ -32,8 +31,8 @@ class UiKitThemes {
         themeMode: ThemeMode.light,
         colorScheme: const UiKitColorScheme.light(),
         customColor: Colors.red,
-        carosTextTheme: CarosTextTheme(foregroundColor: Colors.black),
-        circularStdTextTheme: CircularStdTextTheme(foregroundColor: Colors.black),
+        carosTextTheme: CarosTextTheme(),
+        circularStdTextTheme: CircularStdTextTheme(),
       ),
     ],
   );
@@ -64,35 +63,37 @@ class UiKitThemes {
       enableFeedback: true,
     ),
     textButtonTheme: TextButtonThemeData(
-        style: ButtonStyle(
-      textStyle: WidgetStateTextStyle.resolveWith((states) {
-        return const TextStyle(
-          fontFamily: 'Unbounded',
-          fontSize: 13,
-          fontWeight: FontWeight.w500,
-          color: Color(0xffffffff),
-          package: 'shuffle_uikit',
-          overflow: TextOverflow.ellipsis,
-        );
-      }),
-      foregroundColor: WidgetStateProperty.resolveWith((states) => Colors.white),
-      overlayColor: WidgetStateProperty.resolveWith((states) => Colors.transparent),
-    )),
+      style: ButtonStyle(
+        textStyle: WidgetStateTextStyle.resolveWith((states) {
+          return const TextStyle(
+            fontFamily: 'Unbounded',
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
+            color: Color(0xffffffff),
+            package: 'shuffle_uikit',
+            overflow: TextOverflow.ellipsis,
+          );
+        }),
+        foregroundColor: WidgetStateProperty.resolveWith((states) => Colors.white),
+        overlayColor: WidgetStateProperty.resolveWith((states) => Colors.transparent),
+      ),
+    ),
     iconButtonTheme: IconButtonThemeData(
-        style: ButtonStyle(
-      textStyle: WidgetStateTextStyle.resolveWith((states) {
-        return const TextStyle(
-          fontFamily: 'Unbounded',
-          fontSize: 13,
-          fontWeight: FontWeight.w500,
-          color: Color(0xffffffff),
-          package: 'shuffle_uikit',
-          overflow: TextOverflow.ellipsis,
-        );
-      }),
-      foregroundColor: WidgetStateProperty.resolveWith((states) => Colors.white),
-      overlayColor: WidgetStateProperty.resolveWith((states) => Colors.transparent),
-    )),
+      style: ButtonStyle(
+        textStyle: WidgetStateTextStyle.resolveWith((states) {
+          return const TextStyle(
+            fontFamily: 'Unbounded',
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
+            color: Color(0xffffffff),
+            package: 'shuffle_uikit',
+            overflow: TextOverflow.ellipsis,
+          );
+        }),
+        foregroundColor: WidgetStateProperty.resolveWith((states) => Colors.white),
+        overlayColor: WidgetStateProperty.resolveWith((states) => Colors.transparent),
+      ),
+    ),
     colorScheme: ColorScheme.fromSeed(
       seedColor: ColorsFoundation.primary,
       onSurface: Colors.white,

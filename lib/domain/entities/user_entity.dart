@@ -9,6 +9,7 @@ class UserEntity extends Equatable {
     this.avatarUrl,
     this.email,
     this.number,
+    this.authProvider,
   });
 
   final String id;
@@ -18,28 +19,38 @@ class UserEntity extends Equatable {
   final String? avatarUrl;
   final String? email;
   final String? number;
+  final String? authProvider;
 
   @override
   List<Object> get props => [
     id,
     name ?? '',
+    lastName ?? '',
     avatarUrl ?? '',
     email ?? '',
     number ?? '',
+    authProvider ?? '',
+    address ?? '',
   ];
 
   UserEntity copyWith({
     String? id,
     String? name,
+    String? lastName,
     String? avatarUrl,
     String? email,
     String? number,
+    String? address,
+    String? authProvider,
   }) {
     return UserEntity(
       id: id ?? this.id,
       name: name ?? this.name,
       avatarUrl: avatarUrl ?? this.avatarUrl,
       email: email ?? this.email,
+      address: address ?? this.address,
+      lastName: lastName ?? this.lastName,
+      authProvider: authProvider ?? this.authProvider,
     );
   }
 

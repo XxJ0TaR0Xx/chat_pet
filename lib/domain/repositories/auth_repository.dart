@@ -5,12 +5,11 @@ import 'package:fpdart/fpdart.dart';
 abstract class AuthRepository {
   Future<Either<AuthFailure, UserEntity>> login(String email, String password);
 
+  Future<Either<AuthFailure, UserEntity>> loginByGoogle();
+
   Future<Either<AuthFailure, bool>> logout(String userId);
 
   Future<Either<AuthFailure, UserEntity>> register(String name, String email, String password);
 
   Future<Either<AuthFailure, UserEntity>> loadUserData(String userId);
-
-  //TODO think
-  Future<void> checkAuthStatus(String userId);
 }

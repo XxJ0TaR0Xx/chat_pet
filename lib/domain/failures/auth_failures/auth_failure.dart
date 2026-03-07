@@ -1,6 +1,6 @@
 import 'package:chat_pet/domain/failures/failure.dart';
 
-class AuthFailure extends Failure {
+abstract class AuthFailure extends Failure {
   AuthFailure(super.message);
 }
 
@@ -44,4 +44,20 @@ class NetworkFailure extends AuthFailure {
 
 class OperationNotAllowedFailure extends AuthFailure {
   OperationNotAllowedFailure() : super('Operation not allowed');
+}
+
+/// Google auth
+class GoogleFailure extends AuthFailure {
+  GoogleFailure(this.message) : super(message);
+
+  @override
+  final String message;
+}
+
+class NotFoundUserFailure extends AuthFailure {
+  NotFoundUserFailure() : super('Not found user in google');
+}
+
+class NotFoundUserInFirestore extends AuthFailure {
+  NotFoundUserInFirestore() : super('Данного аккаунта нет в базе пользователей, пожалуйста для начала создайте его');
 }

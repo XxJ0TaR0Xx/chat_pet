@@ -23,7 +23,7 @@ class MessagesPage extends StatelessWidget {
               SizedBox(height: SpacingFoundation.verticalSpacing30),
               SizedBox(
                 height: 72.h,
-                child: HistoryRow(context: context),
+                child: HistoryRow(),
               ),
             ],
           ),

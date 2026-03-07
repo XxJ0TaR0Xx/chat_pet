@@ -1,7 +1,6 @@
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 
-//доделать логин, сделать сохранения токена так ка мы не разлогинились как бы да
 class CustomSnackBar {
   const CustomSnackBar(
     this.context, {
@@ -16,19 +15,23 @@ class CustomSnackBar {
   }
 
   void showErrorMessage() {
+    ScaffoldMessenger.of(context).clearSnackBars();
+
     ScaffoldMessenger.of(context).showSnackBar(
       _getSnackBar(context.uiKitTheme?.colorScheme.error),
     );
   }
 
   void showDevMessage() {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
-      _getSnackBar(context.uiKitTheme?.colorScheme.uiPrimary4),
+      _getSnackBar(context.uiKitTheme?.colorScheme.uiPrimary),
     );
   }
 
   SnackBar _getSnackBar(Color? color) => SnackBar(
     behavior: SnackBarBehavior.floating,
+
     duration: const Duration(seconds: 5),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(16),

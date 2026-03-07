@@ -1,27 +1,27 @@
 import 'package:avatar_plus/avatar_plus.dart';
-import 'package:chat_pet/presentation/pages/messages_page/widget/history_row.dart';
+import 'package:chat_pet/presentation/ui_kit/extension/time_extension.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class MessageRowItem extends StatefulWidget {
   const MessageRowItem({
-    super.key,
     required this.name,
-    this.secondName,
-    this.avatarUrl,
     required this.lastMessage,
     required this.date,
     required this.uncheckMessage,
+    this.secondName,
+    this.avatarUrl,
     this.padding,
+    super.key,
   });
 
   final String name;
-  final String? secondName;
-  final String? avatarUrl;
   final String lastMessage;
   final DateTime date;
   final int uncheckMessage;
+  final String? secondName;
+  final String? avatarUrl;
   final EdgeInsets? padding;
 
   @override
@@ -73,7 +73,7 @@ class _MessageRowItemState extends State<MessageRowItem> {
                       shape: BoxShape.circle,
                     ),
                     child: SvgPicture.string(
-                      AvatarPlusGen.instance.generate("asd"),
+                      AvatarPlusGen.instance.generate('332211'),
                     ),
                   ),
                 SpacingFoundation.horizontalSpace12,
@@ -108,7 +108,7 @@ class _MessageRowItemState extends State<MessageRowItem> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        timeAgo(widget.date),
+                        widget.date.timeAgo(),
                         style: circularStyle,
                       ),
                       SpacingFoundation.verticalSpace8,
@@ -127,7 +127,7 @@ class _MessageRowItemState extends State<MessageRowItem> {
                         ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),

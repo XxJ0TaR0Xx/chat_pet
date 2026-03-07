@@ -10,21 +10,37 @@ class UserModel extends UserEntity {
     super.address,
     super.lastName,
     super.number,
+    super.authProvider,
   });
+
+  factory UserModel.fromEntity(UserEntity userEntity) => UserModel(
+    id: userEntity.id,
+    address: userEntity.address,
+    authProvider: userEntity.authProvider,
+    avatarUrl: userEntity.avatarUrl,
+    email: userEntity.email,
+    lastName: userEntity.lastName,
+    name: userEntity.name,
+    number: userEntity.number,
+  );
 
   factory UserModel.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
   ) {
-    final data = snapshot.data()?['user'];
+    final data = snapshot.data();
+
     return UserModel(
       id: data?['id']?.toString() ?? '',
       name: data?['name'],
       lastName: data?['lastName'],
       address: data?['address'],
-      avatarUrl: data?['avatarUrl'],
+      avatarUrl:
+          data?['avatarUrl'] ??
+          'https://img.freepik.com/premium-photo/unknown-character-incognito-white-background_1106493-276595.jpg?semt=ais_hybrid&w=740&q=80',
       email: data?['email'],
       number: data?['number'],
+      authProvider: data?['authProvider'],
     );
   }
 
@@ -37,6 +53,7 @@ class UserModel extends UserEntity {
       if (avatarUrl != null) 'avatarUrl': avatarUrl,
       if (email != null) 'email': email,
       if (number != null) 'number': number,
+      if (authProvider != null) 'authProvider': authProvider,
     };
   }
 
@@ -49,6 +66,7 @@ class UserModel extends UserEntity {
     String? avatarUrl,
     String? email,
     String? number,
+    String? authProvider,
   }) {
     return UserModel(
       id: id ?? this.id,
@@ -58,6 +76,7 @@ class UserModel extends UserEntity {
       avatarUrl: avatarUrl ?? this.avatarUrl,
       email: email ?? this.email,
       number: number ?? this.number,
+      authProvider: authProvider ?? this.authProvider,
     );
   }
 }

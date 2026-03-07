@@ -1,6 +1,11 @@
+import 'dart:async';
+
 import 'package:chat_pet/presentation/pages/common_widgets/bottom_sheet_widget.dart';
 import 'package:chat_pet/presentation/pages/profile_page/profile_page.dart';
 import 'package:chat_pet/presentation/pages/settings_page/cubit/setting_cubit.dart';
+import 'package:chat_pet/presentation/pages/start_page/start_page.dart';
+import 'package:chat_pet/presentation/ui_kit/molecule/dialogs/exit_dialog.dart';
+import 'package:chat_pet/presentation/ui_kit/molecule/snack_bar/custom_snack_bar.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,14 +20,28 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   late final SettingCubit cubit;
 
-  @override
-  void initState() {
-    cubit = SettingCubit();
-    super.initState();
-  }
-
   Future<void> updatePhoto() async {
     await cubit.updateUserImage();
+  }
+
+  Future<void> _onSettingsButtonTap(AppIcons icon) async {
+    switch (icon) {
+      case AppIcons.keys:
+        unawaited(context.push(ProfilePage()));
+      case AppIcons.arrowBack:
+        await exitDialog(
+          context,
+          onNoTap: () => context.pop(),
+          onYesTap: () async {
+            final canExist = await cubit.logout(context);
+            if (canExist && context.mounted) {
+              unawaited(context.pushAndRemoveUntil(const StartPage()));
+            }
+          },
+        );
+      default:
+        CustomSnackBar(context, text: S.of(context).SomethingWentWrong).showDevMessage();
+    }
   }
 
   @override
@@ -30,15 +49,16 @@ class _SettingsPageState extends State<SettingsPage> {
     final theme = context.uiKitTheme;
 
     return SafeArea(
-      child: BlocProvider.value(
-        value: cubit,
+      child: BlocProvider(
+        create: (context) {
+          return cubit = context.read<SettingCubit>();
+        },
         child: CustomScrollView(
           slivers: [
             UiKitAppBar(
               leadingColor: theme?.colorScheme.surfaceBase,
-              // showLeading: false,
               child: Text(
-                'Setting',
+                S.of(context).Settings,
                 style: theme?.carosTextTheme.medium.copyWith(
                   fontSize: 20.w,
                   color: theme.colorScheme.surfaceBase,
@@ -50,8 +70,9 @@ class _SettingsPageState extends State<SettingsPage> {
               hasScrollBody: false,
               child: BlocBuilder<SettingCubit, SettingState>(
                 builder: (context, state) {
-                  if (state is SettingLoading) {
-                    return Center(
+                  state.when(
+                    initial: SizedBox.shrink,
+                    loading: () => Center(
                       child: SizedBox(
                         height: 24.h,
                         width: 24.h,
@@ -59,31 +80,26 @@ class _SettingsPageState extends State<SettingsPage> {
                           color: context.uiKitTheme?.colorScheme.inverseSurface,
                         ),
                       ),
-                    );
-                  }
-                  if (state is SettingError) {
-                    return Column(
+                    ),
+                    error: (errorMessage) => Column(
                       children: [
                         Spacer(),
                         Text(
-                          state.errorMessage,
+                          errorMessage,
                           style: context.uiKitTheme?.carosTextTheme.bold.copyWith(color: Colors.white),
                           textAlign: TextAlign.center,
                         ).paddingHorizontal(SpacingFoundation.horizontalSpacing16),
                         SpacingFoundation.verticalSpace16,
                         UiKitButton.primary(
-                          text: 'Повторить',
+                          text: S.of(context).Repeat,
                           onTap: () {
                             cubit.initialize();
                           },
                         ),
                         Spacer(),
                       ],
-                    );
-                  }
-
-                  if (state is SettingLoaded) {
-                    return BottomSheetWidget(
+                    ),
+                    loaded: (userModel) => BottomSheetWidget(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SpacingFoundation.verticalSpace24,
@@ -93,7 +109,9 @@ class _SettingsPageState extends State<SettingsPage> {
                               onTap: updatePhoto,
                               child: CircleAvatar(
                                 radius: 30.w,
-                                backgroundImage: AssetImage('assets/images/orig.png'),
+                                backgroundImage: userModel?.avatarUrl != null
+                                    ? NetworkImage(userModel!.avatarUrl!)
+                                    : AssetImage('assets/images/orig.png'),
                               ),
                             ),
                             SpacingFoundation.horizontalSpace24,
@@ -102,12 +120,13 @@ class _SettingsPageState extends State<SettingsPage> {
                               crossAxisAlignment: .start,
                               children: [
                                 Text(
-                                  '${state.userModel?.name} ${state.userModel?.lastName}',
+                                  '${userModel?.name ?? S.of(context).NotFounded} ${userModel?.lastName ?? ''}',
                                   style: theme?.carosTextTheme.bold.copyWith(
                                     fontSize: 20.w,
                                   ),
                                 ),
                                 SpacingFoundation.verticalSpace6,
+                                //TODO add from server
                                 Text(
                                   'Never give up 💪',
                                   style: theme?.circularStdTextTheme.book.copyWith(
@@ -130,42 +149,44 @@ class _SettingsPageState extends State<SettingsPage> {
                         SpacingFoundation.verticalSpace30,
                         ...[
                           SettingsButtonUiModel(
-                            title: 'Account',
-                            description: 'Privacy, security, change number',
+                            title: S.of(context).Account,
+                            description: S.of(context).PrivacySecurityChange,
                             icon: .keys,
                           ),
                           SettingsButtonUiModel(
-                            title: 'Chat',
-                            description: 'Chat history,theme,wallpapers',
+                            title: S.of(context).Chat,
+                            description: S.of(context).ChatHistoryThemeWallpapers,
                             icon: .message,
                           ),
                           SettingsButtonUiModel(
-                            title: 'Notifications',
-                            description: 'Notifications',
+                            title: S.of(context).Notifications,
                             icon: .notifications,
                           ),
                           SettingsButtonUiModel(
-                            title: 'Help',
-                            description: 'Help center,contact us, privacy policy',
+                            title: S.of(context).Help,
+                            description: S.of(context).HelpCenter,
                             icon: .help,
                           ),
                           SettingsButtonUiModel(
-                            title: 'Storage and data',
-                            description: 'Network usage, stogare usage',
+                            title: S.of(context).StorageAndData,
+                            description: S.of(context).NetworkUsage,
                             icon: .data,
                           ),
                           SettingsButtonUiModel(
-                            title: 'Invite a friend',
+                            title: S.of(context).InviteAFriend,
                             icon: .users,
+                          ),
+                          SettingsButtonUiModel(
+                            title: S.of(context).LogOutOfYouAccount,
+                            icon: .arrowBack,
                           ),
                         ].map(
                           (e) {
+                            final isExist = e.icon == AppIcons.arrowBack;
+                            final color = isExist ? ColorsFoundation.red : ColorsFoundation.backNeutral1;
+
                             return GestureDetector(
-                              onTap: () {
-                                if (e.icon == AppIcons.keys) {
-                                  context.push(ProfilePage());
-                                }
-                              },
+                              onTap: () async => _onSettingsButtonTap(e.icon),
                               child:
                                   Row(
                                     children: [
@@ -173,12 +194,12 @@ class _SettingsPageState extends State<SettingsPage> {
                                         width: 44.w,
                                         height: 44.w,
                                         decoration: BoxDecoration(
-                                          color: ColorsFoundation.backNeutral1.withValues(alpha: 0.09),
+                                          color: color.withValues(alpha: 0.09),
                                           shape: .circle,
                                         ),
                                         child: ChatPetIcon.icon(
                                           e.icon,
-                                          color: ColorsFoundation.backNeutral1,
+                                          color: color,
                                         ).paddingAll(EdgeInsetsFoundation.all8),
                                       ),
                                       SpacingFoundation.horizontalSpace12,
@@ -188,14 +209,16 @@ class _SettingsPageState extends State<SettingsPage> {
                                         children: [
                                           Text(
                                             e.title,
-                                            style: theme?.carosTextTheme.bold,
+                                            style: theme?.carosTextTheme.bold.copyWith(
+                                              color: isExist ? ColorsFoundation.red : null,
+                                            ),
                                           ),
                                           if (e.description != null && e.description!.isNotEmpty) ...[
                                             SpacingFoundation.verticalSpace6,
                                             Text(
                                               e.description!,
                                               style: theme?.circularStdTextTheme.book.copyWith(
-                                                color: ColorsFoundation.backNeutral1,
+                                                color: color,
                                                 fontSize: 12.w,
                                               ),
                                             ),
@@ -212,8 +235,8 @@ class _SettingsPageState extends State<SettingsPage> {
                           },
                         ),
                       ],
-                    );
-                  }
+                    ),
+                  );
 
                   return SizedBox();
                 },

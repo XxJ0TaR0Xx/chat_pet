@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:chat_pet/core/injectable/injectable.dart';
 import 'package:chat_pet/presentation/pages/home_page/home_page.dart';
 import 'package:chat_pet/presentation/pages/login_page/cubit/login_cubit.dart';
 import 'package:chat_pet/presentation/pages/start_page/widgets/or_row_widget.dart';
@@ -18,8 +17,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final GlobalKey<FormState> key = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController(text: 'danila20032302@yandex.ru');
-  final TextEditingController _passwordController = TextEditingController(text: '11111111');
+  final TextEditingController _passwordController = TextEditingController(text: '12345678');
 
   bool obscureTextPassword = true;
 
@@ -37,11 +37,12 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> key = GlobalKey<FormState>();
+    final cubit = context.read<LoginCubit>();
+
     final theme = context.uiKitTheme;
 
     return BlocProvider(
-      create: (context) => getIt<LoginCubit>(),
+      create: (context) => cubit,
       child: Scaffold(
         body: SafeArea(
           child: CustomScrollView(
@@ -58,13 +59,13 @@ class _LoginPageState extends State<LoginPage> {
                 hasScrollBody: false,
                 child: BlocListener<LoginCubit, LoginState>(
                   listener: (context, state) {
-                    if (state is LoginError) {
+                    if (state is LoginStateError) {
                       CustomSnackBar(
                         context,
                         text: 'Ошибка: ${state.errorMessage}',
                       ).showErrorMessage();
                     }
-                    if (state is LoginLoaded) {
+                    if (state is LoginStateLoaded) {
                       log('Успешный логин - переходим на главную страницу');
                       context.pushAndRemoveUntil(HomePage());
                     }
@@ -120,7 +121,14 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         SpacingFoundation.verticalSpace30,
-                        SocialLinksWidget(borderColor: ColorsFoundation.darkNeutral),
+                        SocialLinksWidget(
+                          borderColor: ColorsFoundation.darkNeutral,
+                          onSocialLinkTap: (socialLinkIcon) {
+                            if (socialLinkIcon == AppIcons.google) {
+                              cubit.loginByGoogle();
+                            }
+                          },
+                        ),
                         SpacingFoundation.verticalSpace30,
                         OrRowWidget(
                           textColor: ColorsFoundation.backNeutral1,
@@ -170,10 +178,10 @@ class _LoginPageState extends State<LoginPage> {
                                 builder: (context, state) {
                                   return UiKitButton.primary(
                                     text: S.of(context).LogIn,
-                                    isLoading: state is LoginLoading,
+                                    isLoading: state is LoginStateLoading,
                                     onTap: () {
                                       if (key.currentState?.validate() ?? false) {
-                                        context.read<LoginCubit>().login(
+                                        cubit.login(
                                           _emailController.text.trim(),
                                           _passwordController.text.trim(),
                                         );

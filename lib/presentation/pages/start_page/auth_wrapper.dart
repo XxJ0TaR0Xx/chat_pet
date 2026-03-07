@@ -5,6 +5,7 @@ import 'package:chat_pet/domain/repositories/auth_repository.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
 import 'package:chat_pet/presentation/pages/home_page/home_page.dart';
 import 'package:chat_pet/presentation/pages/start_page/start_page.dart';
+import 'package:chat_pet/presentation/ui_kit/molecule/snack_bar/custom_snack_bar.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -34,11 +35,7 @@ class _AuthWrapperContent extends StatelessWidget {
 
       result.fold(
         (failure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Не удалось загрузить данные'),
-            ),
-          );
+          CustomSnackBar(context, text: failure.message).showErrorMessage();
         },
         (user) {},
       );
@@ -51,6 +48,7 @@ class _AuthWrapperContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, userState) {
+        //TODO remove
         return StreamBuilder<User?>(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, authSnapshot) {
@@ -67,21 +65,12 @@ class _AuthWrapperContent extends StatelessWidget {
               );
             }
 
-            if (authSnapshot.hasData && userState is! UserLoaded) {
+            if (authSnapshot.hasData && userState is! UserStateLoaded) {
               log('2');
 
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 _loadUserData(context, authSnapshot.data!.uid);
               });
-              return Center(
-                child: SizedBox(
-                  height: 24.h,
-                  width: 24.h,
-                  child: CircularProgressIndicator(
-                    color: context.uiKitTheme?.colorScheme.inverseSurface,
-                  ),
-                ),
-              );
             }
 
             if (cubit.currentUser != null) {
