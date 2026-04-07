@@ -1,10 +1,13 @@
-import 'package:chat_pet/presentation/pages/messages_page/widget/history_row.dart';
-import 'package:chat_pet/presentation/pages/messages_page/widget/message_row_item.dart';
+import 'dart:developer';
+
+import 'package:chat_pet/presentation/pages/chats/widget/chat_row_item.dart';
+import 'package:chat_pet/presentation/pages/chats/widget/history_row.dart';
+import 'package:chat_pet/presentation/pages/message_page/message_page.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 
-class MessagesPage extends StatelessWidget {
-  const MessagesPage({super.key});
+class AllChatsPage extends StatelessWidget {
+  const AllChatsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -57,18 +60,24 @@ class MessagesPage extends StatelessWidget {
                 itemCount: 12,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
-                  return MessageRowItem(
-                    name: 'Test name',
-                    secondName: 'Second name $index',
-                    date: DateTime.now(),
-                    lastMessage: 'Test last message',
-                    uncheckMessage: index,
-                    avatarUrl: '',
-                    padding: EdgeInsets.only(
-                      left: SpacingFoundation.horizontalSpacing24,
-                      right: SpacingFoundation.horizontalSpacing24,
-                      bottom: SpacingFoundation.verticalSpacing12,
-                      top: SpacingFoundation.verticalSpacing12,
+                  return InkWell(
+                    onTap: () {
+                      log('onTap');
+                      context.push(MessagePage());
+                    },
+                    child: ChatRowItem(
+                      name: 'Test name',
+                      secondName: 'Second name $index',
+                      date: DateTime.now(),
+                      lastMessage: 'Test last message',
+                      uncheckMessage: index,
+                      avatarUrl: '',
+                      padding: EdgeInsets.only(
+                        left: SpacingFoundation.horizontalSpacing24,
+                        right: SpacingFoundation.horizontalSpacing24,
+                        bottom: SpacingFoundation.verticalSpacing12,
+                        top: SpacingFoundation.verticalSpacing12,
+                      ),
                     ),
                   );
                 },

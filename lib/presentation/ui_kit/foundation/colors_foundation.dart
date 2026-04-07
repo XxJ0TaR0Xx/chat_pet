@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ColorsFoundation {
+  ColorsFoundation._();
+
   static const Color surfaceBase = Color(0xFFFFFFFF);
   static const Color lightSurface = Color(0xFFF3F6F6);
   static const Color lightSurface2 = Color(0xFFF2F7FB);
@@ -30,6 +32,8 @@ class ColorsFoundation {
   static const Color transparent = Colors.transparent;
   static const Color purpleLinearColor1 = Color(0xFF43116A);
   static const Color purpleLinearColor2 = Color(0xFF0A1832);
-
-  ColorsFoundation._();
+  static const Color green = Color(0xFF2BEF83);
+  static const Color anotherMessageColor = Color(0xFF000E08);
+  static const Color mutedBorderColor = Color(0xFFEEFAF8);
+  static const Color fillMessageTextField = Color(0xFF797C7B);
 }

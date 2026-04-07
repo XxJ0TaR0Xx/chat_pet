@@ -1,9 +1,10 @@
 import 'dart:async';
 
-import 'package:chat_pet/presentation/pages/common_widgets/bottom_sheet_widget.dart';
-import 'package:chat_pet/presentation/pages/profile_page/profile_page.dart';
-import 'package:chat_pet/presentation/pages/settings_page/cubit/setting_cubit.dart';
-import 'package:chat_pet/presentation/pages/start_page/start_page.dart';
+import 'package:chat_pet/presentation/ui_kit/molecule/common_widgets/bottom_sheet_widget.dart';
+import 'package:chat_pet/presentation/pages/profile/profile_page.dart';
+import 'package:chat_pet/presentation/pages/settings/cubit/setting_cubit.dart';
+import 'package:chat_pet/presentation/pages/start/start_page.dart';
+import 'package:chat_pet/presentation/ui_kit/molecule/common_widgets/loading_widget.dart';
 import 'package:chat_pet/presentation/ui_kit/molecule/dialogs/exit_dialog.dart';
 import 'package:chat_pet/presentation/ui_kit/molecule/snack_bar/custom_snack_bar.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
@@ -70,17 +71,9 @@ class _SettingsPageState extends State<SettingsPage> {
               hasScrollBody: false,
               child: BlocBuilder<SettingCubit, SettingState>(
                 builder: (context, state) {
-                  state.when(
+                  return state.when(
                     initial: SizedBox.shrink,
-                    loading: () => Center(
-                      child: SizedBox(
-                        height: 24.h,
-                        width: 24.h,
-                        child: CircularProgressIndicator(
-                          color: context.uiKitTheme?.colorScheme.inverseSurface,
-                        ),
-                      ),
-                    ),
+                    loading: LoadingWidget.new,
                     error: (errorMessage) => Column(
                       children: [
                         Spacer(),
@@ -237,8 +230,6 @@ class _SettingsPageState extends State<SettingsPage> {
                       ],
                     ),
                   );
-
-                  return SizedBox();
                 },
               ),
             ),

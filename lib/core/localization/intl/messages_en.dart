@@ -25,6 +25,8 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "Account": MessageLookupByLibrary.simpleMessage("Account"),
+    "ActiveNotNow": MessageLookupByLibrary.simpleMessage("Is\'t active now"),
+    "ActiveNow": MessageLookupByLibrary.simpleMessage("Active now"),
     "AfterYouLogOut": MessageLookupByLibrary.simpleMessage(
       "After you log out, you will need to log in to your account again for the app to work properly",
     ),

@@ -19,6 +19,7 @@ class UiKitColorScheme extends ColorScheme {
     this.inversePrimary = ColorsFoundation.lightSurface,
     this.transparent = ColorsFoundation.transparent,
     super.surface = ColorsFoundation.backHelloPage,
+    this.green = ColorsFoundation.green,
   }) : super.dark(primary: uiPrimary, inversePrimary: inversePrimary);
 
   const UiKitColorScheme.light({
@@ -37,6 +38,7 @@ class UiKitColorScheme extends ColorScheme {
     this.inversePrimary = ColorsFoundation.backHelloPage,
     this.transparent = ColorsFoundation.transparent,
     super.surface = ColorsFoundation.lightSurface,
+    this.green = ColorsFoundation.green,
   }) : super.light(primary: uiPrimary, inversePrimary: inversePrimary);
 
   final Color surfaceBase;
@@ -54,6 +56,7 @@ class UiKitColorScheme extends ColorScheme {
   final Color textColor;
   final Color mutedColor;
   final Color transparent;
+  final Color green;
 
   @override
   final Color inversePrimary;

@@ -1,5 +1,5 @@
-import 'package:chat_pet/presentation/pages/home_page/home_page.dart';
-import 'package:chat_pet/presentation/pages/signup_page/cubit/signup_cubit.dart';
+import 'package:chat_pet/presentation/pages/home/home_page.dart';
+import 'package:chat_pet/presentation/pages/signup/cubit/signup_cubit.dart';
 import 'package:chat_pet/presentation/ui_kit/molecule/snack_bar/custom_snack_bar.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';

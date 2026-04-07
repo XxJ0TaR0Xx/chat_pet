@@ -47,5 +47,7 @@
   "Cancel": "Отменить",
   "Save": "Сохранить",
   "EnterNewValue": "Введите новое значение",
-  "SelectYourAddress": "Выберите ваш адресс"
+  "SelectYourAddress": "Выберите ваш адресс",
+  "ActiveNow": "В сети",
+  "ActiveNotNow": "Не в сети"
 }

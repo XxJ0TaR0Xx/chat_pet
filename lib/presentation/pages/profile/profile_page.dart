@@ -1,6 +1,6 @@
-import 'package:chat_pet/presentation/pages/common_widgets/bottom_sheet_widget.dart';
-import 'package:chat_pet/presentation/pages/map_page/map_page.dart';
-import 'package:chat_pet/presentation/pages/profile_page/cubit/profile_cubit.dart';
+import 'package:chat_pet/presentation/ui_kit/molecule/common_widgets/bottom_sheet_widget.dart';
+import 'package:chat_pet/presentation/pages/map/map_page.dart';
+import 'package:chat_pet/presentation/pages/profile/cubit/profile_cubit.dart';
 import 'package:chat_pet/presentation/ui_kit/molecule/dialogs/editing_dialog.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';

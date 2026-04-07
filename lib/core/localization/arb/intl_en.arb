@@ -47,6 +47,8 @@
   "Cancel": "Cancel",
   "Save": "Save",
   "EnterNewValue": "Enter new value",
-  "SelectYourAddress": "Select your address"
+  "SelectYourAddress": "Select your address",
+  "ActiveNow": "Active now",
+  "ActiveNotNow": "Is't active now"
 
 }

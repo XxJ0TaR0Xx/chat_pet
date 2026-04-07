@@ -25,6 +25,8 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "Account": MessageLookupByLibrary.simpleMessage("Аккаунт"),
+    "ActiveNotNow": MessageLookupByLibrary.simpleMessage("Не в сети"),
+    "ActiveNow": MessageLookupByLibrary.simpleMessage("В сети"),
     "AfterYouLogOut": MessageLookupByLibrary.simpleMessage(
       "После того как вы выйдите, необходимо будет снова войти в аккаунт для корректной работы приложения",
     ),

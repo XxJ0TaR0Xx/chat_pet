@@ -1,9 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:chat_pet/presentation/pages/login_page/login_page.dart';
-import 'package:chat_pet/presentation/pages/signup_page/signup_page.dart';
-import 'package:chat_pet/presentation/pages/start_page/widgets/gradient_ellipse_painter.dart';
-import 'package:chat_pet/presentation/pages/start_page/widgets/or_row_widget.dart';
-import 'package:chat_pet/presentation/pages/start_page/widgets/social_links_widget.dart';
+import 'package:chat_pet/presentation/pages/login/login_page.dart';
+import 'package:chat_pet/presentation/pages/signup/signup_page.dart';
+import 'package:chat_pet/presentation/pages/start/widgets/gradient_ellipse_painter.dart';
+import 'package:chat_pet/presentation/pages/start/widgets/or_row_widget.dart';
+import 'package:chat_pet/presentation/pages/start/widgets/social_links_widget.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 

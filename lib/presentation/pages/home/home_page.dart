@@ -1,7 +1,7 @@
-import 'package:chat_pet/presentation/pages/home_page/cubit/navigation_cubit.dart';
-import 'package:chat_pet/presentation/pages/home_page/widgets/bottom_navigation_icon.dart';
-import 'package:chat_pet/presentation/pages/messages_page/messages_page.dart';
-import 'package:chat_pet/presentation/pages/settings_page/settings_page.dart';
+import 'package:chat_pet/presentation/pages/home/cubit/navigation_cubit.dart';
+import 'package:chat_pet/presentation/pages/home/widgets/bottom_navigation_icon.dart';
+import 'package:chat_pet/presentation/pages/chats/all_chats_page.dart';
+import 'package:chat_pet/presentation/pages/settings/settings_page.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
               ),
         ),
         body: switch (index) {
-          0 => MessagesPage(),
+          0 => AllChatsPage(),
           1 => _CallsPagePlaceholder(),
           2 => _ContactsPagePlaceholder(),
           3 => SettingsPage(),

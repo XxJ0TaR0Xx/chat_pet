@@ -423,6 +423,21 @@ class S {
       args: [],
     );
   }
+
+  /// `Active now`
+  String get ActiveNow {
+    return Intl.message('Active now', name: 'ActiveNow', desc: '', args: []);
+  }
+
+  /// `Is't active now`
+  String get ActiveNotNow {
+    return Intl.message(
+      'Is\'t active now',
+      name: 'ActiveNotNow',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

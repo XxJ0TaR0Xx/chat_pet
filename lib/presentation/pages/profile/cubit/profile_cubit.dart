@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:chat_pet/data/models/user.dart';
 import 'package:chat_pet/domain/usecases/user/update_user_usecase.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
-import 'package:chat_pet/presentation/pages/profile_page/profile_page.dart';
+import 'package:chat_pet/presentation/pages/profile/profile_page.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'profile_state.dart';

@@ -8,13 +8,17 @@ class ChatPetIcon {
     AppIcons icon, {
     double size = 24,
     Color? color,
+    VoidCallback? onTap,
   }) {
-    return SizedBox(
-      width: size,
-      height: size,
-      child: SvgPicture.string(
-        _iconsMap[icon]!,
-        colorFilter: ColorFilter.mode(color ?? Colors.black, BlendMode.srcIn),
+    return GestureDetector(
+      onTap: onTap,
+      child: SizedBox(
+        width: size,
+        height: size,
+        child: SvgPicture.string(
+          _iconsMap[icon]!,
+          colorFilter: ColorFilter.mode(color ?? Colors.black, BlendMode.srcIn),
+        ),
       ),
     );
   }

@@ -1,11 +1,10 @@
-import 'package:avatar_plus/avatar_plus.dart';
 import 'package:chat_pet/presentation/ui_kit/extension/time_extension.dart';
+import 'package:chat_pet/presentation/ui_kit/molecule/common_widgets/avatar_widget.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
-class MessageRowItem extends StatefulWidget {
-  const MessageRowItem({
+class ChatRowItem extends StatefulWidget {
+  const ChatRowItem({
     required this.name,
     required this.lastMessage,
     required this.date,
@@ -25,10 +24,10 @@ class MessageRowItem extends StatefulWidget {
   final EdgeInsets? padding;
 
   @override
-  State<MessageRowItem> createState() => _MessageRowItemState();
+  State<ChatRowItem> createState() => _ChatRowItemState();
 }
 
-class _MessageRowItemState extends State<MessageRowItem> {
+class _ChatRowItemState extends State<ChatRowItem> {
   bool isPressed = false;
 
   @override
@@ -66,15 +65,8 @@ class _MessageRowItemState extends State<MessageRowItem> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (widget.avatarUrl != null)
-                  Container(
-                    width: 52.w,
-                    height: 52.w,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: SvgPicture.string(
-                      AvatarPlusGen.instance.generate('332211'),
-                    ),
+                  AvatarWidget(
+                    codeForGen: widget.date.millisecondsSinceEpoch.toString(),
                   ),
                 SpacingFoundation.horizontalSpace12,
                 Expanded(
