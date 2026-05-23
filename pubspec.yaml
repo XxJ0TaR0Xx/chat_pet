@@ -28,12 +28,13 @@ dependencies:
 
   #firebase
   firebase_core: ^4.2.0
-  firebase_auth: ^6.1.1
+  firebase_auth: ^6.4.0
   cloud_firestore: ^6.1.1
+  firebase_app_check: ^0.4.3
 
   #env
   flutter_dotenv: ^6.0.0
-  equatable: ^2.0.7
+  equatable: ^2.0.8
   fpdart: ^1.2.0
 
   #DI
@@ -52,8 +53,20 @@ dependencies:
   flutter_map: ^8.2.2
   latlong2: ^0.9.1
   geolocator: ^14.0.2
+
+  # Logger
+  talker_dio_logger: ^5.1.17
+  talker_bloc_logger: ^5.1.17
+  talker_logger: ^5.1.17
+
+  # Server Request 
+  dio: ^5.9.2
+  flutter_secure_storage: ^10.0.0
+  mask_text_input_formatter: ^2.9.0
+
   freezed_annotation: ^3.1.0
-  
+  json_annotation: ^4.11.0
+
 
 
 
@@ -62,12 +75,13 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
-  flutter_gen_runner: ^5.9.0
   build_runner: ^2.4.9
-  bloc_lint: ^0.3.1
+  bloc_lint: ^0.4.1
   intl_utils: ^2.8.12
   injectable_generator: ^2.9.0
   freezed: ^3.2.5
+  json_serializable: ^6.13.2
+
 
 flutter:
   assets:
@@ -89,20 +103,6 @@ flutter:
   generate: true
 
 
-flutter_gen:
-  output: lib/tokens
-  line_length: 120
-  integrations:
-    flutter_svg: true
-    lottie: true
-  assets:
-    enabled: true
-#    fonts:
-#      enabled: false
-    outputs:
-      style: dot-delimiter
-      package_parameter_enabled: true
-#      synthetic-package: false
 
 # extensions
 flutter_intl:

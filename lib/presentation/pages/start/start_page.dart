@@ -62,8 +62,6 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
               ),
             ),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
               children: [
                 SpacingFoundation.verticalSpace16,
                 Row(
@@ -102,22 +100,10 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                     height: 1.5,
                     color: ColorsFoundation.mutedText,
                     shadows: [
-                      Shadow(
-                        offset: Offset(-1, -1),
-                        color: Colors.black,
-                      ),
-                      Shadow(
-                        offset: Offset(1, -1),
-                        color: Colors.black,
-                      ),
-                      Shadow(
-                        offset: Offset(1, 1),
-                        color: Colors.black,
-                      ),
-                      Shadow(
-                        offset: Offset(-1, 1),
-                        color: Colors.black,
-                      ),
+                      Shadow(offset: Offset(-1, -1)),
+                      Shadow(offset: Offset(1, -1)),
+                      Shadow(offset: Offset(1, 1)),
+                      Shadow(offset: Offset(-1, 1)),
                     ],
                   ),
                 ),

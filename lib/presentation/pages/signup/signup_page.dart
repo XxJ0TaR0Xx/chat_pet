@@ -1,3 +1,4 @@
+import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
 import 'package:chat_pet/presentation/pages/home/home_page.dart';
 import 'package:chat_pet/presentation/pages/signup/cubit/signup_cubit.dart';
 import 'package:chat_pet/presentation/ui_kit/molecule/snack_bar/custom_snack_bar.dart';
@@ -19,10 +20,10 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  final nameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
+  final nameController = TextEditingController(text: 'danila');
+  final emailController = TextEditingController(text: 'danila20032302@yadnex.ru');
+  final passwordController = TextEditingController(text: '20032302');
+  final confirmPasswordController = TextEditingController(text: '20032302');
 
   final GlobalKey<FormState> key = GlobalKey<FormState>();
 
@@ -70,8 +71,8 @@ class _SignupPageState extends State<SignupPage> {
               hasScrollBody: false,
               child: BlocProvider.value(
                 value: cubit,
-                child: BlocBuilder<SignupCubit, SignupState>(
-                  builder: (context, state) {
+                child: BlocConsumer<SignupCubit, SignupState>(
+                  listener: (context, state) {
                     if (state is SignupStateError) {
                       WidgetsBinding.instance.addPostFrameCallback(
                         (_) {
@@ -81,9 +82,11 @@ class _SignupPageState extends State<SignupPage> {
                     }
 
                     if (state is SignupStateLoaded) {
+                      context.read<UserCubit>().setUser(state.user);
                       context.pushAndRemoveUntil(HomePage());
                     }
-
+                  },
+                  builder: (context, state) {
                     return Form(
                       key: key,
                       autovalidateMode: AutovalidateMode.onUserInteraction,

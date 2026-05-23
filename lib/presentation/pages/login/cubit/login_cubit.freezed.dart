@@ -128,12 +128,12 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function()?  loaded,TResult Function( String errorMessage)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( UserModel user)?  loaded,TResult Function( String errorMessage)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case LoginStateInitial() when initial != null:
 return initial();case LoginStateLoading() when loading != null:
 return loading();case LoginStateLoaded() when loaded != null:
-return loaded();case LoginStateError() when error != null:
+return loaded(_that.user);case LoginStateError() when error != null:
 return error(_that.errorMessage);case _:
   return orElse();
 
@@ -152,12 +152,12 @@ return error(_that.errorMessage);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function()  loaded,required TResult Function( String errorMessage)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( UserModel user)  loaded,required TResult Function( String errorMessage)  error,}) {final _that = this;
 switch (_that) {
 case LoginStateInitial():
 return initial();case LoginStateLoading():
 return loading();case LoginStateLoaded():
-return loaded();case LoginStateError():
+return loaded(_that.user);case LoginStateError():
 return error(_that.errorMessage);case _:
   throw StateError('Unexpected subclass');
 
@@ -175,12 +175,12 @@ return error(_that.errorMessage);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function()?  loaded,TResult? Function( String errorMessage)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( UserModel user)?  loaded,TResult? Function( String errorMessage)?  error,}) {final _that = this;
 switch (_that) {
 case LoginStateInitial() when initial != null:
 return initial();case LoginStateLoading() when loading != null:
 return loading();case LoginStateLoaded() when loaded != null:
-return loaded();case LoginStateError() when error != null:
+return loaded(_that.user);case LoginStateError() when error != null:
 return error(_that.errorMessage);case _:
   return null;
 
@@ -257,33 +257,76 @@ String toString() {
 
 
 class LoginStateLoaded implements LoginState {
-  const LoginStateLoaded();
+  const LoginStateLoaded(this.user);
   
 
+ final  UserModel user;
 
-
+/// Create a copy of LoginState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$LoginStateLoadedCopyWith<LoginStateLoaded> get copyWith => _$LoginStateLoadedCopyWithImpl<LoginStateLoaded>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginStateLoaded);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is LoginStateLoaded&&(identical(other.user, user) || other.user == user));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode => Object.hash(runtimeType,user);
 
 @override
 String toString() {
-  return 'LoginState.loaded()';
+  return 'LoginState.loaded(user: $user)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class $LoginStateLoadedCopyWith<$Res> implements $LoginStateCopyWith<$Res> {
+  factory $LoginStateLoadedCopyWith(LoginStateLoaded value, $Res Function(LoginStateLoaded) _then) = _$LoginStateLoadedCopyWithImpl;
+@useResult
+$Res call({
+ UserModel user
+});
 
 
+$UserModelCopyWith<$Res> get user;
+
+}
+/// @nodoc
+class _$LoginStateLoadedCopyWithImpl<$Res>
+    implements $LoginStateLoadedCopyWith<$Res> {
+  _$LoginStateLoadedCopyWithImpl(this._self, this._then);
+
+  final LoginStateLoaded _self;
+  final $Res Function(LoginStateLoaded) _then;
+
+/// Create a copy of LoginState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? user = null,}) {
+  return _then(LoginStateLoaded(
+null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
+as UserModel,
+  ));
+}
+
+/// Create a copy of LoginState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$UserModelCopyWith<$Res> get user {
+  
+  return $UserModelCopyWith<$Res>(_self.user, (value) {
+    return _then(_self.copyWith(user: value));
+  });
+}
+}
 
 /// @nodoc
 

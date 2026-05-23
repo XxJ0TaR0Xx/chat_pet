@@ -296,7 +296,7 @@ $Res call({
 });
 
 
-
+$UserModelCopyWith<$Res> get userModel;
 
 }
 /// @nodoc
@@ -316,7 +316,16 @@ as UserModel,
   ));
 }
 
-
+/// Create a copy of ProfileState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$UserModelCopyWith<$Res> get userModel {
+  
+  return $UserModelCopyWith<$Res>(_self.userModel, (value) {
+    return _then(_self.copyWith(userModel: value));
+  });
+}
 }
 
 /// @nodoc

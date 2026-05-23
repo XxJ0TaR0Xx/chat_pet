@@ -1,54 +1,82 @@
 import 'package:bloc/bloc.dart';
-import 'package:chat_pet/data/models/user.dart';
-import 'package:chat_pet/domain/usecases/user/update_user_usecase.dart';
+import 'package:chat_pet/domain/models/user/user_model.dart';
+import 'package:chat_pet/domain/usecases/users/update_avatar_use_case.dart';
+import 'package:chat_pet/domain/usecases/users/update_me_use_case.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
-import 'package:chat_pet/presentation/pages/profile/profile_page.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:image_picker/image_picker.dart';
 
 part 'profile_state.dart';
 part 'profile_cubit.freezed.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit(
-    this._userUseCase, {
+    this._updateMeUseCase,
+    this._avatarUseCase, {
     required this.userCubit,
   }) : super(ProfileState.initial()) {
     initialize();
   }
 
-  final UpdateUserUseCase _userUseCase;
+  final UpdateMeUseCase _updateMeUseCase;
+  final UpdateAvatarUseCase _avatarUseCase;
   final UserCubit userCubit;
+
+  UserModel? get user => userCubit.currentUser;
 
   void initialize() {
     emit(ProfileState.loading());
-    final user = userCubit.currentUser;
-
     if (user != null) {
-      emit(ProfileState.loaded(user));
+      emit(ProfileState.loaded(user!));
     } else {
       emit(ProfileState.error('Не удалось получить пользователя, пожалуйста попробуйте снова'));
     }
   }
 
-  Future<void> updateUserName(UserContentType contentType, String newValue) async {
-    if (state is _Loaded) {
-      final userModelEditing = (state as _Loaded).userModel.copyWith(
-        name: contentType == UserContentType.name ? newValue : null,
-        address: contentType == UserContentType.adders ? newValue : null,
-        number: contentType == UserContentType.phone ? newValue : null,
-      );
+  Future<bool> updateMe(UserModel editingUser) async {
+    bool isSuccess = false;
 
-      emit(ProfileState.loading());
+    emit(ProfileState.loading());
 
-      final response = await _userUseCase.call(user: userModelEditing);
+    final result = await _updateMeUseCase.call(user: editingUser);
 
-      response.fold(
-        (failure) => emit(ProfileState.error(failure.message)),
-        (r) {
-          userCubit.setUser(userModelEditing);
-          emit(ProfileState.loaded(userModelEditing));
-        },
-      );
-    }
+    result.fold(
+      (failure) {
+        emit(ProfileState.error(failure.message));
+        isSuccess = false;
+      },
+      (newUser) {
+        userCubit.setUser(newUser);
+        emit(ProfileState.loaded(newUser));
+        isSuccess = true;
+      },
+    );
+
+    return isSuccess;
+  }
+
+  Future<bool> updateUserImage() async {
+    bool isSuccess = false;
+
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    if (image?.path == null || image!.path.isEmpty) return isSuccess;
+
+    final result = await _avatarUseCase.call(imagePath: image.path);
+
+    result.fold(
+      (failure) {
+        emit(ProfileState.error(failure.message));
+        isSuccess = false;
+      },
+      (newUser) {
+        userCubit.setUser(newUser);
+        emit(ProfileState.loaded(newUser));
+        isSuccess = true;
+      },
+    );
+
+    return isSuccess;
   }
 }

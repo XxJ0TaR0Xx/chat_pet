@@ -304,7 +304,7 @@ $Res call({
 });
 
 
-$MessageModelCopyWith<$Res>? get lastModel;
+$MessageModelCopyWith<$Res>? get lastModel;$UserModelCopyWith<$Res>? get userModel;
 
 }
 /// @nodoc
@@ -337,6 +337,18 @@ $MessageModelCopyWith<$Res>? get lastModel {
 
   return $MessageModelCopyWith<$Res>(_self.lastModel!, (value) {
     return _then(_self.copyWith(lastModel: value));
+  });
+}/// Create a copy of MessageState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$UserModelCopyWith<$Res>? get userModel {
+    if (_self.userModel == null) {
+    return null;
+  }
+
+  return $UserModelCopyWith<$Res>(_self.userModel!, (value) {
+    return _then(_self.copyWith(userModel: value));
   });
 }
 }

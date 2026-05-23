@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:chat_pet/data/models/user.dart';
+import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/presentation/pages/message_page/models/message_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

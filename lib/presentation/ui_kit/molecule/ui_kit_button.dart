@@ -1,6 +1,7 @@
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 
+//TODO size
 class UiKitButton extends StatelessWidget {
   const UiKitButton({
     required this.text,

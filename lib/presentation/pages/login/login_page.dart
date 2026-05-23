@@ -1,5 +1,8 @@
-import 'dart:developer';
-
+import 'package:chat_pet/core/injectable/injectable.dart';
+import 'package:chat_pet/data/common/custom_talker/custom_talker.dart';
+import 'package:chat_pet/domain/usecases/auth/login_use_case.dart';
+import 'package:chat_pet/domain/usecases/users/get_me_use_case.dart';
+import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
 import 'package:chat_pet/presentation/pages/home/home_page.dart';
 import 'package:chat_pet/presentation/pages/login/cubit/login_cubit.dart';
 import 'package:chat_pet/presentation/pages/start/widgets/or_row_widget.dart';
@@ -17,11 +20,26 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late final LoginCubit cubit;
   final GlobalKey<FormState> key = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController(text: 'danila20032302@yandex.ru');
-  final TextEditingController _passwordController = TextEditingController(text: '12345678');
+  final TextEditingController _emailController = TextEditingController(text: 'danila20032302@yandex.com');
+  final TextEditingController _passwordController = TextEditingController(text: '20032302');
 
   bool obscureTextPassword = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    cubit = LoginCubit(getIt.get<GetMeUseCase>(), getIt.get<LoginUseCase>());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    cubit.close();
+  }
 
   void onEyeTap() {
     obscureTextPassword = !obscureTextPassword;
@@ -29,22 +47,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final cubit = context.read<LoginCubit>();
-
     final theme = context.uiKitTheme;
 
-    return BlocProvider(
-      create: (context) => cubit,
-      child: Scaffold(
-        body: SafeArea(
+    return Scaffold(
+      body: SafeArea(
+        child: BlocProvider.value(
+          value: cubit,
           child: CustomScrollView(
             physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
             slivers: [
@@ -66,7 +75,8 @@ class _LoginPageState extends State<LoginPage> {
                       ).showErrorMessage();
                     }
                     if (state is LoginStateLoaded) {
-                      log('Успешный логин - переходим на главную страницу');
+                      talk.info('Успешный логин - переходим на главную страницу');
+                      context.read<UserCubit>().setUser(state.user);
                       context.pushAndRemoveUntil(HomePage());
                     }
                   },

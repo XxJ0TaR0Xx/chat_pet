@@ -1,36 +1,46 @@
 import 'package:bloc/bloc.dart';
-import 'package:chat_pet/domain/usecases/auth/login_by_google_usecase.dart';
-import 'package:chat_pet/domain/usecases/auth/login_usecase.dart';
+import 'package:chat_pet/domain/models/user/user_model.dart';
+import 'package:chat_pet/domain/usecases/auth/login_use_case.dart';
+import 'package:chat_pet/domain/usecases/users/get_me_use_case.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
 part 'login_state.dart';
 part 'login_cubit.freezed.dart';
 
+@Singleton()
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit(this._loginUseCase, this._loginByGoogleUseCase) : super(LoginState.initial());
+  LoginCubit(
+    this._getMeUseCase,
+    this._loginUseCase,
+  ) : super(LoginState.initial());
 
+  final GetMeUseCase _getMeUseCase;
   final LoginUseCase _loginUseCase;
-  final LoginByGoogleUseCase _loginByGoogleUseCase;
 
   Future<void> login(String email, String password) async {
     emit(LoginState.loading());
-    final result = await _loginUseCase.call(email: email, password: password);
+
+    final result = await _loginUseCase.call(password: password, email: email);
     result.fold(
-      (error) => emit(LoginState.error(error.message)),
-      (result) {
-        emit(LoginState.loaded());
+      (failure) => emit(LoginState.error(failure.message)),
+      (_) async {
+        final result = await _getMeUseCase.call();
+        result.fold(
+          (failure) => emit(LoginState.error(failure.message)),
+          (user) => emit(LoginState.loaded(user)),
+        );
       },
     );
   }
 
   Future<void> loginByGoogle() async {
     emit(LoginState.loading());
-    final result = await _loginByGoogleUseCase.call();
-    result.fold(
-      (error) => emit(LoginState.error(error.message)),
-      (result) {
-        emit(LoginState.loaded());
-      },
-    );
+    emit(LoginState.error('Not implemented'));
+    // final result = await _loginByGoogleUseCase.call();
+    // result.fold(
+    //   (error) => emit(LoginState.error(error.message)),
+    //   (user) => emit(LoginState.loaded(user)),
+    // );
   }
 }
