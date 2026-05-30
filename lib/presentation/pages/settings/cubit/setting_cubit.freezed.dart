@@ -55,13 +55,13 @@ extension SettingStatePatterns on SettingState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Loaded value)?  loaded,TResult Function( _Error value)?  error,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( SettingStateInitial value)?  initial,TResult Function( SettingStateLoading value)?  loading,TResult Function( SettingStateLoaded value)?  loaded,TResult Function( SettingStateError value)?  error,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial(_that);case _Loading() when loading != null:
-return loading(_that);case _Loaded() when loaded != null:
-return loaded(_that);case _Error() when error != null:
+case SettingStateInitial() when initial != null:
+return initial(_that);case SettingStateLoading() when loading != null:
+return loading(_that);case SettingStateLoaded() when loaded != null:
+return loaded(_that);case SettingStateError() when error != null:
 return error(_that);case _:
   return orElse();
 
@@ -80,13 +80,13 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Loaded value)  loaded,required TResult Function( _Error value)  error,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( SettingStateInitial value)  initial,required TResult Function( SettingStateLoading value)  loading,required TResult Function( SettingStateLoaded value)  loaded,required TResult Function( SettingStateError value)  error,}){
 final _that = this;
 switch (_that) {
-case _Initial():
-return initial(_that);case _Loading():
-return loading(_that);case _Loaded():
-return loaded(_that);case _Error():
+case SettingStateInitial():
+return initial(_that);case SettingStateLoading():
+return loading(_that);case SettingStateLoaded():
+return loaded(_that);case SettingStateError():
 return error(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -104,13 +104,13 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Loaded value)?  loaded,TResult? Function( _Error value)?  error,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( SettingStateInitial value)?  initial,TResult? Function( SettingStateLoading value)?  loading,TResult? Function( SettingStateLoaded value)?  loaded,TResult? Function( SettingStateError value)?  error,}){
 final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial(_that);case _Loading() when loading != null:
-return loading(_that);case _Loaded() when loaded != null:
-return loaded(_that);case _Error() when error != null:
+case SettingStateInitial() when initial != null:
+return initial(_that);case SettingStateLoading() when loading != null:
+return loading(_that);case SettingStateLoaded() when loaded != null:
+return loaded(_that);case SettingStateError() when error != null:
 return error(_that);case _:
   return null;
 
@@ -128,12 +128,12 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( UserModel? userModel)?  loaded,TResult Function( String errorMessage)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( UserModel userModel,  String? transientError)?  loaded,TResult Function( String errorMessage)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial();case _Loading() when loading != null:
-return loading();case _Loaded() when loaded != null:
-return loaded(_that.userModel);case _Error() when error != null:
+case SettingStateInitial() when initial != null:
+return initial();case SettingStateLoading() when loading != null:
+return loading();case SettingStateLoaded() when loaded != null:
+return loaded(_that.userModel,_that.transientError);case SettingStateError() when error != null:
 return error(_that.errorMessage);case _:
   return orElse();
 
@@ -152,12 +152,12 @@ return error(_that.errorMessage);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( UserModel? userModel)  loaded,required TResult Function( String errorMessage)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( UserModel userModel,  String? transientError)  loaded,required TResult Function( String errorMessage)  error,}) {final _that = this;
 switch (_that) {
-case _Initial():
-return initial();case _Loading():
-return loading();case _Loaded():
-return loaded(_that.userModel);case _Error():
+case SettingStateInitial():
+return initial();case SettingStateLoading():
+return loading();case SettingStateLoaded():
+return loaded(_that.userModel,_that.transientError);case SettingStateError():
 return error(_that.errorMessage);case _:
   throw StateError('Unexpected subclass');
 
@@ -175,12 +175,12 @@ return error(_that.errorMessage);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( UserModel? userModel)?  loaded,TResult? Function( String errorMessage)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( UserModel userModel,  String? transientError)?  loaded,TResult? Function( String errorMessage)?  error,}) {final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial();case _Loading() when loading != null:
-return loading();case _Loaded() when loaded != null:
-return loaded(_that.userModel);case _Error() when error != null:
+case SettingStateInitial() when initial != null:
+return initial();case SettingStateLoading() when loading != null:
+return loading();case SettingStateLoaded() when loaded != null:
+return loaded(_that.userModel,_that.transientError);case SettingStateError() when error != null:
 return error(_that.errorMessage);case _:
   return null;
 
@@ -192,8 +192,8 @@ return error(_that.errorMessage);case _:
 /// @nodoc
 
 
-class _Initial implements SettingState {
-  const _Initial();
+class SettingStateInitial implements SettingState {
+  const SettingStateInitial();
   
 
 
@@ -203,7 +203,7 @@ class _Initial implements SettingState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingStateInitial);
 }
 
 
@@ -224,8 +224,8 @@ String toString() {
 /// @nodoc
 
 
-class _Loading implements SettingState {
-  const _Loading();
+class SettingStateLoading implements SettingState {
+  const SettingStateLoading();
   
 
 
@@ -235,7 +235,7 @@ class _Loading implements SettingState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingStateLoading);
 }
 
 
@@ -256,63 +256,65 @@ String toString() {
 /// @nodoc
 
 
-class _Loaded implements SettingState {
-  const _Loaded(this.userModel);
+class SettingStateLoaded implements SettingState {
+  const SettingStateLoaded(this.userModel, {this.transientError = null});
   
 
- final  UserModel? userModel;
+ final  UserModel userModel;
+@JsonKey() final  String? transientError;
 
 /// Create a copy of SettingState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+$SettingStateLoadedCopyWith<SettingStateLoaded> get copyWith => _$SettingStateLoadedCopyWithImpl<SettingStateLoaded>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&(identical(other.userModel, userModel) || other.userModel == userModel));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingStateLoaded&&(identical(other.userModel, userModel) || other.userModel == userModel)&&(identical(other.transientError, transientError) || other.transientError == transientError));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,userModel);
+int get hashCode => Object.hash(runtimeType,userModel,transientError);
 
 @override
 String toString() {
-  return 'SettingState.loaded(userModel: $userModel)';
+  return 'SettingState.loaded(userModel: $userModel, transientError: $transientError)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCopyWith<$Res> implements $SettingStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
+abstract mixin class $SettingStateLoadedCopyWith<$Res> implements $SettingStateCopyWith<$Res> {
+  factory $SettingStateLoadedCopyWith(SettingStateLoaded value, $Res Function(SettingStateLoaded) _then) = _$SettingStateLoadedCopyWithImpl;
 @useResult
 $Res call({
- UserModel? userModel
+ UserModel userModel, String? transientError
 });
 
 
-$UserModelCopyWith<$Res>? get userModel;
+$UserModelCopyWith<$Res> get userModel;
 
 }
 /// @nodoc
-class __$LoadedCopyWithImpl<$Res>
-    implements _$LoadedCopyWith<$Res> {
-  __$LoadedCopyWithImpl(this._self, this._then);
+class _$SettingStateLoadedCopyWithImpl<$Res>
+    implements $SettingStateLoadedCopyWith<$Res> {
+  _$SettingStateLoadedCopyWithImpl(this._self, this._then);
 
-  final _Loaded _self;
-  final $Res Function(_Loaded) _then;
+  final SettingStateLoaded _self;
+  final $Res Function(SettingStateLoaded) _then;
 
 /// Create a copy of SettingState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? userModel = freezed,}) {
-  return _then(_Loaded(
-freezed == userModel ? _self.userModel : userModel // ignore: cast_nullable_to_non_nullable
-as UserModel?,
+@pragma('vm:prefer-inline') $Res call({Object? userModel = null,Object? transientError = freezed,}) {
+  return _then(SettingStateLoaded(
+null == userModel ? _self.userModel : userModel // ignore: cast_nullable_to_non_nullable
+as UserModel,transientError: freezed == transientError ? _self.transientError : transientError // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -320,12 +322,9 @@ as UserModel?,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$UserModelCopyWith<$Res>? get userModel {
-    if (_self.userModel == null) {
-    return null;
-  }
-
-  return $UserModelCopyWith<$Res>(_self.userModel!, (value) {
+$UserModelCopyWith<$Res> get userModel {
+  
+  return $UserModelCopyWith<$Res>(_self.userModel, (value) {
     return _then(_self.copyWith(userModel: value));
   });
 }
@@ -334,8 +333,8 @@ $UserModelCopyWith<$Res>? get userModel {
 /// @nodoc
 
 
-class _Error implements SettingState {
-  const _Error(this.errorMessage);
+class SettingStateError implements SettingState {
+  const SettingStateError(this.errorMessage);
   
 
  final  String errorMessage;
@@ -344,13 +343,13 @@ class _Error implements SettingState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
+$SettingStateErrorCopyWith<SettingStateError> get copyWith => _$SettingStateErrorCopyWithImpl<SettingStateError>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Error&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingStateError&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
@@ -366,8 +365,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res> implements $SettingStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
+abstract mixin class $SettingStateErrorCopyWith<$Res> implements $SettingStateCopyWith<$Res> {
+  factory $SettingStateErrorCopyWith(SettingStateError value, $Res Function(SettingStateError) _then) = _$SettingStateErrorCopyWithImpl;
 @useResult
 $Res call({
  String errorMessage
@@ -378,17 +377,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res>
-    implements _$ErrorCopyWith<$Res> {
-  __$ErrorCopyWithImpl(this._self, this._then);
+class _$SettingStateErrorCopyWithImpl<$Res>
+    implements $SettingStateErrorCopyWith<$Res> {
+  _$SettingStateErrorCopyWithImpl(this._self, this._then);
 
-  final _Error _self;
-  final $Res Function(_Error) _then;
+  final SettingStateError _self;
+  final $Res Function(SettingStateError) _then;
 
 /// Create a copy of SettingState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? errorMessage = null,}) {
-  return _then(_Error(
+  return _then(SettingStateError(
 null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String,
   ));

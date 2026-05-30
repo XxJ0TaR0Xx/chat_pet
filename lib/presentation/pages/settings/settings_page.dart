@@ -1,57 +1,15 @@
-import 'dart:async';
-
-import 'package:chat_pet/presentation/pages/profile/profile_page.dart';
 import 'package:chat_pet/presentation/pages/settings/cubit/setting_cubit.dart';
-import 'package:chat_pet/presentation/pages/start/start_page.dart';
+import 'package:chat_pet/presentation/route/app_routes.dart';
 import 'package:chat_pet/presentation/ui_kit/molecule/common_widgets/loading_widget.dart';
 import 'package:chat_pet/presentation/ui_kit/molecule/dialogs/exit_dialog.dart';
 import 'package:chat_pet/presentation/ui_kit/molecule/snack_bar/custom_snack_bar.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
-class SettingsPage extends StatefulWidget {
+class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
-
-  @override
-  State<SettingsPage> createState() => _SettingsPageState();
-}
-
-class _SettingsPageState extends State<SettingsPage> {
-  late final SettingCubit cubit;
-
-  @override
-  void initState() {
-    super.initState();
-
-    cubit = context.read<SettingCubit>();
-  }
-
-  @override
-  void dispose() {
-    cubit.close();
-    super.dispose();
-  }
-
-  Future<void> _onSettingsButtonTap(BuildContext context, AppIcons icon) async {
-    switch (icon) {
-      case AppIcons.keys:
-        unawaited(context.push(ProfilePage(settingCubit: cubit)));
-      case AppIcons.arrowBack:
-        await exitDialog(
-          context,
-          onNoTap: () => context.pop(),
-          onYesTap: () async {
-            await cubit.logout(context);
-            if (context.mounted) {
-              unawaited(context.pushAndRemoveUntil(const StartPage()));
-            }
-          },
-        );
-      default:
-        CustomSnackBar(context, text: S.of(context).SomethingWentWrong).showDevMessage();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +19,7 @@ class _SettingsPageState extends State<SettingsPage> {
       child: CustomScrollView(
         slivers: [
           UiKitAppBar(
-            leadingColor: theme?.colorScheme.surfaceBase,
+            showLeading: false,
             child: Text(
               S.of(context).Settings,
               style: theme?.carosTextTheme.medium.copyWith(
@@ -73,7 +31,12 @@ class _SettingsPageState extends State<SettingsPage> {
           SizedBox(height: 52.h).sliver,
           SliverFillRemaining(
             hasScrollBody: false,
-            child: BlocBuilder<SettingCubit, SettingState>(
+            child: BlocConsumer<SettingCubit, SettingState>(
+              listener: (context, state) {
+                if (state is SettingStateLoaded && state.transientError != null) {
+                  CustomSnackBar(context, text: state.transientError!).showErrorMessage();
+                }
+              },
               builder: (context, state) {
                 return state.when(
                   initial: SizedBox.shrink,
@@ -89,12 +52,12 @@ class _SettingsPageState extends State<SettingsPage> {
                       SpacingFoundation.verticalSpace16,
                       UiKitButton.primary(
                         text: S.of(context).Repeat,
-                        onTap: () => cubit.initialize(),
+                        onTap: () => context.read<SettingCubit>().initialize(),
                       ),
                       Spacer(),
                     ],
                   ),
-                  loaded: (userModel) => BottomSheetWidget(
+                  loaded: (userModel, _) => BottomSheetWidget(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SpacingFoundation.verticalSpace24,
@@ -102,9 +65,7 @@ class _SettingsPageState extends State<SettingsPage> {
                         children: [
                           CircleAvatar(
                             radius: 30.w,
-                            backgroundImage: userModel?.avatarUrl != null
-                                ? NetworkImage(userModel!.avatarUrl!)
-                                : AssetImage('assets/images/orig.png'),
+                            backgroundImage: userModel.avatarUrl != null ? NetworkImage(userModel.avatarUrl!) : AssetImage('assets/images/orig.png'),
                           ),
                           SpacingFoundation.horizontalSpace24,
                           Column(
@@ -112,7 +73,7 @@ class _SettingsPageState extends State<SettingsPage> {
                             crossAxisAlignment: .start,
                             children: [
                               Text(
-                                '${userModel?.name ?? S.of(context).NotFounded} ${userModel?.lastName ?? ''}',
+                                '${userModel.name ?? S.of(context).NotFounded} ${userModel.lastName ?? ''}',
                                 style: theme?.carosTextTheme.bold.copyWith(
                                   fontSize: 20.w,
                                 ),
@@ -139,90 +100,51 @@ class _SettingsPageState extends State<SettingsPage> {
                       SpacingFoundation.verticalSpace20,
                       Divider(color: ColorsFoundation.backNeutral1),
                       SpacingFoundation.verticalSpace30,
-                      ...[
-                        SettingsButtonUiModel(
-                          title: S.of(context).Account,
-                          description: S.of(context).PrivacySecurityChange,
-                          icon: .keys,
-                        ),
-                        SettingsButtonUiModel(
-                          title: S.of(context).Chat,
-                          description: S.of(context).ChatHistoryThemeWallpapers,
-                          icon: .message,
-                        ),
-                        SettingsButtonUiModel(
-                          title: S.of(context).Notifications,
-                          icon: .notifications,
-                        ),
-                        SettingsButtonUiModel(
-                          title: S.of(context).Help,
-                          description: S.of(context).HelpCenter,
-                          icon: .help,
-                        ),
-                        SettingsButtonUiModel(
-                          title: S.of(context).StorageAndData,
-                          description: S.of(context).NetworkUsage,
-                          icon: .data,
-                        ),
-                        SettingsButtonUiModel(
-                          title: S.of(context).InviteAFriend,
-                          icon: .users,
-                        ),
-                        SettingsButtonUiModel(
-                          title: S.of(context).LogOutOfYouAccount,
-                          icon: .arrowBack,
-                        ),
-                      ].map(
-                        (e) {
-                          final isExist = e.icon == AppIcons.arrowBack;
-                          final color = isExist ? ColorsFoundation.red : ColorsFoundation.backNeutral1;
-
-                          return GestureDetector(
-                            onTap: () async => _onSettingsButtonTap(context, e.icon),
-                            child:
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 44.w,
-                                      height: 44.w,
-                                      decoration: BoxDecoration(
-                                        color: color.withValues(alpha: 0.09),
-                                        shape: .circle,
-                                      ),
-                                      child: ChatPetIcon.icon(
-                                        e.icon,
-                                        color: color,
-                                      ).paddingAll(EdgeInsetsFoundation.all8),
-                                    ),
-                                    SpacingFoundation.horizontalSpace12,
-                                    Column(
-                                      mainAxisSize: .min,
-                                      crossAxisAlignment: .start,
-                                      children: [
-                                        Text(
-                                          e.title,
-                                          style: theme?.carosTextTheme.bold.copyWith(
-                                            color: isExist ? ColorsFoundation.red : null,
-                                          ),
-                                        ),
-                                        if (e.description != null && e.description!.isNotEmpty) ...[
-                                          SpacingFoundation.verticalSpace6,
-                                          Text(
-                                            e.description!,
-                                            style: theme?.circularStdTextTheme.book.copyWith(
-                                              color: color,
-                                              fontSize: 12.w,
-                                            ),
-                                          ),
-                                        ],
-                                      ],
-                                    ),
-                                  ],
-                                ).paddingOnly(
-                                  left: SpacingFoundation.horizontalSpacing24,
-                                  right: SpacingFoundation.horizontalSpacing24,
-                                  bottom: SpacingFoundation.verticalSpacing30,
-                                ),
+                      _SettingsItem(
+                        title: S.of(context).Account,
+                        description: S.of(context).PrivacySecurityChange,
+                        icon: AppIcons.keys,
+                        onTap: () {
+                          GoRouter.of(context).push(AppRoutes.settingsProfile);
+                        },
+                      ),
+                      _SettingsItem(
+                        title: S.of(context).Chat,
+                        description: S.of(context).ChatHistoryThemeWallpapers,
+                        icon: AppIcons.message,
+                        onTap: () => _underDeveloped(context),
+                      ),
+                      _SettingsItem(
+                        title: S.of(context).Notifications,
+                        icon: AppIcons.notifications,
+                        onTap: () => _underDeveloped(context),
+                      ),
+                      _SettingsItem(
+                        title: S.of(context).Help,
+                        description: S.of(context).HelpCenter,
+                        icon: AppIcons.help,
+                        onTap: () => _underDeveloped(context),
+                      ),
+                      _SettingsItem(
+                        title: S.of(context).StorageAndData,
+                        description: S.of(context).NetworkUsage,
+                        icon: AppIcons.data,
+                        onTap: () => _underDeveloped(context),
+                      ),
+                      _SettingsItem(
+                        title: S.of(context).InviteAFriend,
+                        icon: AppIcons.users,
+                        onTap: () => _underDeveloped(context),
+                      ),
+                      _SettingsItem(
+                        title: S.of(context).LogOutOfYouAccount,
+                        isDestructive: true,
+                        icon: AppIcons.arrowBack,
+                        onTap: () async {
+                          await exitDialog(
+                            context,
+                            onNoTap: () => GoRouter.of(context).pop(),
+                            onYesTap: () => context.read<SettingCubit>().logout(),
                           );
                         },
                       ),
@@ -236,16 +158,79 @@ class _SettingsPageState extends State<SettingsPage> {
       ),
     );
   }
+
+  void _underDeveloped(BuildContext context) => CustomSnackBar(context, text: S.of(context).UnderDevelopment).showDevMessage();
 }
 
-class SettingsButtonUiModel {
-  SettingsButtonUiModel({
+class _SettingsItem extends StatelessWidget {
+  const _SettingsItem({
     required this.title,
     required this.icon,
+    required this.onTap,
     this.description,
+    this.isDestructive = false,
   });
 
   final String title;
-  final String? description;
   final AppIcons icon;
+  final VoidCallback onTap;
+  final String? description;
+  final bool isDestructive;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = context.uiKitTheme;
+    final color = isDestructive ? ColorsFoundation.red : ColorsFoundation.backNeutral1;
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        child:
+            Row(
+              children: [
+                Container(
+                  width: 44.w,
+                  height: 44.w,
+                  decoration: BoxDecoration(
+                    color: color.withValues(alpha: 0.09),
+                    shape: BoxShape.circle,
+                  ),
+                  child: ChatPetIcon.icon(
+                    icon,
+                    color: color,
+                  ).paddingAll(EdgeInsetsFoundation.all8),
+                ),
+                SpacingFoundation.horizontalSpace12,
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: SpacingFoundation.verticalSpacing6,
+                    children: [
+                      Text(
+                        title,
+                        style: theme?.carosTextTheme.bold.copyWith(
+                          color: isDestructive ? ColorsFoundation.red : null,
+                        ),
+                      ),
+                      if (description != null && description!.isNotEmpty)
+                        Text(
+                          description!,
+                          style: theme?.circularStdTextTheme.book.copyWith(
+                            color: color,
+                            fontSize: 12.w,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+            ).paddingSymmetric(
+              horizontal: SpacingFoundation.horizontalSpacing24,
+              vertical: SpacingFoundation.verticalSpacing16,
+            ),
+      ),
+    );
+  }
 }
