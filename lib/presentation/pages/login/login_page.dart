@@ -3,14 +3,15 @@ import 'package:chat_pet/data/common/custom_talker/custom_talker.dart';
 import 'package:chat_pet/domain/usecases/auth/login_use_case.dart';
 import 'package:chat_pet/domain/usecases/users/get_me_use_case.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
-import 'package:chat_pet/presentation/pages/home/home_page.dart';
 import 'package:chat_pet/presentation/pages/login/cubit/login_cubit.dart';
 import 'package:chat_pet/presentation/pages/start/widgets/or_row_widget.dart';
 import 'package:chat_pet/presentation/pages/start/widgets/social_links_widget.dart';
+import 'package:chat_pet/presentation/route/app_routes.dart';
 import 'package:chat_pet/presentation/ui_kit/molecule/snack_bar/custom_snack_bar.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -77,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                     if (state is LoginStateLoaded) {
                       talk.info('Успешный логин - переходим на главную страницу');
                       context.read<UserCubit>().setUser(state.user);
-                      context.pushAndRemoveUntil(HomePage());
+                      GoRouter.of(context).go(AppRoutes.chats);
                     }
                   },
                   child: Form(
