@@ -63,6 +63,8 @@ class ProfileCubit extends Cubit<ProfileState> {
 
     if (image?.path == null || image!.path.isEmpty) return isSuccess;
 
+    emit(ProfileState.loading());
+
     final result = await _avatarUseCase.call(imagePath: image.path);
 
     result.fold(
