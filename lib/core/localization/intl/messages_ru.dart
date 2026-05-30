@@ -107,6 +107,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "StorageAndData": MessageLookupByLibrary.simpleMessage(
       "Хранение и передача данных",
     ),
+    "UnderDevelopment": MessageLookupByLibrary.simpleMessage(
+      "Under development",
+    ),
     "WelcomeBackSignInUsing": MessageLookupByLibrary.simpleMessage(
       "Welcome back sign in using",
     ),

@@ -49,5 +49,6 @@
   "EnterNewValue": "Введите новое значение",
   "SelectYourAddress": "Выберите ваш адресс",
   "ActiveNow": "В сети",
-  "ActiveNotNow": "Не в сети"
+  "ActiveNotNow": "Не в сети",
+  "UnderDevelopment": "Under development"
 }
