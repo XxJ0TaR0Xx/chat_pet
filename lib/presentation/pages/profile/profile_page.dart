@@ -4,17 +4,15 @@ import 'package:chat_pet/domain/usecases/users/update_avatar_use_case.dart';
 import 'package:chat_pet/domain/usecases/users/update_me_use_case.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
 import 'package:chat_pet/presentation/pages/profile/cubit/profile_cubit.dart';
-import 'package:chat_pet/presentation/pages/settings/cubit/setting_cubit.dart';
 import 'package:chat_pet/presentation/ui_kit/molecule/dialogs/editing_dialog.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({required this.settingCubit, super.key});
-
-  final SettingCubit settingCubit;
+  const ProfilePage({super.key});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -100,7 +98,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             crossAxisAlignment: .start,
                             children: [
                               GestureDetector(
-                                onTap: () => context.pop(),
+                                onTap: () => GoRouter.of(context).pop(),
                                 child: ChatPetIcon.icon(
                                   AppIcons.arrowBack,
                                   color: theme?.colorScheme.surfaceBase,
@@ -113,7 +111,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                     borderRadius: BorderRadius.circular(41.w),
                                     onTap: () async {
                                       if (await cubit.updateUserImage()) {
-                                        widget.settingCubit.initialize();
                                         editingUserModel = cubit.user;
                                       }
                                     },
@@ -165,7 +162,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     editingUserModel = editingUserModel?.copyWith(name: value);
                                     setState(() {});
 
-                                    context.pop();
+                                    GoRouter.of(context).pop();
                                   },
                                 );
                               },
@@ -200,7 +197,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     editingUserModel = editingUserModel?.copyWith(number: value);
                                     setState(() {});
 
-                                    context.pop();
+                                    GoRouter.of(context).pop();
                                   },
                                 );
                               },
@@ -302,11 +299,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               padding: EdgeInsetsGeometry.all(EdgeInsetsFoundation.all16),
                               child: UiKitButton.primary(
                                 text: S.of(context).Save,
-                                onTap: () async {
-                                  if (await cubit.updateMe(editingUserModel!)) {
-                                    widget.settingCubit.initialize();
-                                  }
-                                },
+                                onTap: () => cubit.updateMe(editingUserModel!),
                               ),
                             ),
                           ),

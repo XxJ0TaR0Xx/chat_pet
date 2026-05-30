@@ -2,6 +2,7 @@ import 'package:chat_pet/presentation/ui_kit/molecule/dialogs/ui_kit_dialog.dart
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:chat_pet/presentation/utils/form_validators/form_validators.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 final _maskFormatter = MaskTextInputFormatter(
@@ -41,7 +42,7 @@ Future<void> editingDialog(
         spacing: SpacingFoundation.horizontalSpacing12,
         children: [
           Expanded(
-            child: UiKitButton(text: S.of(context).Cancel, onTap: () => context.pop()),
+            child: UiKitButton(text: S.of(context).Cancel, onTap: () => GoRouter.of(context).pop()),
           ),
           Expanded(
             child: UiKitButton.primary(
