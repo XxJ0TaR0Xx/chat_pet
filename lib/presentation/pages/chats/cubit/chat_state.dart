@@ -4,6 +4,6 @@ part of 'chat_cubit.dart';
 class ChatState with _$ChatState {
   const factory ChatState.initial() = _Initial;
   const factory ChatState.loading() = _Loading;
-  const factory ChatState.loaded() = _Loaded;
+  const factory ChatState.loaded(UserModel userModel) = _Loaded;
   const factory ChatState.error(String error) = _Error;
 }

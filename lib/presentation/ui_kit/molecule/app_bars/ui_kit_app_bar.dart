@@ -1,5 +1,6 @@
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class UiKitAppBar extends PreferredSize {
   const UiKitAppBar({
@@ -32,7 +33,7 @@ class UiKitAppBar extends PreferredSize {
               onPressed:
                   onTap ??
                   () {
-                    context.pop();
+                    GoRouter.of(context).pop();
                   },
               icon: ChatPetIcon.icon(
                 AppIcons.arrowBack,

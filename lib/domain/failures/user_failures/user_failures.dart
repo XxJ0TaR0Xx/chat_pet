@@ -17,10 +17,10 @@ abstract class UserFailure extends Failure {
         if (detail == 'Email already registered') {
           return UserEmailTakenFailure(stackTrace: stackTrace);
         }
-        if (detail?.contains('Invalid file type') == true) {
+        if (detail?.contains('Invalid file type') ?? false) {
           return UserInvalidFileTypeFailure(stackTrace: stackTrace);
         }
-        if (detail?.contains('File too large') == true) {
+        if (detail?.contains('File too large') ?? false) {
           return UserFileTooLargeFailure(stackTrace: stackTrace);
         }
         return UserUnknownFailure(stackTrace: stackTrace);
@@ -41,6 +41,7 @@ abstract class UserFailure extends Failure {
     }
   }
 
+  @override
   String get name;
 }
 

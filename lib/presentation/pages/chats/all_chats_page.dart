@@ -1,12 +1,11 @@
-import 'dart:developer';
-
 import 'package:chat_pet/presentation/pages/chats/cubit/chat_cubit.dart';
 import 'package:chat_pet/presentation/pages/chats/widget/chat_row_item.dart';
-import 'package:chat_pet/presentation/pages/message_page/message_page.dart';
+import 'package:chat_pet/presentation/route/app_routes.dart';
 import 'package:chat_pet/presentation/ui_kit/molecule/common_widgets/loading_widget.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class AllChatsPage extends StatefulWidget {
   const AllChatsPage({super.key});
@@ -43,17 +42,19 @@ class _AllChatsPageState extends State<AllChatsPage> {
             ],
           ),
 
-          loaded: () => RefreshIndicator(
+          loaded: (userModel) => RefreshIndicator(
             onRefresh: () {
-              return Future.delayed(Duration(seconds: 1));
-              // cubit.getCharts
+              return Future.delayed(
+                Duration(seconds: 1),
+                cubit.getCharts,
+              );
             },
             child: CustomScrollView(
               slivers: [
                 SliverAppBar(
                   automaticallyImplyLeading: false,
                   backgroundColor: Colors.transparent,
-                  flexibleSpace: UiKitHomeAppBar(),
+                  flexibleSpace: UiKitHomeAppBar(userModel: userModel),
                 ),
                 SpacingFoundation.verticalSpace30.sliver,
                 DecoratedBox(
@@ -86,8 +87,8 @@ class _AllChatsPageState extends State<AllChatsPage> {
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {
-                              log('onTap');
-                              context.push(MessagePage());
+                              //TODO add chat id
+                              GoRouter.of(context).push(AppRoutes.chatId.replaceFirst(':id', '1'));
                             },
                             child: ChatRowItem(
                               name: 'Test name',

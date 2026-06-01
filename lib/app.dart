@@ -4,9 +4,8 @@ import 'package:chat_pet/domain/usecases/auth/login_use_case.dart';
 import 'package:chat_pet/domain/usecases/auth/registration_use_case.dart';
 import 'package:chat_pet/domain/usecases/users/get_me_use_case.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
-import 'package:chat_pet/presentation/pages/home/cubit/navigation_cubit.dart';
 import 'package:chat_pet/presentation/pages/signup/cubit/signup_cubit.dart';
-import 'package:chat_pet/presentation/pages/start/auth_wrapper.dart';
+import 'package:chat_pet/presentation/route/route_configuration.dart';
 import 'package:chat_pet/presentation/ui_kit/theme/ui_kit_theme.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:chat_pet/presentation/utils/behavior/my_behavior.dart';
@@ -25,25 +24,30 @@ class App extends StatelessWidget {
       splitScreenMode: true,
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (_) => NavigationCubit()),
           BlocProvider(create: (_) => UserCubit(getIt.get<GetMeUseCase>(), getIt.get<InitUseCase>())),
           BlocProvider(create: (_) => SignupCubit(getIt.get<RegistrationUseCase>(), getIt.get<LoginUseCase>())),
         ],
-        child: MaterialApp(
-          builder: (context, child) {
-            return ScrollConfiguration(
-              behavior: MyBehavior(),
-              child: child!,
+        child: Builder(
+          builder: (context) {
+            final router = RouteConfiguration.router(context);
+
+            return MaterialApp.router(
+              routerConfig: router,
+              builder: (context, child) {
+                return ScrollConfiguration(
+                  behavior: MyBehavior(),
+                  child: child!,
+                );
+              },
+              localizationsDelegates: const [
+                S.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+              ],
+              theme: UiKitThemes().defaultThemeData,
             );
           },
-          localizationsDelegates: const [
-            S.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-          ],
-          theme: UiKitThemes().defaultThemeData,
-          home: AuthWrapper(),
         ),
       ),
     );

@@ -1,11 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:chat_pet/presentation/pages/login/login_page.dart';
-import 'package:chat_pet/presentation/pages/signup/signup_page.dart';
 import 'package:chat_pet/presentation/pages/start/widgets/gradient_ellipse_painter.dart';
 import 'package:chat_pet/presentation/pages/start/widgets/or_row_widget.dart';
 import 'package:chat_pet/presentation/pages/start/widgets/social_links_widget.dart';
+import 'package:chat_pet/presentation/route/app_routes.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -119,7 +119,7 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                     Expanded(
                       child: UiKitButton(
                         text: S.of(context).LogIn,
-                        onTap: () => context.push(LoginPage()),
+                        onTap: () => GoRouter.of(context).push(AppRoutes.login),
                       ),
                     ),
                   ],
@@ -137,7 +137,7 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                       ),
                     ),
                     GestureDetector(
-                      onTap: () => context.push(SignupPage()),
+                      onTap: () => GoRouter.of(context).push(AppRoutes.signUp),
                       child: Text(
                         S.of(context).SignUpWithEmail,
                         style: theme?.circularStdTextTheme.medium.copyWith(

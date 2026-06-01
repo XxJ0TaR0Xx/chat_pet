@@ -55,9 +55,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i566.SecureStorageService>(
       () => _i415.SecureStorageServiceImpl(gh<_i558.FlutterSecureStorage>()),
     );
-    gh.factory<_i286.AuthRemoteRepository>(
-      () => _i370.AuthRemoteRepositoryImpl(gh<_i361.Dio>()),
-    );
     gh.singleton<_i866.TokenManager>(() => _i1003.TokenManagerImpl());
     gh.factory<_i374.RegistrationRepository>(
       () => const _i891.RegistrationRepositoryImpl(),
@@ -79,6 +76,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i615.AuthLocalRepository>(
       () => _i236.AuthLocalRepositoryImpl(gh<_i566.SecureStorageService>()),
+    );
+    gh.factory<_i286.AuthRemoteRepository>(
+      () => _i370.AuthRemoteRepositoryImpl(
+        gh<_i361.Dio>(),
+        gh<_i866.TokenManager>(),
+      ),
     );
     gh.factory<_i508.AuthRepository>(
       () => _i24.AuthRepositoryImpl(

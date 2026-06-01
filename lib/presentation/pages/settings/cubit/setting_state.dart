@@ -2,8 +2,11 @@ part of 'setting_cubit.dart';
 
 @freezed
 class SettingState with _$SettingState {
-  const factory SettingState.initial() = _Initial;
-  const factory SettingState.loading() = _Loading;
-  const factory SettingState.loaded(UserModel? userModel) = _Loaded;
-  const factory SettingState.error(String errorMessage) = _Error;
+  const factory SettingState.initial() = SettingStateInitial;
+  const factory SettingState.loading() = SettingStateLoading;
+  const factory SettingState.loaded(
+    UserModel userModel, {
+    @Default(null) String? transientError,
+  }) = SettingStateLoaded;
+  const factory SettingState.error(String errorMessage) = SettingStateError;
 }

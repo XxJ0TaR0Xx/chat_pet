@@ -81,8 +81,8 @@ class AuthRepositoryImpl implements AuthRepository {
     talk.info('Logout requested');
 
     try {
-      await _authLocalRepository.removeTokens();
       await _authRemoteRepository.logout();
+      await _authLocalRepository.removeTokens();
 
       _tokenCache.clear();
     } on DioException catch (e, st) {

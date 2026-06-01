@@ -49,6 +49,7 @@
   "EnterNewValue": "Enter new value",
   "SelectYourAddress": "Select your address",
   "ActiveNow": "Active now",
-  "ActiveNotNow": "Is't active now"
+  "ActiveNotNow": "Is't active now",
+  "UnderDevelopment": "Under development"
 
 }

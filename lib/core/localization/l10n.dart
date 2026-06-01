@@ -438,6 +438,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Under development`
+  String get UnderDevelopment {
+    return Intl.message(
+      'Under development',
+      name: 'UnderDevelopment',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

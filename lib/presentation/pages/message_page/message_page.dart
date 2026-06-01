@@ -11,7 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MessagePage extends StatefulWidget {
-  const MessagePage({super.key});
+  const MessagePage({required this.id, super.key});
+  final String id;
 
   @override
   State<MessagePage> createState() => _MessagePageState();

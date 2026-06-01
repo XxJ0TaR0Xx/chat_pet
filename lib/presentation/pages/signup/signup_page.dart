@@ -1,10 +1,11 @@
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
-import 'package:chat_pet/presentation/pages/home/home_page.dart';
 import 'package:chat_pet/presentation/pages/signup/cubit/signup_cubit.dart';
+import 'package:chat_pet/presentation/route/app_routes.dart';
 import 'package:chat_pet/presentation/ui_kit/molecule/snack_bar/custom_snack_bar.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({
@@ -83,7 +84,7 @@ class _SignupPageState extends State<SignupPage> {
 
                     if (state is SignupStateLoaded) {
                       context.read<UserCubit>().setUser(state.user);
-                      context.pushAndRemoveUntil(HomePage());
+                      GoRouter.of(context).go(AppRoutes.chats);
                     }
                   },
                   builder: (context, state) {
