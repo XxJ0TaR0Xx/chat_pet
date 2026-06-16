@@ -1,3 +1,4 @@
+import 'package:chat_pet/domain/models/user/enum/friend_enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'user_model.freezed.dart';
@@ -16,7 +17,12 @@ abstract class UserModel with _$UserModel {
     @JsonKey(name: 'phone_number') String? number,
     String? authProvider,
     DateTime? createdAt,
+    @JsonKey(name: 'friendship_status') FriendEnum? friendshipStatus,
   }) = _UserModel;
 
+  const UserModel._();
+
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
+
+  String get nameAndLast => '${name ?? ''} ${lastName ?? ''}'.trim();
 }
