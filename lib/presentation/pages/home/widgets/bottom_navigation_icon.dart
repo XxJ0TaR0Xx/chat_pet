@@ -7,12 +7,14 @@ class BottomNavigationIcon extends StatelessWidget {
     required this.icon,
     super.key,
     this.isActive = false,
+    this.showBadge = false,
     this.onTap,
   });
 
   final String title;
   final AppIcons icon;
   final bool isActive;
+  final bool showBadge;
   final VoidCallback? onTap;
 
   @override
@@ -24,10 +26,27 @@ class BottomNavigationIcon extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ChatPetIcon.icon(
-            icon,
-            color: color,
-            size: 26.w,
+          Stack(
+            children: [
+              if (showBadge)
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  child: Container(
+                    width: 10,
+                    height: 10,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ColorsFoundation.orange,
+                    ),
+                  ),
+                ),
+              ChatPetIcon.icon(
+                icon,
+                color: color,
+                size: 26.w,
+              ),
+            ],
           ),
           SpacingFoundation.verticalSpace6,
           Text(
