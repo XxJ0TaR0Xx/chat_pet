@@ -9,6 +9,7 @@ abstract class RegisterModule {
   @lazySingleton
   FlutterSecureStorage get secureStorage => const FlutterSecureStorage();
 
+  @Named('basicDio')
   @injectable
   Dio get dio => DioConfiguration.createBasic(baseUrl: ApiConfig.current.baseUrl);
 }
