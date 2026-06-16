@@ -12,10 +12,12 @@ abstract final class AppRoutes {
   static const String signUpSegment = 'sing-up';
   static const String profileSegment = 'profile';
   static const String chatSegment = ':id';
+  static const String newContacts = 'new-contacts';
 
   // Full paths — used for navigation (push/go/redirect)
   static const String login = '$start/$loginSegment';
   static const String signUp = '$start/$signUpSegment';
   static const String settingsProfile = '$settings/$profileSegment';
   static const String chatId = '$chats/$chatSegment';
+  static const String findNewContacts = '$contacts/$newContacts';
 }

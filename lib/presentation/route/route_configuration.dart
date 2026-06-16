@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
 import 'package:chat_pet/presentation/pages/chats/all_chats_page.dart';
+import 'package:chat_pet/presentation/pages/contacts/contacts_page.dart';
+import 'package:chat_pet/presentation/pages/contacts/find_contact/find_new_contact.dart';
 import 'package:chat_pet/presentation/pages/home/home_page.dart';
 import 'package:chat_pet/presentation/pages/login/login_page.dart';
 import 'package:chat_pet/presentation/pages/message_page/message_page.dart';
@@ -104,9 +106,14 @@ final class RouteConfiguration {
               routes: [
                 GoRoute(
                   path: AppRoutes.contacts,
-                  builder: (context, state) => const Center(
-                    child: Text('Контакты скоро появятся', style: TextStyle(color: Colors.white)),
-                  ),
+                  builder: (context, state) => ContactsPage(),
+                  routes: [
+                    GoRoute(
+                      path: AppRoutes.newContacts,
+                      parentNavigatorKey: _rootNavigationKey,
+                      builder: (context, state) => const FindContact(),
+                    ),
+                  ],
                 ),
               ],
             ),
