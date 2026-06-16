@@ -70,6 +70,7 @@ dependencies:
 
   # Route
   go_router: ^17.2.3
+  web_socket_channel: ^3.0.3
 
 
 

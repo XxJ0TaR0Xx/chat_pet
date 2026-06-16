@@ -25,6 +25,8 @@ class ApiConfig {
 
   String get baseUrl => 'http://$serverHost:$serverPort/';
 
+  String get wsUrl => 'ws://$serverHost:$serverPort/';
+
   static final ApiConfig _current = _createDefaultConfig();
 
   static ApiConfig get current => _current;
