@@ -24,6 +24,8 @@ enum AppIcons {
   microphone,
   files,
   tg,
+  userAdd,
+  x,
 }
 
 const Map<AppIcons, String> _iconsMap = {
@@ -124,5 +126,14 @@ const Map<AppIcons, String> _iconsMap = {
   </svg>''',
   AppIcons.tg: '''<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path fill-rule="evenodd" clip-rule="evenodd" d="M1.74172 0.12711L16.3399 7.42431C16.7476 7.62804 17.0051 8.04468 17.0051 8.50046C17.0051 8.95623 16.7476 9.37287 16.3399 9.57661L1.74172 16.8738C1.3187 17.0854 0.810987 17.0295 0.444074 16.7311C0.0771618 16.4326 -0.080901 15.9469 0.0400907 15.4897L1.89134 8.50046L0.0400907 1.51125C-0.080901 1.05402 0.0771618 0.568307 0.444074 0.269854C0.810987 -0.0285996 1.3187 -0.0844497 1.74172 0.12711Z" fill="white"/>
+  </svg>''',
+  AppIcons.userAdd: '''<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="10" cy="17.5" rx="7" ry="3.5" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+  <circle cx="10" cy="7" r="4" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M21 11H17" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M19 9L19 13" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>''',
+  AppIcons.x: '''<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M10.75 0.750062L0.75 10.75M10.75 10.7499L0.75 0.75" stroke="#000E08" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>''',
 };
