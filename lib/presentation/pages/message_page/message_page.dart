@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:chat_pet/presentation/pages/message_page/cubit/message_cubit.dart';
 import 'package:chat_pet/presentation/pages/message_page/models/message_model.dart';
 import 'package:chat_pet/presentation/pages/message_page/widgets/low_chat_panel_widget.dart';
@@ -86,7 +84,6 @@ class _MessagePageState extends State<MessagePage> {
                             showTime = true;
                           }
 
-                          log('model.messageType ${model.messageType}');
                           return switch (model.messageType) {
                             MessageType.date => Row(
                               mainAxisAlignment: .center,

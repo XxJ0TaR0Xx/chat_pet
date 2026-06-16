@@ -272,12 +272,12 @@ _$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&const DeepCollectionEquality().equals(other.userModel, userModel));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&(identical(other.userModel, userModel) || other.userModel == userModel));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(userModel));
+int get hashCode => Object.hash(runtimeType,userModel);
 
 @override
 String toString() {
@@ -296,7 +296,7 @@ $Res call({
 });
 
 
-
+$UserModelCopyWith<$Res> get userModel;
 
 }
 /// @nodoc
@@ -309,14 +309,23 @@ class __$LoadedCopyWithImpl<$Res>
 
 /// Create a copy of ChatState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? userModel = freezed,}) {
+@pragma('vm:prefer-inline') $Res call({Object? userModel = null,}) {
   return _then(_Loaded(
-freezed == userModel ? _self.userModel : userModel // ignore: cast_nullable_to_non_nullable
+null == userModel ? _self.userModel : userModel // ignore: cast_nullable_to_non_nullable
 as UserModel,
   ));
 }
 
-
+/// Create a copy of ChatState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$UserModelCopyWith<$Res> get userModel {
+  
+  return $UserModelCopyWith<$Res>(_self.userModel, (value) {
+    return _then(_self.copyWith(userModel: value));
+  });
+}
 }
 
 /// @nodoc
