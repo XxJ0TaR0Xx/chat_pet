@@ -60,6 +60,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "ExistingAccount": MessageLookupByLibrary.simpleMessage(
       "Existing account? ",
     ),
+    "FindYourFirstFriends": MessageLookupByLibrary.simpleMessage(
+      "Здесь пока никого нет, найдите своих первых друзей",
+    ),
     "ForgotPassword": MessageLookupByLibrary.simpleMessage("Forgot password"),
     "GetChattingWithFriends": MessageLookupByLibrary.simpleMessage(
       "Get chatting with friends",
@@ -68,6 +71,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "HelpCenter": MessageLookupByLibrary.simpleMessage(
       "Справочный центр, свяжитесь с нами, политика конфиденциальности",
     ),
+    "IncomingRequests": MessageLookupByLibrary.simpleMessage(
+      "Входящие запросы",
+    ),
     "InviteAFriend": MessageLookupByLibrary.simpleMessage("Пригласить друзей"),
     "LogIn": MessageLookupByLibrary.simpleMessage("Log in"),
     "LogInToChatbox": MessageLookupByLibrary.simpleMessage("Log in to Chatbox"),
@@ -75,10 +81,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Выйдите из своей учетной записи",
     ),
     "Message": MessageLookupByLibrary.simpleMessage("Message"),
+    "MyContact": MessageLookupByLibrary.simpleMessage("Мои контакты"),
     "NetworkUsage": MessageLookupByLibrary.simpleMessage(
       "Использование сети, использование данных",
     ),
     "No": MessageLookupByLibrary.simpleMessage("Нет"),
+    "NoOneWasFound": MessageLookupByLibrary.simpleMessage("Никто не найден"),
     "NotFounded": MessageLookupByLibrary.simpleMessage("Not founded"),
     "Notifications": MessageLookupByLibrary.simpleMessage("Уведомления"),
     "Or": MessageLookupByLibrary.simpleMessage("Or"),
@@ -104,6 +112,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "SomethingWentWrong": MessageLookupByLibrary.simpleMessage(
       "Что-то пошло не так",
     ),
+    "StartYourSearch": MessageLookupByLibrary.simpleMessage("Начните поиски"),
     "StorageAndData": MessageLookupByLibrary.simpleMessage(
       "Хранение и передача данных",
     ),
