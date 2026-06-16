@@ -1,18 +1,19 @@
-import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 
 class UiKitHomeAppBar extends PreferredSize {
   const UiKitHomeAppBar({
-    required this.userModel,
     super.preferredSize = const Size(double.infinity, 64),
     super.child = const SizedBox(),
     this.onTap,
+    this.title,
+    this.action,
     super.key,
   });
 
   final VoidCallback? onTap;
-  final UserModel userModel;
+  final String? title;
+  final Widget? action;
 
   @override
   Widget build(BuildContext context) {
@@ -43,20 +44,17 @@ class UiKitHomeAppBar extends PreferredSize {
                       AppIcons.search,
                       size: 24.w,
                       color: ColorsFoundation.surfaceBase,
-                    ).paddingAll(EdgeInsetsFoundation.all10),
+                    ).paddingAll(EdgeInsetsFoundation.all8),
                   ),
                 ),
                 Text(
-                  'Home',
-                  style: theme?.carosTextTheme.bold.copyWith(
+                  title ?? 'Home',
+                  style: theme?.carosTextTheme.mediumBold.copyWith(
                     fontSize: 20.w,
                     color: theme.colorScheme.surfaceBase,
                   ),
                 ),
-                CircleAvatar(
-                  radius: 20.w,
-                  backgroundImage: userModel.avatarUrl != null ? NetworkImage(userModel.avatarUrl!) : AssetImage('assets/images/orig.png'),
-                ),
+                action ?? const SizedBox.shrink(),
               ],
             ).paddingOnly(
               top: SpacingFoundation.verticalSpacing16,
