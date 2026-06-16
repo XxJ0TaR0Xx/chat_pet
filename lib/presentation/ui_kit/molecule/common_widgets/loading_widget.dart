@@ -2,7 +2,12 @@ import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 
 class LoadingWidget extends StatelessWidget {
-  const LoadingWidget({super.key});
+  const LoadingWidget({
+    this.color,
+    super.key,
+  });
+
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +16,7 @@ class LoadingWidget extends StatelessWidget {
         height: 24.h,
         width: 24.h,
         child: CircularProgressIndicator(
-          color: context.uiKitTheme?.colorScheme.inverseSurface,
+          color: color ?? context.uiKitTheme?.colorScheme.inverseSurface,
         ),
       ),
     );
