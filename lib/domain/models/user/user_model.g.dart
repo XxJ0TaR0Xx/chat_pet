@@ -19,6 +19,10 @@ _UserModel _$UserModelFromJson(Map<String, dynamic> json) => _UserModel(
   createdAt: json['createdAt'] == null
       ? null
       : DateTime.parse(json['createdAt'] as String),
+  friendshipStatus: $enumDecodeNullable(
+    _$FriendEnumEnumMap,
+    json['friendship_status'],
+  ),
 );
 
 Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
@@ -33,4 +37,11 @@ Map<String, dynamic> _$UserModelToJson(_UserModel instance) =>
       'phone_number': instance.number,
       'authProvider': instance.authProvider,
       'createdAt': instance.createdAt?.toIso8601String(),
+      'friendship_status': _$FriendEnumEnumMap[instance.friendshipStatus],
     };
+
+const _$FriendEnumEnumMap = {
+  FriendEnum.pendingSent: 'pending_sent',
+  FriendEnum.pendingReceived: 'pending_received',
+  FriendEnum.friends: 'friends',
+};
