@@ -12,7 +12,6 @@ class CarosTextTheme extends UiKitTextTheme {
     fontSize: 16.w,
     fontWeight: FontWeight.w400,
     color: foregroundColor,
-    package: 'aviation_uikit',
   );
 
   TextStyle get medium => TextStyle(
@@ -20,7 +19,6 @@ class CarosTextTheme extends UiKitTextTheme {
     fontSize: 16.w,
     fontWeight: FontWeight.w400,
     color: foregroundColor,
-    package: 'aviation_uikit',
   );
 
   TextStyle get mediumBold => medium.copyWith(
@@ -42,7 +40,6 @@ class CarosTextTheme extends UiKitTextTheme {
     fontSize: 68.w,
     fontWeight: FontWeight.w400,
     color: foregroundColor,
-    package: 'aviation_uikit',
   );
 
   TextStyle get bold => TextStyle(
@@ -50,7 +47,6 @@ class CarosTextTheme extends UiKitTextTheme {
     fontSize: 16.w,
     fontWeight: FontWeight.bold,
     color: foregroundColor,
-    package: 'aviation_uikit',
   );
 
   TextStyle get boldTitle => TextStyle(
@@ -58,7 +54,6 @@ class CarosTextTheme extends UiKitTextTheme {
     fontSize: 24.w,
     fontWeight: FontWeight.bold,
     color: foregroundColor,
-    package: 'aviation_uikit',
   );
 }
 
