@@ -49,6 +49,7 @@ class _ContactsPageState extends State<ContactsPage> {
   @override
   Widget build(BuildContext context) {
     final theme = context.uiKitTheme;
+
     return BlocProvider.value(
       value: _cubit,
       child: Scaffold(
@@ -84,6 +85,7 @@ class _SearchBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.uiKitTheme;
+
     return CustomScrollView(
       slivers: [
         SpacingFoundation.verticalSpace16.sliver,
@@ -143,6 +145,7 @@ class _ContactsBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = context.uiKitTheme;
+
     return CustomScrollView(
       slivers: [
         SliverAppBar(

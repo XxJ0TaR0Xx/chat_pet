@@ -3,18 +3,17 @@ import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 
-class ContactItem extends StatelessWidget {
-  const ContactItem._({
+abstract class ContactItem extends StatelessWidget {
+  const ContactItem({
     required this.user,
-    this.isOtherUsers = false,
-    this.onAddUser,
     this.onDeleteUser,
+    super.key,
   });
 
   factory ContactItem.my({
     required UserModel user,
     ValueChanged<String>? onDeleteUser,
-  }) => ContactItem._(
+  }) => _MyContactsItem(
     user: user,
     onDeleteUser: onDeleteUser,
   );
@@ -23,17 +22,83 @@ class ContactItem extends StatelessWidget {
     required UserModel user,
     ValueChanged<String>? onAddUser,
     ValueChanged<String>? onDeleteUser,
-  }) => ContactItem._(
+  }) => _OtherContactItem(
     user: user,
-    isOtherUsers: true,
     onAddUser: onAddUser,
     onDeleteUser: onDeleteUser,
   );
 
   final UserModel user;
-  final ValueChanged<String>? onAddUser;
   final ValueChanged<String>? onDeleteUser;
-  final bool isOtherUsers;
+}
+
+class _MyContactsItem extends ContactItem {
+  const _MyContactsItem({
+    required super.user,
+    required super.onDeleteUser,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        _CommonContactPart(user: user),
+        InkWell(
+          onTap: () => onDeleteUser?.call(user.id),
+          child: Icon(
+            Icons.delete,
+            color: ColorsFoundation.error.withValues(alpha: 0.5),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _OtherContactItem extends ContactItem {
+  const _OtherContactItem({
+    required super.user,
+    super.onDeleteUser,
+    this.onAddUser,
+  });
+
+  final ValueChanged<String>? onAddUser;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        _CommonContactPart(user: user),
+        switch (user.friendshipStatus) {
+          FriendEnum.friends => InkWell(
+            onTap: () => onDeleteUser?.call(user.id),
+            child: Icon(
+              Icons.delete,
+              color: ColorsFoundation.error.withValues(alpha: 0.5),
+            ),
+          ),
+          FriendEnum.pendingReceived => Icon(
+            Icons.timer_sharp,
+            color: ColorsFoundation.green,
+          ),
+          FriendEnum.pendingSent => Icon(
+            Icons.timer_sharp,
+            color: ColorsFoundation.grayColor.withValues(alpha: 0.5),
+          ),
+          _ => InkWell(
+            onTap: () => onAddUser?.call(user.id),
+            child: ChatPetIcon.icon(AppIcons.userAdd),
+          ),
+        },
+      ],
+    );
+  }
+}
+
+class _CommonContactPart extends StatelessWidget {
+  const _CommonContactPart({required this.user});
+
+  final UserModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -68,36 +133,6 @@ class ContactItem extends StatelessWidget {
             ],
           ).paddingVertical(SpacingFoundation.horizontalSpacing8),
         ),
-        if (isOtherUsers)
-          switch (user.friendshipStatus) {
-            FriendEnum.friends => InkWell(
-              onTap: () => onDeleteUser?.call(user.id),
-              child: Icon(
-                Icons.delete,
-                color: ColorsFoundation.error.withValues(alpha: 0.5),
-              ),
-            ),
-            FriendEnum.pendingReceived => Icon(
-              Icons.timer_sharp,
-              color: ColorsFoundation.green,
-            ),
-            FriendEnum.pendingSent => Icon(
-              Icons.timer_sharp,
-              color: ColorsFoundation.grayColor.withValues(alpha: 0.5),
-            ),
-            _ => InkWell(
-              onTap: () => onAddUser?.call(user.id),
-              child: ChatPetIcon.icon(AppIcons.userAdd),
-            ),
-          }
-        else
-          InkWell(
-            onTap: () => onDeleteUser?.call(user.id),
-            child: Icon(
-              Icons.delete,
-              color: ColorsFoundation.error.withValues(alpha: 0.5),
-            ),
-          ),
       ],
     );
   }

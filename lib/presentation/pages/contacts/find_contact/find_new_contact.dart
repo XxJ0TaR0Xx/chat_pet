@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-//@danila#6947
 class FindContact extends StatefulWidget {
   const FindContact({super.key});
 
@@ -51,48 +50,46 @@ class _FindContactState extends State<FindContact> {
               ).paddingHorizontal(SpacingFoundation.horizontalSpacing24).sliver,
               SpacingFoundation.verticalSpace30.sliver,
               BlocBuilder<FindContactCubit, FindContactState>(
-                builder: (context, state) {
-                  return state.when(
-                    error: (error) => SliverFillRemaining(
-                      hasScrollBody: false,
-                      child: Center(
-                        child: Text(
-                          error,
-                          style: theme?.carosTextTheme.medium,
-                          textAlign: TextAlign.center,
-                        ),
+                builder: (context, state) => state.when(
+                  error: (error) => SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Center(
+                      child: Text(
+                        error,
+                        style: theme?.carosTextTheme.medium,
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                    loading: () => SliverFillRemaining(
-                      hasScrollBody: false,
-                      child: LoadingWidget(),
-                    ),
-                    loaded: (contacts) {
-                      if (contacts.isEmpty) {
-                        return SliverFillRemaining(
-                          hasScrollBody: false,
-                          child: Center(
-                            child: Text(
-                              S.of(context).NoOneWasFound,
-                              style: theme?.carosTextTheme.medium,
-                              textAlign: TextAlign.center,
-                            ),
+                  ),
+                  loading: () => SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: LoadingWidget(),
+                  ),
+                  loaded: (contacts) {
+                    if (contacts.isEmpty) {
+                      return SliverFillRemaining(
+                        hasScrollBody: false,
+                        child: Center(
+                          child: Text(
+                            S.of(context).NoOneWasFound,
+                            style: theme?.carosTextTheme.medium,
+                            textAlign: TextAlign.center,
                           ),
-                        );
-                      }
-
-                      return SliverList.separated(
-                        itemCount: contacts.length,
-                        itemBuilder: (_, index) => ContactItem.other(
-                          user: contacts[index],
-                          onAddUser: cubit.sendRequest,
-                          onDeleteUser: cubit.deleteContact,
-                        ).paddingHorizontal(SpacingFoundation.horizontalSpacing24),
-                        separatorBuilder: (_, __) => SpacingFoundation.verticalSpace8,
+                        ),
                       );
-                    },
-                  );
-                },
+                    }
+
+                    return SliverList.separated(
+                      itemCount: contacts.length,
+                      itemBuilder: (_, index) => ContactItem.other(
+                        user: contacts[index],
+                        onAddUser: cubit.sendRequest,
+                        onDeleteUser: cubit.deleteContact,
+                      ).paddingHorizontal(SpacingFoundation.horizontalSpacing24),
+                      separatorBuilder: (_, __) => SpacingFoundation.verticalSpace8,
+                    );
+                  },
+                ),
               ),
             ],
           ),

@@ -12,6 +12,8 @@ class AllChatsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.uiKitTheme;
+
     return BlocBuilder<ChatCubit, ChatState>(
       builder: (context, state) {
         return state.when(
@@ -82,6 +84,11 @@ class AllChatsPage extends StatelessWidget {
                           ),
                         );
                       },
+                    ),
+                    Expanded(
+                      child: ColoredBox(
+                        color: theme?.colorScheme.surfaceBase ?? Colors.white,
+                      ),
                     ),
                   ],
                 ).sliver,

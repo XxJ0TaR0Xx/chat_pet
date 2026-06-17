@@ -14,7 +14,7 @@ abstract interface class ContactsRepository {
 
   Future<Either<ContactsFailure, Unit>> rejectRequest(String requestId);
 
-  Future<Either<ContactsFailure, Unit>> deleteContacts(String userId);
+  Future<Either<ContactsFailure, Unit>> deleteContacts(String contactId);
 
   Future<Either<ContactsFailure, List<ContactRequest>>> incomingRequest();
 

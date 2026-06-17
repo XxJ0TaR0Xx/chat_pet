@@ -7,9 +7,9 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 @lazySingleton
 class WebSocketService {
-  WebSocketChannel? _channel;
   final _controller = StreamController<Map<String, dynamic>>.broadcast();
 
+  WebSocketChannel? _channel;
   String? _lastUrl;
   String? _lastToken;
 
@@ -19,6 +19,13 @@ class WebSocketService {
     _lastUrl = url;
     _lastToken = token;
     _connect();
+  }
+
+  void disconnect() {
+    _lastUrl = null;
+    _lastToken = null;
+    _channel?.sink.close();
+    _channel = null;
   }
 
   void _connect() {
@@ -48,12 +55,5 @@ class WebSocketService {
 
   void _scheduleReconnect() {
     Future.delayed(const Duration(seconds: 3), _connect);
-  }
-
-  void disconnect() {
-    _lastUrl = null;
-    _lastToken = null;
-    _channel?.sink.close();
-    _channel = null;
   }
 }

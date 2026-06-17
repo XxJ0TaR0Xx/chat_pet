@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:chat_pet/core/injectable/injectable.dart';
-import 'package:chat_pet/data/common/services/web_socket/web_socket_service.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/domain/usecases/auth/init_use_case.dart';
 import 'package:chat_pet/domain/usecases/users/get_me_use_case.dart';
@@ -29,7 +27,6 @@ class UserCubit extends Cubit<UserState> {
 
   void clearUser() {
     _currentUser = null;
-    getIt.get<WebSocketService>().disconnect();
     emit(UserState.error('log out'));
   }
 

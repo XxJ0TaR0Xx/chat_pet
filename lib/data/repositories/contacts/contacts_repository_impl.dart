@@ -109,9 +109,9 @@ class ContactsRepositoryImpl implements ContactsRepository {
   @override
   Future<Either<ContactsFailure, Unit>> deleteContacts(String contactId) async {
     try {
-      talk.info('Delete user by id, contactId $contactId');
+      talk.info('Delete contact by id, contactId $contactId');
 
-      await _dio.delete('contacts/${contactId.trim()}');
+      await _dio.delete('contacts/${contactId}');
 
       return const Right(unit);
     } on DioException catch (e, st) {
