@@ -9,7 +9,7 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: AuthRemoteRepository)
 final class AuthRemoteRepositoryImpl implements AuthRemoteRepository {
-  AuthRemoteRepositoryImpl(this._dio, this._tokenManager);
+  AuthRemoteRepositoryImpl(@Named('basicDio') this._dio, this._tokenManager);
 
   final Dio _dio;
   final TokenManager _tokenManager;
@@ -41,9 +41,7 @@ final class AuthRemoteRepositoryImpl implements AuthRemoteRepository {
     final token = _tokenManager.accessToken;
     await _dio.post(
       '$_authPath/logout',
-      options: token != null
-          ? Options(headers: {'Authorization': 'Bearer $token'})
-          : null,
+      options: token != null ? Options(headers: {'Authorization': 'Bearer $token'}) : null,
     );
   }
 }

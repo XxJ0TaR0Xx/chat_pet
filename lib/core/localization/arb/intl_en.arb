@@ -50,6 +50,11 @@
   "SelectYourAddress": "Select your address",
   "ActiveNow": "Active now",
   "ActiveNotNow": "Is't active now",
-  "UnderDevelopment": "Under development"
+  "UnderDevelopment": "Under development",
+  "MyContact": "My contact",
+  "NoOneWasFound": "No one was found",
+  "FindYourFirstFriends": "There's no one here yet, find your first friends",
+  "StartYourSearch": "Start your search",
+  "IncomingRequests": "Incoming requests"
 
 }

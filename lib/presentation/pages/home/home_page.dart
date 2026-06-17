@@ -1,7 +1,11 @@
 import 'package:chat_pet/core/injectable/injectable.dart';
 import 'package:chat_pet/domain/usecases/auth/logout_use_case.dart';
+import 'package:chat_pet/domain/usecases/contacts/delete_contact_use_case.dart';
+import 'package:chat_pet/domain/usecases/contacts/get_contacts_use_case.dart';
+import 'package:chat_pet/presentation/cubits/contact_request/contact_requests_cubit.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
 import 'package:chat_pet/presentation/pages/chats/cubit/chat_cubit.dart';
+import 'package:chat_pet/presentation/pages/contacts/cubit/contacts_cubit.dart';
 import 'package:chat_pet/presentation/pages/home/widgets/bottom_navigation_icon.dart';
 import 'package:chat_pet/presentation/pages/settings/cubit/setting_cubit.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
@@ -30,13 +34,19 @@ class HomeScope extends StatelessWidget {
         BlocProvider(
           create: (_) => ChatCubit(userCubit: context.read<UserCubit>()),
         ),
+        BlocProvider(
+          create: (_) => ContactsCubit(
+            getIt.get<GetContactsUseCase>(),
+            getIt.get<DeleteContactUseCase>(),
+          ),
+        ),
       ],
       child: child,
     );
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({
     required this.navigationShell,
     super.key,
@@ -44,17 +54,30 @@ class HomePage extends StatelessWidget {
 
   final StatefulNavigationShell navigationShell;
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  late final ContactRequestsCubit _cubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _cubit = getIt.get<ContactRequestsCubit>();
+  }
+
   void _onTabSelected(int index) {
-    navigationShell.goBranch(
+    widget.navigationShell.goBranch(
       index,
-      initialLocation: index == navigationShell.currentIndex,
+      initialLocation: index == widget.navigationShell.currentIndex,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = context.uiKitTheme;
-    final currentIndex = navigationShell.currentIndex;
+    final currentIndex = widget.navigationShell.currentIndex;
 
     return HomeScope(
       child: Scaffold(
@@ -63,43 +86,47 @@ class HomePage extends StatelessWidget {
           decoration: BoxDecoration(
             color: theme?.colorScheme.surfaceBase,
           ),
-          child:
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  BottomNavigationIcon(
-                    icon: AppIcons.message,
-                    title: S.of(context).Message,
-                    isActive: currentIndex == 0,
-                    onTap: () => _onTabSelected(0),
-                  ),
-                  BottomNavigationIcon(
-                    icon: AppIcons.calls,
-                    title: S.of(context).Calls,
-                    isActive: currentIndex == 1,
-                    onTap: () => _onTabSelected(1),
-                  ),
-                  BottomNavigationIcon(
-                    icon: AppIcons.contacts,
-                    title: S.of(context).Contacts,
-                    isActive: currentIndex == 2,
-                    onTap: () => _onTabSelected(2),
-                  ),
-                  BottomNavigationIcon(
-                    icon: AppIcons.settings,
-                    title: S.of(context).Settings,
-                    isActive: currentIndex == 3,
-                    onTap: () => _onTabSelected(3),
-                  ),
-                ],
-              ).paddingOnly(
-                left: SpacingFoundation.horizontalSpacing24,
-                right: SpacingFoundation.horizontalSpacing24,
-                top: SpacingFoundation.verticalSpacing16,
-                bottom: SpacingFoundation.verticalSpacing24,
-              ),
+          child: BlocBuilder<ContactRequestsCubit, ContactRequestState>(
+            bloc: _cubit,
+            builder: (context, state) =>
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    BottomNavigationIcon(
+                      icon: AppIcons.message,
+                      title: S.of(context).Message,
+                      isActive: currentIndex == 0,
+                      onTap: () => _onTabSelected(0),
+                    ),
+                    BottomNavigationIcon(
+                      icon: AppIcons.calls,
+                      title: S.of(context).Calls,
+                      isActive: currentIndex == 1,
+                      onTap: () => _onTabSelected(1),
+                    ),
+                    BottomNavigationIcon(
+                      icon: AppIcons.contacts,
+                      title: S.of(context).Contacts,
+                      isActive: currentIndex == 2,
+                      onTap: () => _onTabSelected(2),
+                      showBadge: state.hasPending,
+                    ),
+                    BottomNavigationIcon(
+                      icon: AppIcons.settings,
+                      title: S.of(context).Settings,
+                      isActive: currentIndex == 3,
+                      onTap: () => _onTabSelected(3),
+                    ),
+                  ],
+                ).paddingOnly(
+                  left: SpacingFoundation.horizontalSpacing24,
+                  right: SpacingFoundation.horizontalSpacing24,
+                  top: SpacingFoundation.verticalSpacing16,
+                  bottom: SpacingFoundation.verticalSpacing24,
+                ),
+          ),
         ),
-        body: navigationShell,
+        body: widget.navigationShell,
       ),
     );
   }

@@ -56,6 +56,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "EnterNewValue": MessageLookupByLibrary.simpleMessage("Enter new value"),
     "ErrorMsg": m0,
     "ExistingAccount": MessageLookupByLibrary.simpleMessage("Existing account"),
+    "FindYourFirstFriends": MessageLookupByLibrary.simpleMessage(
+      "There\'s no one here yet, find your first friends",
+    ),
     "ForgotPassword": MessageLookupByLibrary.simpleMessage("Forgot password"),
     "GetChattingWithFriends": MessageLookupByLibrary.simpleMessage(
       "Get chatting with friends",
@@ -64,6 +67,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "HelpCenter": MessageLookupByLibrary.simpleMessage(
       "Help center,contact us, privacy policy",
     ),
+    "IncomingRequests": MessageLookupByLibrary.simpleMessage(
+      "Incoming requests",
+    ),
     "InviteAFriend": MessageLookupByLibrary.simpleMessage("Invite a friend"),
     "LogIn": MessageLookupByLibrary.simpleMessage("Log in"),
     "LogInToChatbox": MessageLookupByLibrary.simpleMessage("Log in to Chatbox"),
@@ -71,10 +77,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Log out of your account",
     ),
     "Message": MessageLookupByLibrary.simpleMessage("Message"),
+    "MyContact": MessageLookupByLibrary.simpleMessage("My contact"),
     "NetworkUsage": MessageLookupByLibrary.simpleMessage(
       "Network usage, stogare usage",
     ),
     "No": MessageLookupByLibrary.simpleMessage("No"),
+    "NoOneWasFound": MessageLookupByLibrary.simpleMessage("No one was found"),
     "NotFounded": MessageLookupByLibrary.simpleMessage("Not founded"),
     "Notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
     "Or": MessageLookupByLibrary.simpleMessage("Or"),
@@ -99,6 +107,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "SignUpWithMail": MessageLookupByLibrary.simpleMessage("Sign up with mail"),
     "SomethingWentWrong": MessageLookupByLibrary.simpleMessage(
       "Something went wrong",
+    ),
+    "StartYourSearch": MessageLookupByLibrary.simpleMessage(
+      "Start your search",
     ),
     "StorageAndData": MessageLookupByLibrary.simpleMessage("Storage and data"),
     "UnderDevelopment": MessageLookupByLibrary.simpleMessage(

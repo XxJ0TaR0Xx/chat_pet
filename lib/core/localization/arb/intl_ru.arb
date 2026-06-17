@@ -50,5 +50,10 @@
   "SelectYourAddress": "Выберите ваш адресс",
   "ActiveNow": "В сети",
   "ActiveNotNow": "Не в сети",
-  "UnderDevelopment": "Under development"
+  "UnderDevelopment": "Under development",
+  "MyContact": "Мои контакты",
+  "NoOneWasFound": "Никто не найден",
+  "FindYourFirstFriends": "Здесь пока никого нет, найдите своих первых друзей",
+  "StartYourSearch": "Начните поиски",
+  "IncomingRequests": "Входящие запросы"
 }

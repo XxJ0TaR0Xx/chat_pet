@@ -7,17 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-class AllChatsPage extends StatefulWidget {
+class AllChatsPage extends StatelessWidget {
   const AllChatsPage({super.key});
 
   @override
-  State<AllChatsPage> createState() => _AllChatsPageState();
-}
-
-class _AllChatsPageState extends State<AllChatsPage> {
-  @override
   Widget build(BuildContext context) {
-    final cubit = context.read<ChatCubit>();
     final theme = context.uiKitTheme;
 
     return BlocBuilder<ChatCubit, ChatState>(
@@ -36,7 +30,7 @@ class _AllChatsPageState extends State<AllChatsPage> {
               SpacingFoundation.verticalSpace16,
               UiKitButton.primary(
                 text: 'Повторить',
-                onTap: cubit.getCharts,
+                onTap: context.read<ChatCubit>().getCharts,
               ),
               Spacer(),
             ],
@@ -46,7 +40,7 @@ class _AllChatsPageState extends State<AllChatsPage> {
             onRefresh: () {
               return Future.delayed(
                 Duration(seconds: 1),
-                cubit.getCharts,
+                context.read<ChatCubit>().getCharts,
               );
             },
             child: CustomScrollView(
@@ -54,61 +48,49 @@ class _AllChatsPageState extends State<AllChatsPage> {
                 SliverAppBar(
                   automaticallyImplyLeading: false,
                   backgroundColor: Colors.transparent,
-                  flexibleSpace: UiKitHomeAppBar(userModel: userModel),
-                ),
-                SpacingFoundation.verticalSpace30.sliver,
-                DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: theme?.colorScheme.surfaceBase,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(40),
-                      topRight: Radius.circular(40),
+                  flexibleSpace: UiKitHomeAppBar(
+                    action: CircleAvatar(
+                      radius: 20.w,
+                      backgroundImage: userModel.avatarUrl != null ? NetworkImage(userModel.avatarUrl!) : AssetImage('assets/images/orig.png'),
                     ),
                   ),
-                  child: Column(
-                    children: [
-                      SpacingFoundation.verticalSpace14,
-                      Container(
-                        width: 30.w,
-                        height: 3.h,
-                        decoration: BoxDecoration(
-                          color: theme?.colorScheme.grayForegroundColor,
-                          borderRadius: BorderRadius.horizontal(
-                            left: Radius.circular(32),
-                            right: Radius.circular(32),
-                          ),
-                        ),
-                      ),
-                      SpacingFoundation.verticalSpace8,
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: 12,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              //TODO add chat id
-                              GoRouter.of(context).push(AppRoutes.chatId.replaceFirst(':id', '1'));
-                            },
-                            child: ChatRowItem(
-                              name: 'Test name',
-                              secondName: 'Second name $index',
-                              date: DateTime.now(),
-                              lastMessage: 'Test last message',
-                              uncheckMessage: index,
-                              avatarUrl: '',
-                              padding: EdgeInsets.only(
-                                left: SpacingFoundation.horizontalSpacing24,
-                                right: SpacingFoundation.horizontalSpacing24,
-                                bottom: SpacingFoundation.verticalSpacing12,
-                                top: SpacingFoundation.verticalSpacing12,
-                              ),
+                ),
+                SpacingFoundation.verticalSpace30.sliver,
+                BottomSheetWidget(
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 12,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            //TODO add chat id
+                            GoRouter.of(context).push(AppRoutes.chatId.replaceFirst(':id', '1'));
+                          },
+                          child: ChatRowItem(
+                            name: 'Test name',
+                            secondName: 'Second name $index',
+                            date: DateTime.now(),
+                            lastMessage: 'Test last message',
+                            uncheckMessage: index,
+                            avatarUrl: '',
+                            padding: EdgeInsets.only(
+                              left: SpacingFoundation.horizontalSpacing24,
+                              right: SpacingFoundation.horizontalSpacing24,
+                              bottom: SpacingFoundation.verticalSpacing12,
+                              top: SpacingFoundation.verticalSpacing12,
                             ),
-                          );
-                        },
+                          ),
+                        );
+                      },
+                    ),
+                    Expanded(
+                      child: ColoredBox(
+                        color: theme?.colorScheme.surfaceBase ?? Colors.white,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ).sliver,
               ],
             ),

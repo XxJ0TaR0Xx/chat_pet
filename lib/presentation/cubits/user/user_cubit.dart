@@ -27,6 +27,7 @@ class UserCubit extends Cubit<UserState> {
 
   void clearUser() {
     _currentUser = null;
+    emit(UserState.error('log out'));
   }
 
   UserModel? get currentUser => _currentUser ?? (state is UserStateLoaded ? (state as UserStateLoaded).user : null);

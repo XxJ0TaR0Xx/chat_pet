@@ -7,31 +7,38 @@ class AvatarWidget extends StatelessWidget {
   const AvatarWidget({
     required this.codeForGen,
     this.isOnline = false,
+    this.size,
+    this.url,
     super.key,
   });
 
   final String codeForGen;
   final bool isOnline;
-  //TODO when add avatarUrl on back
-  // final String? url;
+  final double? size;
+  final String? url;
 
   @override
   Widget build(BuildContext context) {
     final color = context.uiKitTheme?.colorScheme.green;
 
     return SizedBox(
-      width: 40.w,
-      height: 40.w,
+      width: size ?? 40.w,
+      height: size ?? 40.w,
       child: Stack(
         children: [
-          DecoratedBox(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-            ),
-            child: SvgPicture.string(
-              AvatarPlusGen.instance.generate(codeForGen),
-            ),
-          ),
+          url != null && url!.isNotEmpty
+              ? CircleAvatar(
+                  radius: size,
+                  backgroundImage: NetworkImage(url!),
+                )
+              : DecoratedBox(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                  ),
+                  child: SvgPicture.string(
+                    AvatarPlusGen.instance.generate(codeForGen),
+                  ),
+                ),
           if (isOnline)
             Align(
               alignment: AlignmentGeometry.bottomRight,

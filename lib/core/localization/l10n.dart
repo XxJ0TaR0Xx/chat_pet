@@ -448,6 +448,51 @@ class S {
       args: [],
     );
   }
+
+  /// `My contact`
+  String get MyContact {
+    return Intl.message('My contact', name: 'MyContact', desc: '', args: []);
+  }
+
+  /// `No one was found`
+  String get NoOneWasFound {
+    return Intl.message(
+      'No one was found',
+      name: 'NoOneWasFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There's no one here yet, find your first friends`
+  String get FindYourFirstFriends {
+    return Intl.message(
+      'There\'s no one here yet, find your first friends',
+      name: 'FindYourFirstFriends',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start your search`
+  String get StartYourSearch {
+    return Intl.message(
+      'Start your search',
+      name: 'StartYourSearch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Incoming requests`
+  String get IncomingRequests {
+    return Intl.message(
+      'Incoming requests',
+      name: 'IncomingRequests',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

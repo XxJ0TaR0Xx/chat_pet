@@ -1,5 +1,4 @@
 import 'package:chat_pet/data/common/custom_talker/custom_talker.dart';
-import 'package:chat_pet/data/common/services/api_service.dart';
 import 'package:chat_pet/domain/failures/auth_failures/auth_failure.dart';
 import 'package:chat_pet/domain/interfaces/registration/registration_repository.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
@@ -10,13 +9,14 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: RegistrationRepository)
 class RegistrationRepositoryImpl implements RegistrationRepository {
-  const RegistrationRepositoryImpl();
+  const RegistrationRepositoryImpl(@Named('basicDio') this._dio);
+
+  final Dio _dio;
 
   @override
   Future<Either<AuthFailure, UserModel>> registration(String userName, String email, String password) async {
-    final dio = APIService.instants.dio;
     try {
-      final response = await dio.post(
+      final response = await _dio.post(
         'auth/register',
         data: {
           'username': userName,

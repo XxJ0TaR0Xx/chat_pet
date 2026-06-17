@@ -2,6 +2,7 @@ import 'package:chat_pet/app.dart';
 import 'package:chat_pet/core/injectable/injectable.dart';
 import 'package:chat_pet/data/common/services/api_service.dart';
 import 'package:chat_pet/presentation/cubits/cubit_talker/cubit_talker.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ void main() async {
   configureDependencies();
   CubitTalker.init();
   APIService.init();
+  getIt.registerSingleton<Dio>(APIService.instants.dio);
 
   runApp(const App());
 }

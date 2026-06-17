@@ -128,7 +128,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       color: theme.colorScheme.surfaceBase,
                                     ),
                                   ),
-                                  Text(
+                                  SelectableText(
                                     userModel.userTag,
                                     style: theme?.carosTextTheme.bold.copyWith(
                                       fontSize: 12.w,
