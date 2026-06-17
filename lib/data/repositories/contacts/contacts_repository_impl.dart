@@ -111,7 +111,7 @@ class ContactsRepositoryImpl implements ContactsRepository {
     try {
       talk.info('Delete contact by id, contactId $contactId');
 
-      await _dio.delete('contacts/${contactId}');
+      await _dio.delete('contacts/$contactId');
 
       return const Right(unit);
     } on DioException catch (e, st) {
