@@ -21,7 +21,6 @@ analyzer:
     secure_pubspec_urls: error
     unintended_html_in_doc_comment: ignore # некорретно работает, например для <T>
     overridden_fields: ignore # для override базовых стилей
-    prefer_const_constructors: ignore # TODO вернуть позже (убрал т.к. затрудняет разработку из-за авто const)
 
   plugins:
 
