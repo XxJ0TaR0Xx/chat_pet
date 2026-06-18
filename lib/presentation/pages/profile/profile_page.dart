@@ -4,6 +4,7 @@ import 'package:chat_pet/domain/usecases/users/update_avatar_use_case.dart';
 import 'package:chat_pet/domain/usecases/users/update_me_use_case.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
 import 'package:chat_pet/presentation/pages/profile/cubit/profile_cubit.dart';
+import 'package:chat_pet/presentation/route/app_routes.dart';
 import 'package:chat_pet/presentation/ui_kit/molecule/dialogs/editing_dialog.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void dispose() {
     cubit.close();
-
     super.dispose();
   }
 
@@ -118,7 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       radius: 41.w,
                                       backgroundImage: userModel.avatarUrl != null && userModel.avatarUrl!.isNotEmpty
                                           ? NetworkImage(userModel.avatarUrl!)
-                                          : AssetImage('assets/images/orig.png'),
+                                          : const AssetImage('assets/images/orig.png'),
                                     ),
                                   ),
                                   Text(
@@ -137,14 +137,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ],
                               ),
-                              SizedBox(width: 24),
+                              const SizedBox(width: 24),
                             ],
                           ),
                         ],
                       ).paddingHorizontal(SpacingFoundation.horizontalSpacing24).sliver,
                       SpacingFoundation.verticalSpace24.sliver,
                       BottomSheetWidget(
-                        crossAxisAlignment: .start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SpacingFoundation.verticalSpace24,
                           ...[
@@ -180,6 +180,16 @@ class _ProfilePageState extends State<ProfilePage> {
                               description: editingUserModel?.address != null && editingUserModel!.address!.isNotEmpty
                                   ? editingUserModel?.address
                                   : S.of(context).NotFounded,
+                              onTap: () async {
+                                final newAddress =
+                                    await GoRouter.of(context).push(
+                                          AppRoutes.settingsProfileMap,
+                                          extra: editingUserModel?.address,
+                                        )
+                                        as String;
+                                editingUserModel = editingUserModel?.copyWith(address: newAddress);
+                                setState(() {});
+                              },
                             ),
                             DescriptionProfileUiModel(
                               title: 'Phone  Number',
@@ -204,41 +214,53 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                             DescriptionProfileUiModel(
                               title: 'Create at',
-                              contentType: .createAt,
+                              contentType: UserContentType.createAt,
                               description: editingUserModel?.createdAt != null
-                                  ? DateFormat('mm:hh dd.MM.yyyy').format(editingUserModel!.createdAt!)
+                                  ? DateFormat('dd.MM.yyyy').format(editingUserModel!.createdAt!)
                                   : S.of(context).NotFounded,
                             ),
                           ].map(
                             (e) {
-                              return GestureDetector(
-                                onTap: e.onTap,
-                                child: Column(
-                                  crossAxisAlignment: .start,
-                                  mainAxisSize: .min,
-                                  children: [
-                                    Text(
-                                      e.title,
-                                      style: theme?.circularStdTextTheme.book.copyWith(
-                                        fontSize: 14.w,
-                                        color: ColorsFoundation.backNeutral1,
+                              return Material(
+                                color: Colors.transparent,
+                                child: InkWell(
+                                  onTap: e.onTap,
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child:
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Text(
+                                                  e.title,
+                                                  style: theme?.circularStdTextTheme.book.copyWith(
+                                                    fontSize: 14.w,
+                                                    color: ColorsFoundation.backNeutral1,
+                                                  ),
+                                                ),
+                                                SpacingFoundation.verticalSpace12,
+                                                Flexible(
+                                                  child: Text(
+                                                    e.description ?? S.of(context).NotFounded,
+                                                    style: theme?.carosTextTheme.medium.copyWith(
+                                                      fontSize: 18.w,
+                                                      color: theme.colorScheme.backgroundColor,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ).paddingOnly(
+                                              bottom: SpacingFoundation.verticalSpacing30,
+                                              right: SpacingFoundation.horizontalSpacing24,
+                                              left: SpacingFoundation.horizontalSpacing24,
+                                            ),
                                       ),
-                                    ),
-                                    SpacingFoundation.verticalSpace12,
-                                    Text(
-                                      e.description ?? S.of(context).NotFounded,
-                                      style: theme?.carosTextTheme.medium.copyWith(
-                                        fontSize: 18.w,
-                                        color: theme.colorScheme.backgroundColor,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ).paddingOnly(
-                                bottom: SpacingFoundation.verticalSpacing30,
-                                right: SpacingFoundation.horizontalSpacing24,
-                                left: SpacingFoundation.horizontalSpacing24,
                               );
                             },
                           ),
