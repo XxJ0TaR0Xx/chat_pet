@@ -16,7 +16,7 @@ abstract class UserModel with _$UserModel {
     @JsonKey(name: 'last_name') String? lastName,
     @JsonKey(name: 'phone_number') String? number,
     String? authProvider,
-    DateTime? createdAt,
+    @JsonKey(name: 'created_at') DateTime? createdAt,
     @JsonKey(name: 'friendship_status') FriendEnum? friendshipStatus,
   }) = _UserModel;
 
