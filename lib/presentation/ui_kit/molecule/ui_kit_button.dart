@@ -1,7 +1,30 @@
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 
-//TODO size
+enum UiKitButtonSize {
+  s,
+  sFull,
+  m,
+  mFull,
+  l,
+  lFull
+  ;
+
+  bool get isFull => this == UiKitButtonSize.sFull || this == UiKitButtonSize.mFull || this == UiKitButtonSize.lFull;
+
+  double get verticalPadding => switch (this) {
+    UiKitButtonSize.s || UiKitButtonSize.sFull => SpacingFoundation.verticalSpacing8,
+    UiKitButtonSize.m || UiKitButtonSize.mFull => SpacingFoundation.verticalSpacing12,
+    UiKitButtonSize.l || UiKitButtonSize.lFull => SpacingFoundation.verticalSpacing16,
+  };
+
+  double get borderRadius => switch (this) {
+    UiKitButtonSize.s || UiKitButtonSize.sFull => 8,
+    UiKitButtonSize.m || UiKitButtonSize.mFull => 12,
+    UiKitButtonSize.l || UiKitButtonSize.lFull => 16,
+  };
+}
+
 class UiKitButton extends StatelessWidget {
   const UiKitButton({
     required this.text,
@@ -11,12 +34,15 @@ class UiKitButton extends StatelessWidget {
     this.textColor = ColorsFoundation.darkNeutral,
     this.isDisable = false,
     this.isLoading = false,
+    this.size = UiKitButtonSize.m,
   });
+
   factory UiKitButton.primary({
     required String text,
     VoidCallback? onTap,
     bool isDisable = false,
     bool isLoading = false,
+    UiKitButtonSize size = UiKitButtonSize.m,
   }) {
     return UiKitButton(
       text: text,
@@ -25,23 +51,35 @@ class UiKitButton extends StatelessWidget {
       textColor: ColorsFoundation.surfaceBase,
       isDisable: isDisable,
       isLoading: isLoading,
+      size: size,
     );
   }
+
   final Color backgroundColor;
   final VoidCallback? onTap;
   final String text;
   final Color textColor;
   final bool isDisable;
   final bool isLoading;
+  final UiKitButtonSize size;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onTap,
+      onPressed: isDisable ? null : onTap,
       style: ButtonStyle(
-        shape: WidgetStateProperty.all(
+        minimumSize: WidgetStatePropertyAll(
+          Size(size.isFull ? double.infinity : 0, 0),
+        ),
+        padding: WidgetStatePropertyAll(
+          EdgeInsets.symmetric(
+            vertical: size.verticalPadding,
+            horizontal: SpacingFoundation.horizontalSpacing16,
+          ),
+        ),
+        shape: WidgetStatePropertyAll(
           RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(size.borderRadius),
           ),
         ),
         foregroundColor: WidgetStateProperty.resolveWith<Color>((states) {
@@ -50,9 +88,9 @@ class UiKitButton extends StatelessWidget {
           }
           return textColor;
         }),
-        textStyle: WidgetStateProperty.resolveWith<TextStyle>((states) {
-          return context.uiKitTheme?.carosTextTheme.medium.copyWith(fontWeight: FontWeight.w900) ?? TextStyle(color: textColor);
-        }),
+        textStyle: WidgetStatePropertyAll(
+          context.uiKitTheme?.carosTextTheme.medium.copyWith(fontWeight: FontWeight.w900) ?? TextStyle(color: textColor),
+        ),
         backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
           if (states.contains(WidgetState.disabled) || isDisable) {
             return ColorsFoundation.lightSurface;
@@ -60,19 +98,15 @@ class UiKitButton extends StatelessWidget {
           return backgroundColor;
         }),
       ),
-      child:
-          (isLoading
-                  ? SizedBox(
-                      height: 24.h,
-                      width: 24.h,
-                      child: CircularProgressIndicator(
-                        color: context.uiKitTheme?.colorScheme.inverseSurface,
-                      ),
-                    )
-                  : Text(text))
-              .paddingVertical(
-                SpacingFoundation.verticalSpacing16,
+      child: isLoading
+          ? SizedBox(
+              height: 24.h,
+              width: 24.h,
+              child: CircularProgressIndicator(
+                color: context.uiKitTheme?.colorScheme.inverseSurface,
               ),
+            )
+          : Text(text),
     );
   }
 }
