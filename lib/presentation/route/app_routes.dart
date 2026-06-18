@@ -6,6 +6,7 @@ abstract final class AppRoutes {
   static const String calls = '/calls';
   static const String contacts = '/contacts';
   static const String settings = '/settings';
+  static const String map = 'map';
 
   // Child segments — used in GoRoute.path for nested routes
   static const String loginSegment = 'login';
@@ -20,4 +21,5 @@ abstract final class AppRoutes {
   static const String settingsProfile = '$settings/$profileSegment';
   static const String chatId = '$chats/$chatSegment';
   static const String findNewContacts = '$contacts/$newContacts';
+  static const String settingsProfileMap = '$settings/$profileSegment/$map';
 }

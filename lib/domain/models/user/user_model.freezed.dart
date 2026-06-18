@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserModel {
 
- String get id;@JsonKey(name: 'user_tag') String get userTag;@JsonKey(name: 'avatar_url') String? get avatarUrl; String? get email;@JsonKey(name: 'username') String? get name; String? get address;@JsonKey(name: 'last_name') String? get lastName;@JsonKey(name: 'phone_number') String? get number; String? get authProvider; DateTime? get createdAt;@JsonKey(name: 'friendship_status') FriendEnum? get friendshipStatus;
+ String get id;@JsonKey(name: 'user_tag') String get userTag;@JsonKey(name: 'avatar_url') String? get avatarUrl; String? get email;@JsonKey(name: 'username') String? get name; String? get address;@JsonKey(name: 'last_name') String? get lastName;@JsonKey(name: 'phone_number') String? get number; String? get authProvider;@JsonKey(name: 'created_at') DateTime? get createdAt;@JsonKey(name: 'friendship_status') FriendEnum? get friendshipStatus;
 /// Create a copy of UserModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $UserModelCopyWith<$Res>  {
   factory $UserModelCopyWith(UserModel value, $Res Function(UserModel) _then) = _$UserModelCopyWithImpl;
 @useResult
 $Res call({
- String id,@JsonKey(name: 'user_tag') String userTag,@JsonKey(name: 'avatar_url') String? avatarUrl, String? email,@JsonKey(name: 'username') String? name, String? address,@JsonKey(name: 'last_name') String? lastName,@JsonKey(name: 'phone_number') String? number, String? authProvider, DateTime? createdAt,@JsonKey(name: 'friendship_status') FriendEnum? friendshipStatus
+ String id,@JsonKey(name: 'user_tag') String userTag,@JsonKey(name: 'avatar_url') String? avatarUrl, String? email,@JsonKey(name: 'username') String? name, String? address,@JsonKey(name: 'last_name') String? lastName,@JsonKey(name: 'phone_number') String? number, String? authProvider,@JsonKey(name: 'created_at') DateTime? createdAt,@JsonKey(name: 'friendship_status') FriendEnum? friendshipStatus
 });
 
 
@@ -163,7 +163,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'user_tag')  String userTag, @JsonKey(name: 'avatar_url')  String? avatarUrl,  String? email, @JsonKey(name: 'username')  String? name,  String? address, @JsonKey(name: 'last_name')  String? lastName, @JsonKey(name: 'phone_number')  String? number,  String? authProvider,  DateTime? createdAt, @JsonKey(name: 'friendship_status')  FriendEnum? friendshipStatus)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'user_tag')  String userTag, @JsonKey(name: 'avatar_url')  String? avatarUrl,  String? email, @JsonKey(name: 'username')  String? name,  String? address, @JsonKey(name: 'last_name')  String? lastName, @JsonKey(name: 'phone_number')  String? number,  String? authProvider, @JsonKey(name: 'created_at')  DateTime? createdAt, @JsonKey(name: 'friendship_status')  FriendEnum? friendshipStatus)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
 return $default(_that.id,_that.userTag,_that.avatarUrl,_that.email,_that.name,_that.address,_that.lastName,_that.number,_that.authProvider,_that.createdAt,_that.friendshipStatus);case _:
@@ -184,7 +184,7 @@ return $default(_that.id,_that.userTag,_that.avatarUrl,_that.email,_that.name,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'user_tag')  String userTag, @JsonKey(name: 'avatar_url')  String? avatarUrl,  String? email, @JsonKey(name: 'username')  String? name,  String? address, @JsonKey(name: 'last_name')  String? lastName, @JsonKey(name: 'phone_number')  String? number,  String? authProvider,  DateTime? createdAt, @JsonKey(name: 'friendship_status')  FriendEnum? friendshipStatus)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'user_tag')  String userTag, @JsonKey(name: 'avatar_url')  String? avatarUrl,  String? email, @JsonKey(name: 'username')  String? name,  String? address, @JsonKey(name: 'last_name')  String? lastName, @JsonKey(name: 'phone_number')  String? number,  String? authProvider, @JsonKey(name: 'created_at')  DateTime? createdAt, @JsonKey(name: 'friendship_status')  FriendEnum? friendshipStatus)  $default,) {final _that = this;
 switch (_that) {
 case _UserModel():
 return $default(_that.id,_that.userTag,_that.avatarUrl,_that.email,_that.name,_that.address,_that.lastName,_that.number,_that.authProvider,_that.createdAt,_that.friendshipStatus);case _:
@@ -204,7 +204,7 @@ return $default(_that.id,_that.userTag,_that.avatarUrl,_that.email,_that.name,_t
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'user_tag')  String userTag, @JsonKey(name: 'avatar_url')  String? avatarUrl,  String? email, @JsonKey(name: 'username')  String? name,  String? address, @JsonKey(name: 'last_name')  String? lastName, @JsonKey(name: 'phone_number')  String? number,  String? authProvider,  DateTime? createdAt, @JsonKey(name: 'friendship_status')  FriendEnum? friendshipStatus)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'user_tag')  String userTag, @JsonKey(name: 'avatar_url')  String? avatarUrl,  String? email, @JsonKey(name: 'username')  String? name,  String? address, @JsonKey(name: 'last_name')  String? lastName, @JsonKey(name: 'phone_number')  String? number,  String? authProvider, @JsonKey(name: 'created_at')  DateTime? createdAt, @JsonKey(name: 'friendship_status')  FriendEnum? friendshipStatus)?  $default,) {final _that = this;
 switch (_that) {
 case _UserModel() when $default != null:
 return $default(_that.id,_that.userTag,_that.avatarUrl,_that.email,_that.name,_that.address,_that.lastName,_that.number,_that.authProvider,_that.createdAt,_that.friendshipStatus);case _:
@@ -219,7 +219,7 @@ return $default(_that.id,_that.userTag,_that.avatarUrl,_that.email,_that.name,_t
 @JsonSerializable()
 
 class _UserModel extends UserModel {
-  const _UserModel({required this.id, @JsonKey(name: 'user_tag') required this.userTag, @JsonKey(name: 'avatar_url') this.avatarUrl, this.email, @JsonKey(name: 'username') this.name, this.address, @JsonKey(name: 'last_name') this.lastName, @JsonKey(name: 'phone_number') this.number, this.authProvider, this.createdAt, @JsonKey(name: 'friendship_status') this.friendshipStatus}): super._();
+  const _UserModel({required this.id, @JsonKey(name: 'user_tag') required this.userTag, @JsonKey(name: 'avatar_url') this.avatarUrl, this.email, @JsonKey(name: 'username') this.name, this.address, @JsonKey(name: 'last_name') this.lastName, @JsonKey(name: 'phone_number') this.number, this.authProvider, @JsonKey(name: 'created_at') this.createdAt, @JsonKey(name: 'friendship_status') this.friendshipStatus}): super._();
   factory _UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
 
 @override final  String id;
@@ -231,7 +231,7 @@ class _UserModel extends UserModel {
 @override@JsonKey(name: 'last_name') final  String? lastName;
 @override@JsonKey(name: 'phone_number') final  String? number;
 @override final  String? authProvider;
-@override final  DateTime? createdAt;
+@override@JsonKey(name: 'created_at') final  DateTime? createdAt;
 @override@JsonKey(name: 'friendship_status') final  FriendEnum? friendshipStatus;
 
 /// Create a copy of UserModel
@@ -267,7 +267,7 @@ abstract mixin class _$UserModelCopyWith<$Res> implements $UserModelCopyWith<$Re
   factory _$UserModelCopyWith(_UserModel value, $Res Function(_UserModel) _then) = __$UserModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id,@JsonKey(name: 'user_tag') String userTag,@JsonKey(name: 'avatar_url') String? avatarUrl, String? email,@JsonKey(name: 'username') String? name, String? address,@JsonKey(name: 'last_name') String? lastName,@JsonKey(name: 'phone_number') String? number, String? authProvider, DateTime? createdAt,@JsonKey(name: 'friendship_status') FriendEnum? friendshipStatus
+ String id,@JsonKey(name: 'user_tag') String userTag,@JsonKey(name: 'avatar_url') String? avatarUrl, String? email,@JsonKey(name: 'username') String? name, String? address,@JsonKey(name: 'last_name') String? lastName,@JsonKey(name: 'phone_number') String? number, String? authProvider,@JsonKey(name: 'created_at') DateTime? createdAt,@JsonKey(name: 'friendship_status') FriendEnum? friendshipStatus
 });
 
 

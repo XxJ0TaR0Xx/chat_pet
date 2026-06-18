@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:chat_pet/core/localization/l10n.dart';
 import 'package:chat_pet/data/common/custom_talker/custom_talker.dart';
@@ -15,14 +17,19 @@ class SettingCubit extends Cubit<SettingState> {
     required UserCubit userCubit,
   }) : _logoutUseCase = logoutUseCase,
        _userCubit = userCubit,
-       super(SettingState.initial()) {
+       super(const SettingState.initial()) {
     initialize();
+    _userSub = userCubit.stream.listen((userState) {
+      if (userState is UserStateLoaded) initialize();
+    });
   }
+
   final LogoutUseCase _logoutUseCase;
   final UserCubit _userCubit;
+  late final StreamSubscription<UserState> _userSub;
 
   void initialize() {
-    emit(SettingState.loading());
+    emit(const SettingState.loading());
     final user = _userCubit.currentUser;
 
     if (user != null) {
@@ -30,6 +37,12 @@ class SettingCubit extends Cubit<SettingState> {
     } else {
       emit(SettingState.error(S.current.ErrorMsg(S.current.CouldntFindTheUser)));
     }
+  }
+
+  @override
+  Future<void> close() {
+    _userSub.cancel();
+    return super.close();
   }
 
   Future<void> logout() async {

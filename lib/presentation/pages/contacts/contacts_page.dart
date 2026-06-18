@@ -50,8 +50,11 @@ class _ContactsPageState extends State<ContactsPage> {
   Widget build(BuildContext context) {
     final theme = context.uiKitTheme;
 
-    return BlocProvider.value(
-      value: _cubit,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: _cubit),
+        BlocProvider.value(value: getIt<ContactRequestsCubit>()),
+      ],
       child: Scaffold(
         backgroundColor: _isSearching ? null : theme?.colorScheme.darkNeutral,
         body: RefreshIndicator(

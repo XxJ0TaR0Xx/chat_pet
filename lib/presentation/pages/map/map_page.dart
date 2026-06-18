@@ -3,10 +3,16 @@ import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 
 class MapPage extends StatefulWidget {
-  const MapPage({super.key});
+  const MapPage({
+    this.oldAddress,
+    super.key,
+  });
+
+  final String? oldAddress;
 
   @override
   State<MapPage> createState() => _MapPageState();
@@ -16,12 +22,13 @@ class _MapPageState extends State<MapPage> {
   late final MapCubit cubit;
   late final MapController _mapController;
 
-  final List<Marker> markers = List.empty(growable: true);
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    cubit = MapCubit();
+    cubit = MapCubit(oldAddress: widget.oldAddress);
     _mapController = MapController();
   }
 
@@ -42,31 +49,55 @@ class _MapPageState extends State<MapPage> {
     _mapController.move(_mapController.camera.center, newZoom);
   }
 
-  void _onMapTap(TapPosition tapPosition, LatLng point) {
-    setState(() {
-      markers.add(
-        Marker(
-          point: point,
-          width: 40,
-          height: 40,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: Colors.red,
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: Colors.white,
-                width: 2,
-              ),
-            ),
-            child: const Icon(
-              Icons.location_on,
-              color: Colors.white,
-              size: 20,
+  Future<void> onMarkerTap(BuildContext context, LatLng myLocation) async {
+    final location = await cubit.getAddressFromLatLng(myLocation);
+    _controller.text = location ?? '';
+
+    if (!context.mounted) return;
+
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Form(
+            key: _formKey,
+            child: BottomSheetWidget(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SpacingFoundation.verticalSpace12,
+                Text(
+                  'Ваш адресс',
+                  style: context.uiKitTheme?.carosTextTheme.mediumBold,
+                ),
+                UiKitTextField(
+                  controller: _controller,
+                  validator: (address) {
+                    final newAddress = address?.trim();
+                    if (newAddress == null || newAddress.isEmpty) return 'Адрес не может быть пустым';
+
+                    return null;
+                  },
+                ).paddingHorizontal(SpacingFoundation.horizontalSpacing12),
+                SpacingFoundation.verticalSpace12,
+                UiKitButton.primary(
+                  text: S.of(context).Save,
+                  size: UiKitButtonSize.lFull,
+                  onTap: () {
+                    if (_formKey.currentState?.validate() ?? false) {
+                      GoRouter.of(context).pop();
+                      GoRouter.of(context).pop(_controller.text.trim());
+                    }
+                  },
+                ).paddingHorizontal(SpacingFoundation.horizontalSpacing12),
+                SpacingFoundation.verticalSpace30,
+              ],
             ),
           ),
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 
   @override
@@ -112,7 +143,7 @@ class _MapPageState extends State<MapPage> {
                           options: MapOptions(
                             initialCenter: myLocation,
                             cameraConstraint: const CameraConstraint.containLatitude(),
-                            onLongPress: _onMapTap,
+                            onLongPress: (tapPosition, point) => cubit.updateMyPosition(point),
                           ),
                           children: [
                             TileLayer(
@@ -120,7 +151,31 @@ class _MapPageState extends State<MapPage> {
                               userAgentPackageName: 'com.example.chat_pet',
                             ),
                             MarkerLayer(
-                              markers: markers,
+                              markers: [
+                                Marker(
+                                  point: myLocation,
+                                  width: 40,
+                                  height: 40,
+                                  child: InkWell(
+                                    onTap: () => onMarkerTap(context, myLocation),
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 2,
+                                        ),
+                                      ),
+                                      child: const Icon(
+                                        Icons.location_on,
+                                        color: Colors.white,
+                                        size: 20,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -130,12 +185,10 @@ class _MapPageState extends State<MapPage> {
                             mainAxisSize: .min,
                             spacing: SpacingFoundation.horizontalSpacing12,
                             children: [
-                              DecoratedBox(
-                                decoration: BoxDecoration(
-                                  color: theme?.colorScheme.surface1,
-                                  borderRadius: BorderRadius.circular(
-                                    SpacingFoundation.horizontalSpacing12,
-                                  ),
+                              Material(
+                                color: theme?.colorScheme.surface1,
+                                borderRadius: BorderRadius.circular(
+                                  SpacingFoundation.horizontalSpacing12,
                                 ),
                                 child: InkWell(
                                   onTap: () => updateZoom(true),
@@ -143,15 +196,13 @@ class _MapPageState extends State<MapPage> {
                                     Icons.add,
                                     color: theme?.colorScheme.darkNeutral,
                                     size: 28.0.w,
-                                  ),
-                                ).paddingAll(EdgeInsetsFoundation.all4),
+                                  ).paddingAll(EdgeInsetsFoundation.all4),
+                                ),
                               ),
-                              DecoratedBox(
-                                decoration: BoxDecoration(
-                                  color: theme?.colorScheme.surface1,
-                                  borderRadius: BorderRadius.circular(
-                                    SpacingFoundation.horizontalSpacing12,
-                                  ),
+                              Material(
+                                color: theme?.colorScheme.surface1,
+                                borderRadius: BorderRadius.circular(
+                                  SpacingFoundation.horizontalSpacing12,
                                 ),
                                 child: InkWell(
                                   onTap: () => updateZoom(false),
@@ -159,8 +210,8 @@ class _MapPageState extends State<MapPage> {
                                     Icons.remove,
                                     color: theme?.colorScheme.darkNeutral,
                                     size: 28.0.w,
-                                  ),
-                                ).paddingAll(EdgeInsetsFoundation.all4),
+                                  ).paddingAll(EdgeInsetsFoundation.all4),
+                                ),
                               ),
                             ],
                           ),

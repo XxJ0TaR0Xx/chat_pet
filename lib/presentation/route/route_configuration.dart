@@ -6,6 +6,7 @@ import 'package:chat_pet/presentation/pages/contacts/contacts_page.dart';
 import 'package:chat_pet/presentation/pages/contacts/find_contact/find_new_contact.dart';
 import 'package:chat_pet/presentation/pages/home/home_page.dart';
 import 'package:chat_pet/presentation/pages/login/login_page.dart';
+import 'package:chat_pet/presentation/pages/map/map_page.dart';
 import 'package:chat_pet/presentation/pages/message_page/message_page.dart';
 import 'package:chat_pet/presentation/pages/profile/profile_page.dart';
 import 'package:chat_pet/presentation/pages/settings/settings_page.dart';
@@ -127,6 +128,13 @@ final class RouteConfiguration {
                       path: AppRoutes.profileSegment,
                       parentNavigatorKey: _rootNavigationKey,
                       builder: (context, state) => const ProfilePage(),
+                      routes: [
+                        GoRoute(
+                          path: AppRoutes.map,
+                          parentNavigatorKey: _rootNavigationKey,
+                          builder: (context, state) => MapPage(oldAddress: state.extra as String?),
+                        ),
+                      ],
                     ),
                   ],
                 ),
