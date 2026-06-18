@@ -43,6 +43,7 @@ class _MyContactsItem extends ContactItem {
     return Row(
       children: [
         _CommonContactPart(user: user),
+        const Spacer(),
         InkWell(
           onTap: () => onDeleteUser?.call(user.id),
           child: Icon(
@@ -69,6 +70,7 @@ class _OtherContactItem extends ContactItem {
     return Row(
       children: [
         _CommonContactPart(user: user),
+        const Spacer(),
         switch (user.friendshipStatus) {
           FriendEnum.friends => InkWell(
             onTap: () => onDeleteUser?.call(user.id),
@@ -77,7 +79,7 @@ class _OtherContactItem extends ContactItem {
               color: ColorsFoundation.error.withValues(alpha: 0.5),
             ),
           ),
-          FriendEnum.pendingReceived => Icon(
+          FriendEnum.pendingReceived => const Icon(
             Icons.timer_sharp,
             color: ColorsFoundation.green,
           ),
@@ -112,27 +114,25 @@ class _CommonContactPart extends StatelessWidget {
           url: user.avatarUrl,
         ),
         SpacingFoundation.horizontalSpace12,
-        Expanded(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: SpacingFoundation.verticalSpacing8,
-            children: [
-              Text(
-                user.nameAndLast,
-                style: theme?.carosTextTheme.mediumBold,
-                overflow: TextOverflow.ellipsis,
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: SpacingFoundation.verticalSpacing8,
+          children: [
+            Text(
+              user.nameAndLast,
+              style: theme?.carosTextTheme.mediumBold,
+              overflow: TextOverflow.ellipsis,
+            ),
+            Text(
+              user.userTag,
+              style: theme?.circularStdTextTheme.bookSmall.copyWith(
+                color: ColorsFoundation.backNeutral1,
               ),
-              Text(
-                user.userTag,
-                style: theme?.circularStdTextTheme.bookSmall.copyWith(
-                  color: ColorsFoundation.backNeutral1,
-                ),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ).paddingVertical(SpacingFoundation.horizontalSpacing8),
-        ),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ).paddingVertical(SpacingFoundation.horizontalSpacing8),
       ],
     );
   }
