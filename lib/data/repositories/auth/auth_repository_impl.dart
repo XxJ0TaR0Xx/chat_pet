@@ -46,7 +46,7 @@ class AuthRepositoryImpl implements AuthRepository {
       _tokenCache.updateToken(tokens);
 
       if (tokens != null) {
-        _connectWebSocketService(tokens.accessToken);
+        _connectWebSocketService();
       }
 
       talk.info('initialized successfully');
@@ -73,7 +73,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
       _tokenCache.updateToken(tokens);
 
-      _connectWebSocketService(tokens.accessToken);
+      _connectWebSocketService();
 
       talk.info('Login successful');
       return Right(null);
@@ -156,8 +156,8 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-  void _connectWebSocketService(String accessToken) {
+  void _connectWebSocketService() {
     final wsUrl = '${ApiConfig.current.wsUrl}contacts/ws/notifications';
-    _webSocketService.connect(wsUrl, accessToken);
+    _webSocketService.connect(wsUrl);
   }
 }
