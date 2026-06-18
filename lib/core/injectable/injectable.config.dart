@@ -70,7 +70,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i558.FlutterSecureStorage>(
       () => registerModule.secureStorage,
     );
-    gh.lazySingleton<_i865.WebSocketService>(() => _i865.WebSocketService());
     gh.singleton<_i566.SecureStorageService>(
       () => _i415.SecureStorageServiceImpl(gh<_i558.FlutterSecureStorage>()),
     );
@@ -78,12 +77,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i866.UsersRepositoryImpl(gh<_i361.Dio>()),
     );
     gh.singleton<_i866.TokenManager>(() => _i1003.TokenManagerImpl());
-    gh.factory<_i113.ContactsRepository>(
-      () => _i447.ContactsRepositoryImpl(
-        gh<_i361.Dio>(),
-        gh<_i865.WebSocketService>(),
-      ),
-    );
     gh.factory<_i361.Dio>(() => registerModule.dio, instanceName: 'basicDio');
     gh.factory<_i791.GetMeUseCase>(
       () => _i791.GetMeUseCase(gh<_i73.UserRepository>()),
@@ -94,6 +87,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i274.UpdateMeUseCase>(
       () => _i274.UpdateMeUseCase(gh<_i73.UserRepository>()),
     );
+    gh.lazySingleton<_i865.WebSocketService>(
+      () => _i865.WebSocketService(gh<_i866.TokenManager>()),
+      dispose: (i) => i.dispose(),
+    );
     gh.factory<_i615.AuthLocalRepository>(
       () => _i236.AuthLocalRepositoryImpl(gh<_i566.SecureStorageService>()),
     );
@@ -101,6 +98,41 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i891.RegistrationRepositoryImpl(
         gh<_i361.Dio>(instanceName: 'basicDio'),
       ),
+    );
+    gh.factory<_i286.AuthRemoteRepository>(
+      () => _i370.AuthRemoteRepositoryImpl(
+        gh<_i361.Dio>(instanceName: 'basicDio'),
+        gh<_i866.TokenManager>(),
+      ),
+    );
+    gh.factory<_i508.AuthRepository>(
+      () => _i24.AuthRepositoryImpl(
+        authLocalRepository: gh<_i615.AuthLocalRepository>(),
+        authRemoteRepository: gh<_i286.AuthRemoteRepository>(),
+        tokenCache: gh<_i866.TokenManager>(),
+        webSocketService: gh<_i865.WebSocketService>(),
+      ),
+    );
+    gh.factory<_i629.LoginUseCase>(
+      () => _i629.LoginUseCase(gh<_i508.AuthRepository>()),
+    );
+    gh.factory<_i635.LogoutUseCase>(
+      () => _i635.LogoutUseCase(gh<_i508.AuthRepository>()),
+    );
+    gh.factory<_i113.ContactsRepository>(
+      () => _i447.ContactsRepositoryImpl(
+        gh<_i361.Dio>(),
+        gh<_i865.WebSocketService>(),
+      ),
+    );
+    gh.factory<_i104.InitUseCase>(
+      () => _i104.InitUseCase(gh<_i508.AuthRepository>()),
+    );
+    gh.factory<_i314.RegistrationUseCase>(
+      () => _i314.RegistrationUseCase(gh<_i374.RegistrationRepository>()),
+    );
+    gh.lazySingleton<_i419.LoginCubit>(
+      () => _i419.LoginCubit(gh<_i629.LoginUseCase>()),
     );
     gh.factory<_i889.AcceptRequestUseCase>(
       () => _i889.AcceptRequestUseCase(gh<_i113.ContactsRepository>()),
@@ -126,29 +158,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i555.SendRequestUseCase>(
       () => _i555.SendRequestUseCase(gh<_i113.ContactsRepository>()),
     );
-    gh.factory<_i286.AuthRemoteRepository>(
-      () => _i370.AuthRemoteRepositoryImpl(
-        gh<_i361.Dio>(instanceName: 'basicDio'),
-        gh<_i866.TokenManager>(),
-      ),
-    );
-    gh.factory<_i508.AuthRepository>(
-      () => _i24.AuthRepositoryImpl(
-        authLocalRepository: gh<_i615.AuthLocalRepository>(),
-        authRemoteRepository: gh<_i286.AuthRemoteRepository>(),
-        tokenCache: gh<_i866.TokenManager>(),
-        webSocketService: gh<_i865.WebSocketService>(),
-      ),
-    );
-    gh.factory<_i629.LoginUseCase>(
-      () => _i629.LoginUseCase(gh<_i508.AuthRepository>()),
-    );
-    gh.factory<_i635.LogoutUseCase>(
-      () => _i635.LogoutUseCase(gh<_i508.AuthRepository>()),
-    );
-    gh.factory<_i104.InitUseCase>(
-      () => _i104.InitUseCase(gh<_i508.AuthRepository>()),
-    );
     gh.lazySingleton<_i241.ContactRequestsCubit>(
       () => _i241.ContactRequestsCubit(
         gh<_i1011.IncomingRequestsUseCase>(),
@@ -156,12 +165,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i493.RejectRequestUseCase>(),
         gh<_i781.IncomingRequestStreamUseCase>(),
       ),
-    );
-    gh.factory<_i314.RegistrationUseCase>(
-      () => _i314.RegistrationUseCase(gh<_i374.RegistrationRepository>()),
-    );
-    gh.lazySingleton<_i419.LoginCubit>(
-      () => _i419.LoginCubit(gh<_i629.LoginUseCase>()),
     );
     gh.factory<_i1019.FindContactCubit>(
       () => _i1019.FindContactCubit(
