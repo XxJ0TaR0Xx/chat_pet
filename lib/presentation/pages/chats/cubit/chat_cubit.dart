@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:chat_pet/core/localization/l10n.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
@@ -10,9 +12,15 @@ part 'chat_cubit.freezed.dart';
 class ChatCubit extends Cubit<ChatState> {
   ChatCubit({required UserCubit userCubit}) : _userCubit = userCubit, super(ChatState.initial()) {
     getCharts();
+    _userSub = userCubit.stream.listen((userState) {
+      if (userState is UserStateLoaded && state is _Loaded) {
+        emit(_Loaded(userState.user));
+      }
+    });
   }
 
   final UserCubit _userCubit;
+  late final StreamSubscription<UserState> _userSub;
 
   Future<void> getCharts() async {
     emit(_Loading());
@@ -24,5 +32,11 @@ class ChatCubit extends Cubit<ChatState> {
     }
 
     emit(_Loaded(user));
+  }
+
+  @override
+  Future<void> close() {
+    _userSub.cancel();
+    return super.close();
   }
 }
