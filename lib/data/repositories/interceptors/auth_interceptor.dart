@@ -9,16 +9,16 @@ class AuthInterceptor extends Interceptor {
   const AuthInterceptor({
     required Dio dio,
     required TokenProvider tokenProvider,
-    required AuthRepository authService,
+    required AuthRepository Function() authServiceProvider,
   }) : _dio = dio,
        _tokenProvider = tokenProvider,
-       _authService = authService;
+       _authServiceProvider = authServiceProvider;
 
   static const _tokenKey = 'Authorization';
 
   final Dio _dio;
   final TokenProvider _tokenProvider;
-  final AuthRepository _authService;
+  final AuthRepository Function() _authServiceProvider;
 
   @override
   Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
@@ -46,7 +46,7 @@ class AuthInterceptor extends Interceptor {
       talk.info('Access token expired, attempting refresh');
 
       try {
-        final newAccessToken = await _authService.refreshTokens();
+        final newAccessToken = await _authServiceProvider().refreshTokens();
 
         _setToken(err.requestOptions, newAccessToken);
 

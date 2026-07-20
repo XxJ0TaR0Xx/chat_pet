@@ -1,4 +1,5 @@
 import 'package:chat_pet/core/storages/interfaces/secure_storage_service.dart';
+import 'package:chat_pet/data/common/custom_talker/custom_talker.dart';
 import 'package:chat_pet/domain/interfaces/auth/auth_local_repository.dart';
 import 'package:chat_pet/domain/models/auth/tokens.dart';
 import 'package:injectable/injectable.dart';
@@ -32,6 +33,11 @@ class AuthLocalRepositoryImpl implements AuthLocalRepository {
 
   @override
   Future<void> writeTokens(Tokens tokens) async {
+    if (tokens.accessToken.isEmpty || tokens.refreshToken.isEmpty) {
+      talk.error('Tokens must not be empty');
+      throw ArgumentError('Tokens must not be empty');
+    }
+
     await Future.wait([
       _secureStorageService.write(key: _accessToken, value: tokens.accessToken),
       _secureStorageService.write(key: _refreshToken, value: tokens.refreshToken),

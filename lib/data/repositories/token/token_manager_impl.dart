@@ -33,7 +33,7 @@ class TokenManagerImpl implements TokenManager {
   String? get accessToken => _guard(_tokens?.accessToken);
 
   @override
-  String? get refreshToken => _guard(_tokens?.accessToken);
+  String? get refreshToken => _guard(_tokens?.refreshToken);
 
   @override
   Stream<bool> get isAuthorized => _guard(_authStream);
