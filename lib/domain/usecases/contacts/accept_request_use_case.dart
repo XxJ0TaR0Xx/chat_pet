@@ -10,5 +10,9 @@ class AcceptRequestUseCase {
 
   final ContactsRepository _contactsRepository;
 
-  Future<Either<ContactsFailure, UserModel>> call({required String requestId}) => _contactsRepository.acceptRequest(requestId);
+  Future<Either<ContactsFailure, UserModel>> call({required String requestId}) {
+    if (requestId.isEmpty) return Future.value(Left(ContactsValidationFailure(stackTrace: StackTrace.current)));
+
+    return _contactsRepository.acceptRequest(requestId);
+  }
 }

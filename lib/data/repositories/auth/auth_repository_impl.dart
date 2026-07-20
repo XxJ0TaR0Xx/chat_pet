@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:chat_pet/core/config/api_config.dart';
 import 'package:chat_pet/core/storages/exceptions/secure_storage_exception.dart';
@@ -50,8 +49,6 @@ class AuthRepositoryImpl implements AuthRepository {
       }
 
       talk.info('initialized successfully');
-    } on DioException catch (e, st) {
-      throw AuthFailure.fromDioException(e, st);
     } on SecureStorageException catch (e, st) {
       throw e.toFailure(st);
     } catch (e, st) {
@@ -67,7 +64,7 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final tokens = await _authRemoteRepository.login(AuthRequest(email: email, password: password));
 
-      log('Login requested $tokens');
+      talk.info('Login requested $tokens');
 
       await _authLocalRepository.writeTokens(tokens);
 
@@ -76,14 +73,14 @@ class AuthRepositoryImpl implements AuthRepository {
       _connectWebSocketService();
 
       talk.info('Login successful');
-      return Right(null);
+      return const Right(null);
     } on DioException catch (e, st) {
       return Left(AuthFailure.fromDioException(e, st));
     } on SecureStorageException catch (e, st) {
       throw e.toFailure(st);
     } catch (e, st) {
       talk.error('Login error: $e, st $st');
-      throw UnknownAuthFailure(stackTrace: st);
+      return Left(UnknownAuthFailure(stackTrace: st));
     }
   }
 
@@ -93,16 +90,19 @@ class AuthRepositoryImpl implements AuthRepository {
 
     try {
       await _authRemoteRepository.logout();
+    } catch (e, st) {
+      talk.warning('Remote logout failed, proceeding with local cleanup: $e, st $st');
+    }
+
+    try {
       await _authLocalRepository.removeTokens();
       _webSocketService.disconnect();
 
       _tokenCache.clear();
-    } on DioException catch (e, st) {
-      throw AuthFailure.fromDioException(e, st);
     } on SecureStorageException catch (e, st) {
       throw e.toFailure(st);
     } catch (e, st) {
-      talk.error('Login error: $e, st $st');
+      talk.error('Logout error: $e, st $st');
       throw UnknownAuthFailure(stackTrace: st);
     }
   }
@@ -118,7 +118,7 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final refreshToken = _tokenCache.refreshToken;
 
-      if (refreshToken == null) throw SessionExpiredFailure(stackTrace: StackTrace.current);
+      if (refreshToken == null || refreshToken.isEmpty) throw SessionExpiredFailure(stackTrace: StackTrace.current);
 
       final accessToken = await RetryUtil.run<String>(
         maxAttempts: 3,

@@ -5,12 +5,14 @@ import 'package:chat_pet/core/localization/l10n.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
 part 'chat_state.dart';
 part 'chat_cubit.freezed.dart';
 
+@injectable
 class ChatCubit extends Cubit<ChatState> {
-  ChatCubit({required UserCubit userCubit}) : _userCubit = userCubit, super(ChatState.initial()) {
+  ChatCubit(UserCubit userCubit) : _userCubit = userCubit, super(ChatState.initial()) {
     getCharts();
     _userSub = userCubit.stream.listen((userState) {
       if (userState is UserStateLoaded && state is _Loaded) {

@@ -1,7 +1,7 @@
 import 'package:chat_pet/core/injectable/injectable.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
-import 'package:chat_pet/domain/usecases/users/update_avatar_use_case.dart';
-import 'package:chat_pet/domain/usecases/users/update_me_use_case.dart';
+import 'package:chat_pet/domain/usecases/user/update_avatar_use_case.dart';
+import 'package:chat_pet/domain/usecases/user/update_me_use_case.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
 import 'package:chat_pet/presentation/pages/profile/cubit/profile_cubit.dart';
 import 'package:chat_pet/presentation/route/app_routes.dart';
@@ -30,7 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
     cubit = ProfileCubit(
       getIt.get<UpdateMeUseCase>(),
       getIt.get<UpdateAvatarUseCase>(),
-      userCubit: context.read<UserCubit>(),
+      userCubit: getIt.get<UserCubit>(),
     );
 
     editingUserModel = cubit.user;
@@ -64,7 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             error: (errorMessage) => Column(
               children: [
-                Spacer(),
+                const Spacer(),
                 Row(
                   children: [
                     Expanded(
@@ -81,7 +81,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   text: 'Повторить',
                   onTap: () => cubit.initialize(),
                 ),
-                Spacer(),
+                const Spacer(),
               ],
             ),
             loaded: (userModel) {

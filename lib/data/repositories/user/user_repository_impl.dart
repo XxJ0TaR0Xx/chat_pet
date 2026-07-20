@@ -10,15 +10,18 @@ import 'package:fpdart/src/either.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: UserRepository)
-class UsersRepositoryImpl implements UserRepository {
-  const UsersRepositoryImpl(this._dio);
+class UserRepositoryImpl implements UserRepository {
+  const UserRepositoryImpl(this._dio);
   final Dio _dio;
 
   @override
   Future<Either<UserFailure, UserModel>> getMe() async {
+    talk.info('Start get me call');
+
     try {
       final response = await _dio.get('users/me');
 
+      talk.info('Get me success $response');
       return Right(UserModel.fromJson(response.data));
     } on DioException catch (e, st) {
       return Left(UserFailure.fromDioException(e, st));
@@ -30,12 +33,15 @@ class UsersRepositoryImpl implements UserRepository {
 
   @override
   Future<Either<UserFailure, UserModel>> updateMe(UserModel user) async {
+    talk.info('Start update me call');
+
     try {
       final response = await _dio.patch(
         'users/me',
         data: user.toJson(),
       );
 
+      talk.info('Update me success $response');
       return Right(UserModel.fromJson(response.data));
     } on DioException catch (e, st) {
       return Left(UserFailure.fromDioException(e, st));
@@ -47,6 +53,8 @@ class UsersRepositoryImpl implements UserRepository {
 
   @override
   Future<Either<UserFailure, UserModel>> updateAvatar(String imagePath) async {
+    talk.info('Start update avatar call');
+
     try {
       final formData = FormData.fromMap({
         'file': await MultipartFile.fromFile(
@@ -62,6 +70,7 @@ class UsersRepositoryImpl implements UserRepository {
         options: Options(contentType: 'multipart/form-data'),
       );
 
+      talk.info('Update avatar success $response');
       return Right(UserModel.fromJson(response.data));
     } on DioException catch (e, st) {
       return Left(UserFailure.fromDioException(e, st));

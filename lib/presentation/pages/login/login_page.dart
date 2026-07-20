@@ -1,6 +1,4 @@
-import 'package:chat_pet/core/injectable/injectable.dart';
 import 'package:chat_pet/data/common/custom_talker/custom_talker.dart';
-import 'package:chat_pet/domain/usecases/auth/login_use_case.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
 import 'package:chat_pet/presentation/pages/login/cubit/login_cubit.dart';
 import 'package:chat_pet/presentation/pages/start/widgets/or_row_widget.dart';
@@ -31,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
 
-    cubit = LoginCubit(getIt.get<LoginUseCase>());
+    cubit = context.read<LoginCubit>();
   }
 
   @override
@@ -57,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
           child: CustomScrollView(
             physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
             slivers: [
-              SliverAppBar(
+              const SliverAppBar(
                 backgroundColor: Colors.transparent,
                 shadowColor: Colors.transparent,
                 foregroundColor: ColorsFoundation.darkNeutral,
@@ -85,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     child: Column(
                       children: [
-                        Spacer(),
+                        const Spacer(),
                         Stack(
                           children: [
                             Positioned(
@@ -140,9 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                         ),
                         SpacingFoundation.verticalSpace30,
-                        OrRowWidget(
-                          textColor: ColorsFoundation.backNeutral1,
-                        ),
+                        const OrRowWidget(textColor: ColorsFoundation.backNeutral1),
                         SpacingFoundation.verticalSpace30,
                         UiKitTextField(
                           controller: _emailController,
@@ -180,7 +176,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                         ),
                         SpacingFoundation.verticalSpace30,
-                        Spacer(),
+                        const Spacer(),
                         Row(
                           children: [
                             Expanded(
@@ -206,7 +202,7 @@ class _LoginPageState extends State<LoginPage> {
                         SpacingFoundation.verticalSpace12,
                         TextButton(
                           onPressed: () {},
-                          style: ButtonStyle(
+                          style: const ButtonStyle(
                             padding: WidgetStatePropertyAll<EdgeInsetsGeometry>(EdgeInsets.zero),
                             minimumSize: WidgetStatePropertyAll<Size>(Size.zero),
                           ),

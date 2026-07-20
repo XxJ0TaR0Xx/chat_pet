@@ -81,7 +81,7 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 AutoSizeText(
                   S.of(context).ConnectFriendsEasilyQuickly,
                   maxLines: 4,
@@ -100,19 +100,19 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                     height: 1.5,
                     color: ColorsFoundation.mutedText,
                     shadows: [
-                      Shadow(offset: Offset(-1, -1)),
-                      Shadow(offset: Offset(1, -1)),
-                      Shadow(offset: Offset(1, 1)),
-                      Shadow(offset: Offset(-1, 1)),
+                      const Shadow(offset: Offset(-1, -1)),
+                      const Shadow(offset: Offset(1, -1)),
+                      const Shadow(offset: Offset(1, 1)),
+                      const Shadow(offset: Offset(-1, 1)),
                     ],
                   ),
                 ),
                 SpacingFoundation.verticalSpace16,
-                SocialLinksWidget(
+                const SocialLinksWidget(
                   isWhiteBackground: false,
                 ),
                 SpacingFoundation.verticalSpace30,
-                OrRowWidget(),
+                const OrRowWidget(),
                 SpacingFoundation.verticalSpace30,
                 Row(
                   children: [
@@ -124,7 +124,7 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   spacing: SpacingFoundation.horizontalSpacing4,
@@ -148,7 +148,7 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                     ),
                   ],
                 ),
-                Spacer(),
+                const Spacer(),
               ],
             ).paddingHorizontal(SpacingFoundation.horizontalSpacing24),
           ],

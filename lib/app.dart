@@ -1,8 +1,6 @@
 import 'package:chat_pet/core/injectable/injectable.dart';
-import 'package:chat_pet/domain/usecases/auth/init_use_case.dart';
 import 'package:chat_pet/domain/usecases/auth/login_use_case.dart';
 import 'package:chat_pet/domain/usecases/auth/registration_use_case.dart';
-import 'package:chat_pet/domain/usecases/users/get_me_use_case.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
 import 'package:chat_pet/presentation/pages/signup/cubit/signup_cubit.dart';
 import 'package:chat_pet/presentation/route/route_configuration.dart';
@@ -24,7 +22,7 @@ class App extends StatelessWidget {
       splitScreenMode: true,
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (_) => UserCubit(getIt.get<GetMeUseCase>(), getIt.get<InitUseCase>())),
+          BlocProvider(create: (_) => getIt.get<UserCubit>()),
           BlocProvider(create: (_) => SignupCubit(getIt.get<RegistrationUseCase>(), getIt.get<LoginUseCase>())),
         ],
         child: Builder(

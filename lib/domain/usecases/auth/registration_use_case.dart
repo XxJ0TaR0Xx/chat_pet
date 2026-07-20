@@ -13,5 +13,8 @@ class RegistrationUseCase {
     required String email,
     required String userName,
     required String password,
-  }) async => _registrationRepository.registration(userName, email, password);
+  }) async {
+    if (email.isEmpty || userName.isEmpty || password.isEmpty) return Future.value(Left(ValidationFailure(stackTrace: StackTrace.current)));
+    return _registrationRepository.registration(userName, email, password);
+  }
 }

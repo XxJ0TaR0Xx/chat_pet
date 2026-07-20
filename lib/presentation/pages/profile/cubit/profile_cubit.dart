@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
-import 'package:chat_pet/domain/usecases/users/update_avatar_use_case.dart';
-import 'package:chat_pet/domain/usecases/users/update_me_use_case.dart';
+import 'package:chat_pet/domain/usecases/user/update_avatar_use_case.dart';
+import 'package:chat_pet/domain/usecases/user/update_me_use_case.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,7 +14,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     this._updateMeUseCase,
     this._avatarUseCase, {
     required this.userCubit,
-  }) : super(ProfileState.initial()) {
+  }) : super(const ProfileState.initial()) {
     initialize();
   }
 
@@ -25,18 +25,18 @@ class ProfileCubit extends Cubit<ProfileState> {
   UserModel? get user => userCubit.currentUser;
 
   void initialize() {
-    emit(ProfileState.loading());
+    emit(const ProfileState.loading());
     if (user != null) {
       emit(ProfileState.loaded(user!));
     } else {
-      emit(ProfileState.error('Не удалось получить пользователя, пожалуйста попробуйте снова'));
+      emit(const ProfileState.error('Не удалось получить пользователя, пожалуйста попробуйте снова'));
     }
   }
 
   Future<bool> updateMe(UserModel editingUser) async {
     bool isSuccess = false;
 
-    emit(ProfileState.loading());
+    emit(const ProfileState.loading());
 
     final result = await _updateMeUseCase.call(user: editingUser);
 
@@ -63,7 +63,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
     if (image?.path == null || image!.path.isEmpty) return isSuccess;
 
-    emit(ProfileState.loading());
+    emit(const ProfileState.loading());
 
     final result = await _avatarUseCase.call(imagePath: image.path);
 

@@ -7,17 +7,17 @@ import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/domain/usecases/auth/logout_use_case.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
 part 'setting_state.dart';
 part 'setting_cubit.freezed.dart';
 
+@injectable
 class SettingCubit extends Cubit<SettingState> {
-  SettingCubit({
-    required LogoutUseCase logoutUseCase,
-    required UserCubit userCubit,
-  }) : _logoutUseCase = logoutUseCase,
-       _userCubit = userCubit,
-       super(const SettingState.initial()) {
+  SettingCubit(LogoutUseCase logoutUseCase, UserCubit userCubit)
+    : _logoutUseCase = logoutUseCase,
+      _userCubit = userCubit,
+      super(const SettingState.initial()) {
     initialize();
     _userSub = userCubit.stream.listen((userState) {
       if (userState is UserStateLoaded) initialize();
@@ -52,7 +52,7 @@ class SettingCubit extends Cubit<SettingState> {
       return;
     }
 
-    emit(SettingState.loading());
+    emit(const SettingState.loading());
 
     try {
       await _logoutUseCase.call();
