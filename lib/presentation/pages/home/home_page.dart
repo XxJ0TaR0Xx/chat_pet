@@ -1,9 +1,5 @@
 import 'package:chat_pet/core/injectable/injectable.dart';
-import 'package:chat_pet/domain/usecases/auth/logout_use_case.dart';
-import 'package:chat_pet/domain/usecases/contacts/delete_contact_use_case.dart';
-import 'package:chat_pet/domain/usecases/contacts/get_contacts_use_case.dart';
 import 'package:chat_pet/presentation/cubits/contact_request/contact_requests_cubit.dart';
-import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
 import 'package:chat_pet/presentation/pages/chats/cubit/chat_cubit.dart';
 import 'package:chat_pet/presentation/pages/contacts/cubit/contacts_cubit.dart';
 import 'package:chat_pet/presentation/pages/home/widgets/bottom_navigation_icon.dart';
@@ -25,21 +21,9 @@ class HomeScope extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (_) => SettingCubit(
-            logoutUseCase: getIt.get<LogoutUseCase>(),
-            userCubit: context.read<UserCubit>(),
-          ),
-        ),
-        BlocProvider(
-          create: (_) => ChatCubit(userCubit: context.read<UserCubit>()),
-        ),
-        BlocProvider(
-          create: (_) => ContactsCubit(
-            getIt.get<GetContactsUseCase>(),
-            getIt.get<DeleteContactUseCase>(),
-          ),
-        ),
+        BlocProvider(create: (_) => getIt.get<SettingCubit>()),
+        BlocProvider(create: (_) => getIt.get<ChatCubit>()),
+        BlocProvider(create: (_) => getIt.get<ContactsCubit>()),
       ],
       child: child,
     );

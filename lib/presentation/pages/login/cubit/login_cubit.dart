@@ -10,12 +10,12 @@ part 'login_cubit.freezed.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(
     this._loginUseCase,
-  ) : super(LoginState.initial());
+  ) : super(const LoginState.initial());
 
   final LoginUseCase _loginUseCase;
 
   Future<void> login(String email, String password) async {
-    emit(LoginState.loading());
+    emit(const LoginState.loading());
 
     final result = await _loginUseCase.call(password: password, email: email);
     result.fold(
@@ -23,15 +23,15 @@ class LoginCubit extends Cubit<LoginState> {
       (_) async {
         result.fold(
           (failure) => emit(LoginState.error(failure.message)),
-          (user) => emit(LoginState.loaded()),
+          (user) => emit(const LoginState.loaded()),
         );
       },
     );
   }
 
   Future<void> loginByGoogle() async {
-    emit(LoginState.loading());
-    emit(LoginState.error('Not implemented'));
+    emit(const LoginState.loading());
+    emit(const LoginState.error('Not implemented'));
     // final result = await _loginByGoogleUseCase.call();
     // result.fold(
     //   (error) => emit(LoginState.error(error.message)),

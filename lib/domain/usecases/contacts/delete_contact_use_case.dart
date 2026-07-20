@@ -9,5 +9,8 @@ class DeleteContactUseCase {
 
   final ContactsRepository _contactsRepository;
 
-  Future<Either<ContactsFailure, Unit>> call({required String contactId}) => _contactsRepository.deleteContacts(contactId);
+  Future<Either<ContactsFailure, Unit>> call({required String contactId}) {
+    if (contactId.isEmpty) return Future.value(Left(ContactsValidationFailure(stackTrace: StackTrace.current)));
+    return _contactsRepository.deleteContacts(contactId);
+  }
 }

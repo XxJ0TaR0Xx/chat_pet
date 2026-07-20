@@ -18,7 +18,7 @@ class APIService {
   static void init() {
     final authInterceptor = AuthInterceptor(
       dio: DioConfiguration.createBasic(baseUrl: ApiConfig.current.baseUrl),
-      authService: getIt<AuthRepository>(),
+      authServiceProvider: getIt.call<AuthRepository>,
       tokenProvider: getIt<TokenManager>(),
     );
 

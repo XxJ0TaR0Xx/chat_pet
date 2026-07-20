@@ -24,7 +24,7 @@ import '../../data/repositories/contacts/contacts_repository_impl.dart'
 import '../../data/repositories/registration/registration_repository_impl.dart'
     as _i891;
 import '../../data/repositories/token/token_manager_impl.dart' as _i1003;
-import '../../data/repositories/users/users_repository_impl.dart' as _i866;
+import '../../data/repositories/user/user_repository_impl.dart' as _i991;
 import '../../domain/interfaces/auth/auth_local_repository.dart' as _i615;
 import '../../domain/interfaces/auth/auth_remote_repository.dart' as _i286;
 import '../../domain/interfaces/auth/auth_repository.dart' as _i508;
@@ -47,15 +47,18 @@ import '../../domain/usecases/contacts/incoming_requests_use_case.dart'
 import '../../domain/usecases/contacts/reject_request_use_case.dart' as _i493;
 import '../../domain/usecases/contacts/search_contacts_use_case.dart' as _i19;
 import '../../domain/usecases/contacts/send_request_use_case.dart' as _i555;
-import '../../domain/usecases/users/get_me_use_case.dart' as _i791;
-import '../../domain/usecases/users/update_avatar_use_case.dart' as _i462;
-import '../../domain/usecases/users/update_me_use_case.dart' as _i274;
+import '../../domain/usecases/user/get_me_use_case.dart' as _i59;
+import '../../domain/usecases/user/update_avatar_use_case.dart' as _i74;
+import '../../domain/usecases/user/update_me_use_case.dart' as _i778;
 import '../../presentation/cubits/contact_request/contact_requests_cubit.dart'
     as _i241;
+import '../../presentation/cubits/user/user_cubit.dart' as _i40;
+import '../../presentation/pages/chats/cubit/chat_cubit.dart' as _i130;
 import '../../presentation/pages/contacts/cubit/contacts_cubit.dart' as _i728;
 import '../../presentation/pages/contacts/find_contact/cubit/find_contact_cubit.dart'
     as _i1019;
 import '../../presentation/pages/login/cubit/login_cubit.dart' as _i419;
+import '../../presentation/pages/settings/cubit/setting_cubit.dart' as _i657;
 import '../storages/interfaces/secure_storage_service.dart' as _i566;
 import 'register_module.dart' as _i291;
 
@@ -70,22 +73,22 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i558.FlutterSecureStorage>(
       () => registerModule.secureStorage,
     );
+    gh.lazySingleton<_i73.UserRepository>(
+      () => _i991.UserRepositoryImpl(gh<_i361.Dio>()),
+    );
     gh.singleton<_i566.SecureStorageService>(
       () => _i415.SecureStorageServiceImpl(gh<_i558.FlutterSecureStorage>()),
     );
-    gh.lazySingleton<_i73.UserRepository>(
-      () => _i866.UsersRepositoryImpl(gh<_i361.Dio>()),
-    );
     gh.singleton<_i866.TokenManager>(() => _i1003.TokenManagerImpl());
     gh.factory<_i361.Dio>(() => registerModule.dio, instanceName: 'basicDio');
-    gh.factory<_i791.GetMeUseCase>(
-      () => _i791.GetMeUseCase(gh<_i73.UserRepository>()),
+    gh.factory<_i59.GetMeUseCase>(
+      () => _i59.GetMeUseCase(gh<_i73.UserRepository>()),
     );
-    gh.factory<_i462.UpdateAvatarUseCase>(
-      () => _i462.UpdateAvatarUseCase(gh<_i73.UserRepository>()),
+    gh.factory<_i74.UpdateAvatarUseCase>(
+      () => _i74.UpdateAvatarUseCase(gh<_i73.UserRepository>()),
     );
-    gh.factory<_i274.UpdateMeUseCase>(
-      () => _i274.UpdateMeUseCase(gh<_i73.UserRepository>()),
+    gh.factory<_i778.UpdateMeUseCase>(
+      () => _i778.UpdateMeUseCase(gh<_i73.UserRepository>()),
     );
     gh.lazySingleton<_i865.WebSocketService>(
       () => _i865.WebSocketService(gh<_i866.TokenManager>()),
@@ -102,7 +105,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i286.AuthRemoteRepository>(
       () => _i370.AuthRemoteRepositoryImpl(
         gh<_i361.Dio>(instanceName: 'basicDio'),
-        gh<_i866.TokenManager>(),
+        gh<_i361.Dio>(),
       ),
     );
     gh.factory<_i508.AuthRepository>(
@@ -133,6 +136,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i419.LoginCubit>(
       () => _i419.LoginCubit(gh<_i629.LoginUseCase>()),
+    );
+    gh.lazySingleton<_i40.UserCubit>(
+      () => _i40.UserCubit(gh<_i59.GetMeUseCase>(), gh<_i104.InitUseCase>()),
+    );
+    gh.factory<_i657.SettingCubit>(
+      () => _i657.SettingCubit(gh<_i635.LogoutUseCase>(), gh<_i40.UserCubit>()),
     );
     gh.factory<_i889.AcceptRequestUseCase>(
       () => _i889.AcceptRequestUseCase(gh<_i113.ContactsRepository>()),
@@ -166,6 +175,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i781.IncomingRequestStreamUseCase>(),
       ),
     );
+    gh.factory<_i130.ChatCubit>(() => _i130.ChatCubit(gh<_i40.UserCubit>()));
     gh.factory<_i1019.FindContactCubit>(
       () => _i1019.FindContactCubit(
         gh<_i19.SearchContactsUseCase>(),

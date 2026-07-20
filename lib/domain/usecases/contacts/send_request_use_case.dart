@@ -9,5 +9,8 @@ class SendRequestUseCase {
 
   final ContactsRepository _contactsRepository;
 
-  Future<Either<ContactsFailure, Unit>> call({required String userId}) => _contactsRepository.sendRequest(userId);
+  Future<Either<ContactsFailure, Unit>> call({required String userId}) {
+    if (userId.isEmpty) return Future.value(Left(ContactsValidationFailure(stackTrace: StackTrace.current)));
+    return _contactsRepository.sendRequest(userId);
+  }
 }

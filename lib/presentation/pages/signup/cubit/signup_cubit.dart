@@ -8,7 +8,7 @@ part 'signup_state.dart';
 part 'signup_cubit.freezed.dart';
 
 class SignupCubit extends Cubit<SignupState> {
-  SignupCubit(this._registrationUseCase, this._loginUseCase) : super(SignupState.initial());
+  SignupCubit(this._registrationUseCase, this._loginUseCase) : super(const SignupState.initial());
 
   final RegistrationUseCase _registrationUseCase;
   final LoginUseCase _loginUseCase;
@@ -18,7 +18,7 @@ class SignupCubit extends Cubit<SignupState> {
     required String email,
     required String password,
   }) async {
-    emit(SignupState.loading());
+    emit(const SignupState.loading());
 
     final result = await _registrationUseCase.call(
       userName: name,

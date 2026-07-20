@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:chat_pet/core/injectable/injectable.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
 import 'package:chat_pet/presentation/pages/chats/all_chats_page.dart';
 import 'package:chat_pet/presentation/pages/contacts/contacts_page.dart';
 import 'package:chat_pet/presentation/pages/contacts/find_contact/find_new_contact.dart';
 import 'package:chat_pet/presentation/pages/home/home_page.dart';
+import 'package:chat_pet/presentation/pages/login/cubit/login_cubit.dart';
 import 'package:chat_pet/presentation/pages/login/login_page.dart';
 import 'package:chat_pet/presentation/pages/map/map_page.dart';
 import 'package:chat_pet/presentation/pages/message_page/message_page.dart';
@@ -31,7 +33,7 @@ final class RouteConfiguration {
       initialLocation: AppRoutes.loading,
 
       redirect: (context, state) {
-        final userState = context.read<UserCubit>().state;
+        final userState = getIt.get<UserCubit>().state;
 
         final isAuthFlow = state.matchedLocation.startsWith(AppRoutes.start);
         final isLoading = state.matchedLocation == AppRoutes.loading;
@@ -52,7 +54,7 @@ final class RouteConfiguration {
 
         return null;
       },
-      refreshListenable: GoRouterRefreshBloc(context.read<UserCubit>()),
+      refreshListenable: GoRouterRefreshBloc(getIt.get<UserCubit>()),
       routes: [
         GoRoute(
           path: AppRoutes.loading,
@@ -64,7 +66,13 @@ final class RouteConfiguration {
           routes: [
             GoRoute(
               path: AppRoutes.loginSegment,
-              builder: (context, state) => const LoginPage(),
+              builder: (context, state) => MultiBlocProvider(
+                providers: [
+                  BlocProvider.value(value: getIt.get<LoginCubit>()),
+                  BlocProvider.value(value: getIt.get<UserCubit>()),
+                ],
+                child: const LoginPage(),
+              ),
             ),
             GoRoute(
               path: AppRoutes.signUpSegment,

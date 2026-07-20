@@ -61,7 +61,7 @@ class _SignupPageState extends State<SignupPage> {
         child: CustomScrollView(
           physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
           slivers: [
-            SliverAppBar(
+            const SliverAppBar(
               backgroundColor: Colors.transparent,
               shadowColor: Colors.transparent,
               foregroundColor: ColorsFoundation.darkNeutral,
@@ -246,7 +246,7 @@ class _SignupPageState extends State<SignupPage> {
                             ),
                           ).paddingHorizontal(SpacingFoundation.horizontalSpacing24),
                           SpacingFoundation.verticalSpace30,
-                          Spacer(),
+                          const Spacer(),
                           Row(
                             children: [
                               Expanded(
