@@ -22,7 +22,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   final UpdateAvatarUseCase _avatarUseCase;
   final UserCubit userCubit;
 
-  UserModel? get user => userCubit.currentUser;
+  UserModel? get user => userCubit.state.user;
 
   void initialize() {
     emit(const ProfileState.loading());
@@ -57,9 +57,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<bool> updateUserImage() async {
     bool isSuccess = false;
-
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    final image = await _getImage();
 
     if (image?.path == null || image!.path.isEmpty) return isSuccess;
 
@@ -80,5 +78,10 @@ class ProfileCubit extends Cubit<ProfileState> {
     );
 
     return isSuccess;
+  }
+
+  Future<XFile?> _getImage() async {
+    final ImagePicker picker = ImagePicker();
+    return picker.pickImage(source: ImageSource.gallery);
   }
 }
