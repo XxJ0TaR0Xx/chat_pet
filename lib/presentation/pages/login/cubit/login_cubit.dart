@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
+import 'package:chat_pet/core/injectable/injectable.dart';
 import 'package:chat_pet/domain/usecases/auth/login_use_case.dart';
+import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -21,10 +23,12 @@ class LoginCubit extends Cubit<LoginState> {
     result.fold(
       (failure) => emit(LoginState.error(failure.message)),
       (_) async {
-        result.fold(
-          (failure) => emit(LoginState.error(failure.message)),
-          (user) => emit(const LoginState.loaded()),
-        );
+        final userCubit = getIt<UserCubit>();
+        await userCubit.getMe();
+        if (userCubit.state.user == null) {
+          emit(const LoginState.error('Не удалось получить пользователя'));
+        }
+        emit(const LoginState.loaded());
       },
     );
   }
