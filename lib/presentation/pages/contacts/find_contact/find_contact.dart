@@ -61,7 +61,7 @@ class _FindContactState extends State<FindContact> {
                       ),
                     ),
                   ),
-                  loading: () => SliverFillRemaining(
+                  loading: () => const SliverFillRemaining(
                     hasScrollBody: false,
                     child: LoadingWidget(),
                   ),
