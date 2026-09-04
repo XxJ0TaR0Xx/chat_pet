@@ -55,13 +55,13 @@ extension ChatStatePatterns on ChatState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Loaded value)?  loaded,TResult Function( _Error value)?  error,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( ChatStateInitial value)?  initial,TResult Function( ChatStateLoading value)?  loading,TResult Function( ChatStateLoaded value)?  loaded,TResult Function( ChatStateError value)?  error,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial(_that);case _Loading() when loading != null:
-return loading(_that);case _Loaded() when loaded != null:
-return loaded(_that);case _Error() when error != null:
+case ChatStateInitial() when initial != null:
+return initial(_that);case ChatStateLoading() when loading != null:
+return loading(_that);case ChatStateLoaded() when loaded != null:
+return loaded(_that);case ChatStateError() when error != null:
 return error(_that);case _:
   return orElse();
 
@@ -80,13 +80,13 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Loaded value)  loaded,required TResult Function( _Error value)  error,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( ChatStateInitial value)  initial,required TResult Function( ChatStateLoading value)  loading,required TResult Function( ChatStateLoaded value)  loaded,required TResult Function( ChatStateError value)  error,}){
 final _that = this;
 switch (_that) {
-case _Initial():
-return initial(_that);case _Loading():
-return loading(_that);case _Loaded():
-return loaded(_that);case _Error():
+case ChatStateInitial():
+return initial(_that);case ChatStateLoading():
+return loading(_that);case ChatStateLoaded():
+return loaded(_that);case ChatStateError():
 return error(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -104,13 +104,13 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Loaded value)?  loaded,TResult? Function( _Error value)?  error,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( ChatStateInitial value)?  initial,TResult? Function( ChatStateLoading value)?  loading,TResult? Function( ChatStateLoaded value)?  loaded,TResult? Function( ChatStateError value)?  error,}){
 final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial(_that);case _Loading() when loading != null:
-return loading(_that);case _Loaded() when loaded != null:
-return loaded(_that);case _Error() when error != null:
+case ChatStateInitial() when initial != null:
+return initial(_that);case ChatStateLoading() when loading != null:
+return loading(_that);case ChatStateLoaded() when loaded != null:
+return loaded(_that);case ChatStateError() when error != null:
 return error(_that);case _:
   return null;
 
@@ -128,12 +128,12 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( UserModel userModel)?  loaded,TResult Function( String error)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<ChatModel> models)?  loaded,TResult Function( String error)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial();case _Loading() when loading != null:
-return loading();case _Loaded() when loaded != null:
-return loaded(_that.userModel);case _Error() when error != null:
+case ChatStateInitial() when initial != null:
+return initial();case ChatStateLoading() when loading != null:
+return loading();case ChatStateLoaded() when loaded != null:
+return loaded(_that.models);case ChatStateError() when error != null:
 return error(_that.error);case _:
   return orElse();
 
@@ -152,12 +152,12 @@ return error(_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( UserModel userModel)  loaded,required TResult Function( String error)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<ChatModel> models)  loaded,required TResult Function( String error)  error,}) {final _that = this;
 switch (_that) {
-case _Initial():
-return initial();case _Loading():
-return loading();case _Loaded():
-return loaded(_that.userModel);case _Error():
+case ChatStateInitial():
+return initial();case ChatStateLoading():
+return loading();case ChatStateLoaded():
+return loaded(_that.models);case ChatStateError():
 return error(_that.error);case _:
   throw StateError('Unexpected subclass');
 
@@ -175,12 +175,12 @@ return error(_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( UserModel userModel)?  loaded,TResult? Function( String error)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<ChatModel> models)?  loaded,TResult? Function( String error)?  error,}) {final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial();case _Loading() when loading != null:
-return loading();case _Loaded() when loaded != null:
-return loaded(_that.userModel);case _Error() when error != null:
+case ChatStateInitial() when initial != null:
+return initial();case ChatStateLoading() when loading != null:
+return loading();case ChatStateLoaded() when loaded != null:
+return loaded(_that.models);case ChatStateError() when error != null:
 return error(_that.error);case _:
   return null;
 
@@ -192,8 +192,8 @@ return error(_that.error);case _:
 /// @nodoc
 
 
-class _Initial implements ChatState {
-  const _Initial();
+class ChatStateInitial implements ChatState {
+  const ChatStateInitial();
   
 
 
@@ -203,7 +203,7 @@ class _Initial implements ChatState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatStateInitial);
 }
 
 
@@ -224,8 +224,8 @@ String toString() {
 /// @nodoc
 
 
-class _Loading implements ChatState {
-  const _Loading();
+class ChatStateLoading implements ChatState {
+  const ChatStateLoading();
   
 
 
@@ -235,7 +235,7 @@ class _Loading implements ChatState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatStateLoading);
 }
 
 
@@ -256,83 +256,80 @@ String toString() {
 /// @nodoc
 
 
-class _Loaded implements ChatState {
-  const _Loaded(this.userModel);
+class ChatStateLoaded implements ChatState {
+  const ChatStateLoaded(final  List<ChatModel> models): _models = models;
   
 
- final  UserModel userModel;
+ final  List<ChatModel> _models;
+ List<ChatModel> get models {
+  if (_models is EqualUnmodifiableListView) return _models;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_models);
+}
+
 
 /// Create a copy of ChatState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+$ChatStateLoadedCopyWith<ChatStateLoaded> get copyWith => _$ChatStateLoadedCopyWithImpl<ChatStateLoaded>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&(identical(other.userModel, userModel) || other.userModel == userModel));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatStateLoaded&&const DeepCollectionEquality().equals(other._models, _models));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,userModel);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_models));
 
 @override
 String toString() {
-  return 'ChatState.loaded(userModel: $userModel)';
+  return 'ChatState.loaded(models: $models)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCopyWith<$Res> implements $ChatStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
+abstract mixin class $ChatStateLoadedCopyWith<$Res> implements $ChatStateCopyWith<$Res> {
+  factory $ChatStateLoadedCopyWith(ChatStateLoaded value, $Res Function(ChatStateLoaded) _then) = _$ChatStateLoadedCopyWithImpl;
 @useResult
 $Res call({
- UserModel userModel
+ List<ChatModel> models
 });
 
 
-$UserModelCopyWith<$Res> get userModel;
+
 
 }
 /// @nodoc
-class __$LoadedCopyWithImpl<$Res>
-    implements _$LoadedCopyWith<$Res> {
-  __$LoadedCopyWithImpl(this._self, this._then);
+class _$ChatStateLoadedCopyWithImpl<$Res>
+    implements $ChatStateLoadedCopyWith<$Res> {
+  _$ChatStateLoadedCopyWithImpl(this._self, this._then);
 
-  final _Loaded _self;
-  final $Res Function(_Loaded) _then;
+  final ChatStateLoaded _self;
+  final $Res Function(ChatStateLoaded) _then;
 
 /// Create a copy of ChatState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? userModel = null,}) {
-  return _then(_Loaded(
-null == userModel ? _self.userModel : userModel // ignore: cast_nullable_to_non_nullable
-as UserModel,
+@pragma('vm:prefer-inline') $Res call({Object? models = null,}) {
+  return _then(ChatStateLoaded(
+null == models ? _self._models : models // ignore: cast_nullable_to_non_nullable
+as List<ChatModel>,
   ));
 }
 
-/// Create a copy of ChatState
-/// with the given fields replaced by the non-null parameter values.
-@override
-@pragma('vm:prefer-inline')
-$UserModelCopyWith<$Res> get userModel {
-  
-  return $UserModelCopyWith<$Res>(_self.userModel, (value) {
-    return _then(_self.copyWith(userModel: value));
-  });
-}
+
 }
 
 /// @nodoc
 
 
-class _Error implements ChatState {
-  const _Error(this.error);
+class ChatStateError implements ChatState {
+  const ChatStateError(this.error);
   
 
  final  String error;
@@ -341,13 +338,13 @@ class _Error implements ChatState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
+$ChatStateErrorCopyWith<ChatStateError> get copyWith => _$ChatStateErrorCopyWithImpl<ChatStateError>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Error&&(identical(other.error, error) || other.error == error));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatStateError&&(identical(other.error, error) || other.error == error));
 }
 
 
@@ -363,8 +360,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res> implements $ChatStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
+abstract mixin class $ChatStateErrorCopyWith<$Res> implements $ChatStateCopyWith<$Res> {
+  factory $ChatStateErrorCopyWith(ChatStateError value, $Res Function(ChatStateError) _then) = _$ChatStateErrorCopyWithImpl;
 @useResult
 $Res call({
  String error
@@ -375,17 +372,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res>
-    implements _$ErrorCopyWith<$Res> {
-  __$ErrorCopyWithImpl(this._self, this._then);
+class _$ChatStateErrorCopyWithImpl<$Res>
+    implements $ChatStateErrorCopyWith<$Res> {
+  _$ChatStateErrorCopyWithImpl(this._self, this._then);
 
-  final _Error _self;
-  final $Res Function(_Error) _then;
+  final ChatStateError _self;
+  final $Res Function(ChatStateError) _then;
 
 /// Create a copy of ChatState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? error = null,}) {
-  return _then(_Error(
+  return _then(ChatStateError(
 null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String,
   ));
