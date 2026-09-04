@@ -12,7 +12,7 @@ part 'user_cubit.freezed.dart';
 
 @lazySingleton
 class UserCubit extends Cubit<UserState> {
-  UserCubit(this._getMeUseCase, this._initUseCase) : super(const UserState.initial()) {
+  UserCubit(this._getMeUseCase, this._initUseCase) : super(const UserState()) {
     _init().whenComplete(getMe);
   }
 
@@ -20,33 +20,24 @@ class UserCubit extends Cubit<UserState> {
 
   final InitUseCase _initUseCase;
 
-  static UserModel? _currentUser;
-
   void setUser(UserModel user) {
-    _currentUser = user;
-    emit(UserState.loaded(user));
+    emit(state.copyWith(user: user, isLoading: false));
   }
 
   void clearUser() {
-    _currentUser = null;
-    emit(const UserState.error('log out'));
+    emit(state.copyWith(user: null, isLoading: false));
   }
-
-  UserModel? get currentUser => _currentUser ?? (state is UserStateLoaded ? (state as UserStateLoaded).user : null);
 
   Future<void> _init() async {
     await _initUseCase.call();
   }
 
   Future<void> getMe() async {
-    emit(const UserState.loading());
-
     final result = await _getMeUseCase.call();
     result.fold(
-      (failure) => emit(UserState.error(failure.message)),
+      (failure) => emit(state.copyWith(user: null, isLoading: false)),
       (user) {
-        _currentUser = user;
-        emit(UserState.loaded(user));
+        emit(state.copyWith(user: user, isLoading: false));
       },
     );
   }
