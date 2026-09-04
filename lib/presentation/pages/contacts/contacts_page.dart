@@ -50,11 +50,8 @@ class _ContactsPageState extends State<ContactsPage> {
   Widget build(BuildContext context) {
     final theme = context.uiKitTheme;
 
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider.value(value: _cubit),
-        BlocProvider.value(value: getIt<ContactRequestsCubit>()),
-      ],
+    return BlocProvider.value(
+      value: _cubit,
       child: Scaffold(
         backgroundColor: _isSearching ? null : theme?.colorScheme.darkNeutral,
         body: RefreshIndicator(
@@ -206,17 +203,17 @@ class _ContactsBody extends StatelessWidget {
                 ),
               ),
               SpacingFoundation.verticalSpace24,
-              BlocBuilder<ContactRequestsCubit, ContactRequestState>(
+              BlocBuilder<ContactModelRequestsCubit, ContactModelRequestState>(
                 builder: (context, state) {
                   if (!state.hasPending) return const SizedBox.shrink();
                   return IncomingRequestsSection(
                     requests: state.request,
                     onAcceptTap: (requestId) async {
-                      await context.read<ContactRequestsCubit>().acceptRequest(requestId);
+                      await context.read<ContactModelRequestsCubit>().acceptRequest(requestId);
                       if (context.mounted) unawaited(context.read<ContactsCubit>().refresh());
                     },
                     onRejectTap: (requestId) {
-                      context.read<ContactRequestsCubit>().rejectRequest(requestId);
+                      context.read<ContactModelRequestsCubit>().rejectRequest(requestId);
                     },
                   );
                 },
