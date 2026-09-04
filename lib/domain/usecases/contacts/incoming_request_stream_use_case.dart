@@ -1,5 +1,5 @@
 import 'package:chat_pet/domain/interfaces/contacts/contacts_repository.dart';
-import 'package:chat_pet/domain/models/contacts/contact_request.dart';
+import 'package:chat_pet/domain/models/contacts/contact_model_request.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable()
@@ -8,5 +8,5 @@ class IncomingRequestStreamUseCase {
 
   final ContactsRepository _contactsRepository;
 
-  Stream<ContactRequest> call() => _contactsRepository.incomingRequestStream;
+  Stream<ContactModelRequest> call() => _contactsRepository.incomingRequestStream;
 }

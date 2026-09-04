@@ -1,12 +1,12 @@
 part of 'contact_requests_cubit.dart';
 
 @freezed
-abstract class ContactRequestState with _$ContactRequestState {
-  const factory ContactRequestState({
-    @Default([]) List<ContactRequest> request,
-  }) = _ContactRequestState;
+abstract class ContactModelRequestState with _$ContactModelRequestState {
+  const factory ContactModelRequestState({
+    @Default([]) List<ContactModelRequest> request,
+  }) = _ContactModelRequestState;
 
-  const ContactRequestState._();
+  const ContactModelRequestState._();
 
   int get pendingCount => request.length;
 
