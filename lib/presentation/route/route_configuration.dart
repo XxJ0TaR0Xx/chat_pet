@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:chat_pet/core/injectable/injectable.dart';
+import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
 import 'package:chat_pet/presentation/pages/chats/all_chats_page.dart';
 import 'package:chat_pet/presentation/pages/contacts/contacts_page.dart';
-import 'package:chat_pet/presentation/pages/contacts/find_contact/find_new_contact.dart';
+import 'package:chat_pet/presentation/pages/contacts/find_contact/find_contact.dart';
+import 'package:chat_pet/presentation/pages/contacts/select_contact/select_contact_page.dart';
 import 'package:chat_pet/presentation/pages/home/home_page.dart';
 import 'package:chat_pet/presentation/pages/login/cubit/login_cubit.dart';
 import 'package:chat_pet/presentation/pages/login/login_page.dart';
@@ -38,18 +40,16 @@ final class RouteConfiguration {
         final isAuthFlow = state.matchedLocation.startsWith(AppRoutes.start);
         final isLoading = state.matchedLocation == AppRoutes.loading;
 
-        if (userState is UserStateInitial || userState is UserStateLoading) {
+        if (userState.isLoading) {
           return isLoading ? null : AppRoutes.loading;
         }
 
-        if (userState is UserStateError) {
+        if (userState.user == null) {
           return isAuthFlow ? null : AppRoutes.start;
         }
 
-        if (userState is UserStateLoaded) {
-          if (isLoading || isAuthFlow) {
-            return AppRoutes.chats;
-          }
+        if (isLoading || isAuthFlow) {
+          return AppRoutes.chats;
         }
 
         return null;
@@ -95,7 +95,10 @@ final class RouteConfiguration {
                     GoRoute(
                       path: AppRoutes.chatSegment,
                       parentNavigatorKey: _rootNavigationKey,
-                      builder: (context, state) => MessagePage(id: state.pathParameters['id']!),
+                      builder: (context, state) => MessagePage(
+                        id: state.pathParameters['id']!,
+                        interlocutorModel: state.extra as UserModel,
+                      ),
                     ),
                   ],
                 ),
@@ -115,12 +118,17 @@ final class RouteConfiguration {
               routes: [
                 GoRoute(
                   path: AppRoutes.contacts,
-                  builder: (context, state) => ContactsPage(),
+                  builder: (context, state) => const ContactsPage(),
                   routes: [
                     GoRoute(
                       path: AppRoutes.newContacts,
                       parentNavigatorKey: _rootNavigationKey,
                       builder: (context, state) => const FindContact(),
+                    ),
+                    GoRoute(
+                      path: AppRoutes.selectContactSegment,
+                      parentNavigatorKey: _rootNavigationKey,
+                      builder: (context, state) => const SelectContactPage(),
                     ),
                   ],
                 ),
