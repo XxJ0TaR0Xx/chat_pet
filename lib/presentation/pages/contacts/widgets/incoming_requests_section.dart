@@ -1,4 +1,4 @@
-import 'package:chat_pet/domain/models/contacts/contact_request.dart';
+import 'package:chat_pet/domain/models/contacts/contact_model_request.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +10,7 @@ class IncomingRequestsSection extends StatelessWidget {
     super.key,
   });
 
-  final List<ContactRequest> requests;
+  final List<ContactModelRequest> requests;
   final ValueChanged<String> onAcceptTap;
   final ValueChanged<String> onRejectTap;
 
@@ -67,7 +67,7 @@ class _RequestItem extends StatelessWidget {
     required this.onRejectTap,
   });
 
-  final ContactRequest request;
+  final ContactModelRequest request;
   final VoidCallback onAcceptTap;
   final VoidCallback onRejectTap;
 
@@ -77,7 +77,6 @@ class _RequestItem extends StatelessWidget {
     return Row(
       children: [
         AvatarWidget(
-          codeForGen: request.sender.id,
           size: 52.w,
           url: request.sender.avatarUrl,
         ),
@@ -103,7 +102,7 @@ class _RequestItem extends StatelessWidget {
         ),
         InkWell(
           onTap: onAcceptTap,
-          child: Icon(Icons.check_circle_outline, color: ColorsFoundation.green),
+          child: const Icon(Icons.check_circle_outline, color: ColorsFoundation.green),
         ),
         SpacingFoundation.horizontalSpace8,
         InkWell(
