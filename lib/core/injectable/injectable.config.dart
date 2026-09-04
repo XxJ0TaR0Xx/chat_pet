@@ -19,6 +19,7 @@ import '../../data/common/services/web_socket/web_socket_service.dart' as _i865;
 import '../../data/repositories/auth/auth_local_repository_impl.dart' as _i236;
 import '../../data/repositories/auth/auth_remote_repository_impl.dart' as _i370;
 import '../../data/repositories/auth/auth_repository_impl.dart' as _i24;
+import '../../data/repositories/chats/chat_repository_impl.dart' as _i310;
 import '../../data/repositories/contacts/contacts_repository_impl.dart'
     as _i447;
 import '../../data/repositories/registration/registration_repository_impl.dart'
@@ -28,6 +29,7 @@ import '../../data/repositories/user/user_repository_impl.dart' as _i991;
 import '../../domain/interfaces/auth/auth_local_repository.dart' as _i615;
 import '../../domain/interfaces/auth/auth_remote_repository.dart' as _i286;
 import '../../domain/interfaces/auth/auth_repository.dart' as _i508;
+import '../../domain/interfaces/chats/chat_repository.dart' as _i316;
 import '../../domain/interfaces/contacts/contacts_repository.dart' as _i113;
 import '../../domain/interfaces/registration/registration_repository.dart'
     as _i374;
@@ -37,6 +39,17 @@ import '../../domain/usecases/auth/init_use_case.dart' as _i104;
 import '../../domain/usecases/auth/login_use_case.dart' as _i629;
 import '../../domain/usecases/auth/logout_use_case.dart' as _i635;
 import '../../domain/usecases/auth/registration_use_case.dart' as _i314;
+import '../../domain/usecases/chats/chat_web_socket_use_case.dart' as _i190;
+import '../../domain/usecases/chats/create_chat_use_case.dart' as _i396;
+import '../../domain/usecases/chats/delete_chat_use_case.dart' as _i730;
+import '../../domain/usecases/chats/delete_message_use_case.dart' as _i61;
+import '../../domain/usecases/chats/delete_messages_use_case.dart' as _i707;
+import '../../domain/usecases/chats/disconnect_from_chat_use_case.dart'
+    as _i345;
+import '../../domain/usecases/chats/get_chats_use_case.dart' as _i625;
+import '../../domain/usecases/chats/get_messages_use_case.dart' as _i1050;
+import '../../domain/usecases/chats/send_message_use_case.dart' as _i585;
+import '../../domain/usecases/chats/update_message_use_case.dart' as _i1032;
 import '../../domain/usecases/contacts/accept_request_use_case.dart' as _i889;
 import '../../domain/usecases/contacts/delete_contact_use_case.dart' as _i845;
 import '../../domain/usecases/contacts/get_contacts_use_case.dart' as _i805;
@@ -58,6 +71,8 @@ import '../../presentation/pages/contacts/cubit/contacts_cubit.dart' as _i728;
 import '../../presentation/pages/contacts/find_contact/cubit/find_contact_cubit.dart'
     as _i1019;
 import '../../presentation/pages/login/cubit/login_cubit.dart' as _i419;
+import '../../presentation/pages/message_page/cubit/message_cubit.dart'
+    as _i538;
 import '../../presentation/pages/settings/cubit/setting_cubit.dart' as _i657;
 import '../storages/interfaces/secure_storage_service.dart' as _i566;
 import 'register_module.dart' as _i291;
@@ -90,8 +105,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i778.UpdateMeUseCase>(
       () => _i778.UpdateMeUseCase(gh<_i73.UserRepository>()),
     );
-    gh.lazySingleton<_i865.WebSocketService>(
-      () => _i865.WebSocketService(gh<_i866.TokenManager>()),
+    gh.lazySingleton<_i865.NotificationWebSocket>(
+      () => _i865.NotificationWebSocket(gh<_i866.TokenManager>()),
       dispose: (i) => i.dispose(),
     );
     gh.factory<_i615.AuthLocalRepository>(
@@ -108,12 +123,15 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i361.Dio>(),
       ),
     );
+    gh.lazySingleton<_i316.ChatRepository>(
+      () => _i310.ChatRepositoryImpl(gh<_i361.Dio>(), gh<_i866.TokenManager>()),
+    );
     gh.factory<_i508.AuthRepository>(
       () => _i24.AuthRepositoryImpl(
         authLocalRepository: gh<_i615.AuthLocalRepository>(),
         authRemoteRepository: gh<_i286.AuthRemoteRepository>(),
         tokenCache: gh<_i866.TokenManager>(),
-        webSocketService: gh<_i865.WebSocketService>(),
+        webSocketService: gh<_i865.NotificationWebSocket>(),
       ),
     );
     gh.factory<_i629.LoginUseCase>(
@@ -125,7 +143,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i113.ContactsRepository>(
       () => _i447.ContactsRepositoryImpl(
         gh<_i361.Dio>(),
-        gh<_i865.WebSocketService>(),
+        gh<_i865.NotificationWebSocket>(),
       ),
     );
     gh.factory<_i104.InitUseCase>(
@@ -137,8 +155,51 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i419.LoginCubit>(
       () => _i419.LoginCubit(gh<_i629.LoginUseCase>()),
     );
+    gh.factory<_i190.ChatWebSocketUseCase>(
+      () => _i190.ChatWebSocketUseCase(gh<_i316.ChatRepository>()),
+    );
+    gh.factory<_i396.CreateChatUseCase>(
+      () => _i396.CreateChatUseCase(gh<_i316.ChatRepository>()),
+    );
+    gh.factory<_i730.DeleteChatUseCase>(
+      () => _i730.DeleteChatUseCase(gh<_i316.ChatRepository>()),
+    );
+    gh.factory<_i61.DeleteMessageUseCase>(
+      () => _i61.DeleteMessageUseCase(gh<_i316.ChatRepository>()),
+    );
+    gh.factory<_i707.DeleteMessagesUseCase>(
+      () => _i707.DeleteMessagesUseCase(gh<_i316.ChatRepository>()),
+    );
+    gh.factory<_i345.DisconnectFromChatUseCase>(
+      () => _i345.DisconnectFromChatUseCase(gh<_i316.ChatRepository>()),
+    );
+    gh.factory<_i625.GetChatsUseCase>(
+      () => _i625.GetChatsUseCase(gh<_i316.ChatRepository>()),
+    );
+    gh.factory<_i1050.GetMessagesUseCase>(
+      () => _i1050.GetMessagesUseCase(gh<_i316.ChatRepository>()),
+    );
+    gh.factory<_i585.SendMessageUseCase>(
+      () => _i585.SendMessageUseCase(gh<_i316.ChatRepository>()),
+    );
+    gh.factory<_i1032.UpdateMessageUseCase>(
+      () => _i1032.UpdateMessageUseCase(gh<_i316.ChatRepository>()),
+    );
     gh.lazySingleton<_i40.UserCubit>(
       () => _i40.UserCubit(gh<_i59.GetMeUseCase>(), gh<_i104.InitUseCase>()),
+    );
+    gh.factory<_i538.MessageCubit>(
+      () => _i538.MessageCubit(
+        gh<_i1050.GetMessagesUseCase>(),
+        gh<_i61.DeleteMessageUseCase>(),
+        gh<_i707.DeleteMessagesUseCase>(),
+        gh<_i1032.UpdateMessageUseCase>(),
+        gh<_i190.ChatWebSocketUseCase>(),
+        gh<_i345.DisconnectFromChatUseCase>(),
+        gh<_i585.SendMessageUseCase>(),
+        chatId: gh<String>(),
+        currentUserId: gh<String>(),
+      ),
     );
     gh.factory<_i657.SettingCubit>(
       () => _i657.SettingCubit(gh<_i635.LogoutUseCase>(), gh<_i40.UserCubit>()),
@@ -167,15 +228,22 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i555.SendRequestUseCase>(
       () => _i555.SendRequestUseCase(gh<_i113.ContactsRepository>()),
     );
-    gh.lazySingleton<_i241.ContactRequestsCubit>(
-      () => _i241.ContactRequestsCubit(
+    gh.lazySingleton<_i241.ContactModelRequestsCubit>(
+      () => _i241.ContactModelRequestsCubit(
         gh<_i1011.IncomingRequestsUseCase>(),
         gh<_i889.AcceptRequestUseCase>(),
         gh<_i493.RejectRequestUseCase>(),
         gh<_i781.IncomingRequestStreamUseCase>(),
       ),
     );
-    gh.factory<_i130.ChatCubit>(() => _i130.ChatCubit(gh<_i40.UserCubit>()));
+    gh.factory<_i130.ChatCubit>(
+      () => _i130.ChatCubit(
+        gh<_i625.GetChatsUseCase>(),
+        gh<_i396.CreateChatUseCase>(),
+        gh<_i730.DeleteChatUseCase>(),
+        gh<_i865.NotificationWebSocket>(),
+      ),
+    );
     gh.factory<_i1019.FindContactCubit>(
       () => _i1019.FindContactCubit(
         gh<_i19.SearchContactsUseCase>(),
