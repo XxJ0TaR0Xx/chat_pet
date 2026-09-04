@@ -24,6 +24,7 @@ class HomeScope extends StatelessWidget {
         BlocProvider(create: (_) => getIt.get<SettingCubit>()),
         BlocProvider(create: (_) => getIt.get<ChatCubit>()),
         BlocProvider(create: (_) => getIt.get<ContactsCubit>()),
+        BlocProvider(create: (_) => getIt<ContactModelRequestsCubit>()),
       ],
       child: child,
     );
@@ -43,14 +44,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late final ContactRequestsCubit _cubit;
-
-  @override
-  void initState() {
-    super.initState();
-    _cubit = getIt.get<ContactRequestsCubit>();
-  }
-
   void _onTabSelected(int index) {
     widget.navigationShell.goBranch(
       index,
@@ -70,45 +63,51 @@ class _HomePageState extends State<HomePage> {
           decoration: BoxDecoration(
             color: theme?.colorScheme.surfaceBase,
           ),
-          child: BlocBuilder<ContactRequestsCubit, ContactRequestState>(
-            bloc: _cubit,
-            builder: (context, state) =>
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    BottomNavigationIcon(
-                      icon: AppIcons.message,
-                      title: S.of(context).Message,
-                      isActive: currentIndex == 0,
-                      onTap: () => _onTabSelected(0),
-                    ),
-                    BottomNavigationIcon(
-                      icon: AppIcons.calls,
-                      title: S.of(context).Calls,
-                      isActive: currentIndex == 1,
-                      onTap: () => _onTabSelected(1),
-                    ),
-                    BottomNavigationIcon(
+          child:
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  BlocBuilder<ChatCubit, ChatState>(
+                    builder: (context, state) {
+                      final showBadge = state is ChatStateLoaded ? state.models.any((chat) => chat.uncheckedMessageCount > 0) : false;
+
+                      return BottomNavigationIcon(
+                        icon: AppIcons.message,
+                        title: S.of(context).Message,
+                        isActive: currentIndex == 0,
+                        showBadge: showBadge,
+                        onTap: () => _onTabSelected(0),
+                      );
+                    },
+                  ),
+                  BottomNavigationIcon(
+                    icon: AppIcons.calls,
+                    title: S.of(context).Calls,
+                    isActive: currentIndex == 1,
+                    onTap: () => _onTabSelected(1),
+                  ),
+                  BlocBuilder<ContactModelRequestsCubit, ContactModelRequestState>(
+                    builder: (context, state) => BottomNavigationIcon(
                       icon: AppIcons.contacts,
                       title: S.of(context).Contacts,
                       isActive: currentIndex == 2,
                       onTap: () => _onTabSelected(2),
                       showBadge: state.hasPending,
                     ),
-                    BottomNavigationIcon(
-                      icon: AppIcons.settings,
-                      title: S.of(context).Settings,
-                      isActive: currentIndex == 3,
-                      onTap: () => _onTabSelected(3),
-                    ),
-                  ],
-                ).paddingOnly(
-                  left: SpacingFoundation.horizontalSpacing24,
-                  right: SpacingFoundation.horizontalSpacing24,
-                  top: SpacingFoundation.verticalSpacing16,
-                  bottom: SpacingFoundation.verticalSpacing24,
-                ),
-          ),
+                  ),
+                  BottomNavigationIcon(
+                    icon: AppIcons.settings,
+                    title: S.of(context).Settings,
+                    isActive: currentIndex == 3,
+                    onTap: () => _onTabSelected(3),
+                  ),
+                ],
+              ).paddingOnly(
+                left: SpacingFoundation.horizontalSpacing24,
+                right: SpacingFoundation.horizontalSpacing24,
+                top: SpacingFoundation.verticalSpacing16,
+                bottom: SpacingFoundation.verticalSpacing24,
+              ),
         ),
         body: widget.navigationShell,
       ),
