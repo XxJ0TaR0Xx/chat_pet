@@ -11,7 +11,10 @@ class CustomSnackBar {
   final String text;
 
   void showMessage() {
-    //TODO implement
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      _getSnackBar(ColorsFoundation.success),
+    );
   }
 
   void showErrorMessage() {
