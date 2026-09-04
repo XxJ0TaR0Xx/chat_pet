@@ -1,6 +1,8 @@
 import 'dart:async';
 
-import 'package:chat_pet/data/common/custom_talker/custom_talker.dart';
+import 'package:chat_pet/domain/custom_talker/custom_talker.dart';
+import 'package:chat_pet/data/mappers/user/user_mapper.dart';
+import 'package:chat_pet/data/models/user/user_dto.dart';
 import 'package:chat_pet/domain/failures/user_failures/user_failures.dart';
 import 'package:chat_pet/domain/interfaces/user/user_repository.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
@@ -22,7 +24,7 @@ class UserRepositoryImpl implements UserRepository {
       final response = await _dio.get('users/me');
 
       talk.info('Get me success $response');
-      return Right(UserModel.fromJson(response.data));
+      return Right(UserDto.fromJson(response.data as Map<String, dynamic>).toDomain());
     } on DioException catch (e, st) {
       return Left(UserFailure.fromDioException(e, st));
     } catch (e, st) {
@@ -38,11 +40,11 @@ class UserRepositoryImpl implements UserRepository {
     try {
       final response = await _dio.patch(
         'users/me',
-        data: user.toJson(),
+        data: user.toUpdateDto().toJson(),
       );
 
       talk.info('Update me success $response');
-      return Right(UserModel.fromJson(response.data));
+      return Right(UserDto.fromJson(response.data as Map<String, dynamic>).toDomain());
     } on DioException catch (e, st) {
       return Left(UserFailure.fromDioException(e, st));
     } catch (e, st) {
@@ -71,7 +73,7 @@ class UserRepositoryImpl implements UserRepository {
       );
 
       talk.info('Update avatar success $response');
-      return Right(UserModel.fromJson(response.data));
+      return Right(UserDto.fromJson(response.data as Map<String, dynamic>).toDomain());
     } on DioException catch (e, st) {
       return Left(UserFailure.fromDioException(e, st));
     } catch (e, st) {

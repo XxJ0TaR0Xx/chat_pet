@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:chat_pet/core/common/failures/disposed_failure.dart';
-import 'package:chat_pet/data/common/custom_talker/custom_talker.dart';
+import 'package:chat_pet/domain/custom_talker/custom_talker.dart';
 import 'package:chat_pet/domain/interfaces/token/token_manager.dart';
 import 'package:chat_pet/domain/models/auth/tokens.dart';
 import 'package:injectable/injectable.dart';

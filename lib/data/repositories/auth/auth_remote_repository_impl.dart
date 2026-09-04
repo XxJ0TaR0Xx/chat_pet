@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:chat_pet/data/mappers/auth/tokens_mapper.dart';
+import 'package:chat_pet/data/models/auth/auth_request_dto.dart';
+import 'package:chat_pet/data/models/auth/tokens_dto.dart';
 import 'package:chat_pet/domain/interfaces/auth/auth_remote_repository.dart';
 import 'package:chat_pet/domain/models/auth/auth_request.dart';
 import 'package:chat_pet/domain/models/auth/tokens.dart';
@@ -29,10 +32,10 @@ final class AuthRemoteRepositoryImpl implements AuthRemoteRepository {
   Future<Tokens> login(AuthRequest authRequest) async {
     final response = await _dio.post(
       '$_authPath/login',
-      data: authRequest.toJson(),
+      data: AuthRequestDto.fromDomain(authRequest).toJson(),
     );
 
-    return Tokens.fromJson(response.data);
+    return TokensDto.fromJson(response.data).toDomain();
   }
 
   @override
@@ -42,7 +45,7 @@ final class AuthRemoteRepositoryImpl implements AuthRemoteRepository {
       data: jsonEncode({'refresh_token': refreshToken}),
     );
 
-    return Tokens.fromJson(response.data);
+    return TokensDto.fromJson(response.data).toDomain();
   }
 
   @override

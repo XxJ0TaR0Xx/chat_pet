@@ -10,7 +10,7 @@ abstract class UserFailure extends Failure {
     }
 
     final statusCode = e.response?.statusCode;
-    final detail = e.response?.data?['detail'] as String?;
+    final detail = e.response?.data?['detail'].toString();
 
     switch (statusCode) {
       case 400:

@@ -4,8 +4,8 @@ import 'package:chat_pet/core/config/api_config.dart';
 import 'package:chat_pet/core/storages/exceptions/secure_storage_exception.dart';
 import 'package:chat_pet/core/utils/exceptions_handler/secure_storage_exception_extension.dart';
 import 'package:chat_pet/core/utils/retry/retry_util.dart';
-import 'package:chat_pet/data/common/custom_talker/custom_talker.dart';
 import 'package:chat_pet/data/common/services/web_socket/web_socket_service.dart';
+import 'package:chat_pet/domain/custom_talker/custom_talker.dart';
 import 'package:chat_pet/domain/failures/auth_failures/auth_failure.dart';
 import 'package:chat_pet/domain/interfaces/auth/auth_local_repository.dart';
 import 'package:chat_pet/domain/interfaces/auth/auth_remote_repository.dart';
@@ -22,7 +22,7 @@ class AuthRepositoryImpl implements AuthRepository {
     required AuthLocalRepository authLocalRepository,
     required AuthRemoteRepository authRemoteRepository,
     required TokenManager tokenCache,
-    required WebSocketService webSocketService,
+    required NotificationWebSocket webSocketService,
   }) : _authLocalRepository = authLocalRepository,
        _authRemoteRepository = authRemoteRepository,
        _tokenCache = tokenCache,
@@ -31,7 +31,7 @@ class AuthRepositoryImpl implements AuthRepository {
   final AuthLocalRepository _authLocalRepository;
   final AuthRemoteRepository _authRemoteRepository;
   final TokenManager _tokenCache;
-  final WebSocketService _webSocketService;
+  final NotificationWebSocket _webSocketService;
 
   Completer<String>? _refreshCompleter;
 

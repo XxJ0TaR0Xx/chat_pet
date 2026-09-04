@@ -1,5 +1,5 @@
 import 'package:chat_pet/core/storages/interfaces/secure_storage_service.dart';
-import 'package:chat_pet/data/common/custom_talker/custom_talker.dart';
+import 'package:chat_pet/domain/custom_talker/custom_talker.dart';
 import 'package:chat_pet/domain/interfaces/auth/auth_local_repository.dart';
 import 'package:chat_pet/domain/models/auth/tokens.dart';
 import 'package:injectable/injectable.dart';

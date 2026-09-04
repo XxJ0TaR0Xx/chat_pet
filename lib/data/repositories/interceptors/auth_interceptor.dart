@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:chat_pet/core/auth/interface/token_provide.dart';
-import 'package:chat_pet/data/common/custom_talker/custom_talker.dart';
+import 'package:chat_pet/domain/custom_talker/custom_talker.dart';
 import 'package:chat_pet/domain/interfaces/auth/auth_repository.dart';
 import 'package:dio/dio.dart';
 
