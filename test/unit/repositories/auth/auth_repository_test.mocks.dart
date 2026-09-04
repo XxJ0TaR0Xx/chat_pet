@@ -140,11 +140,12 @@ class MockAuthRemoteRepository extends _i1.Mock
           as _i4.Future<_i2.Tokens>);
 }
 
-/// A class which mocks [WebSocketService].
+/// A class which mocks [NotificationWebSocket].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockWebSocketService extends _i1.Mock implements _i8.WebSocketService {
-  MockWebSocketService() {
+class MockNotificationWebSocket extends _i1.Mock
+    implements _i8.NotificationWebSocket {
+  MockNotificationWebSocket() {
     _i1.throwOnMissingStub(this);
   }
 

@@ -807,11 +807,12 @@ class MockDio extends _i1.Mock implements _i7.Dio {
           as _i7.Dio);
 }
 
-/// A class which mocks [WebSocketService].
+/// A class which mocks [NotificationWebSocket].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockWebSocketService extends _i1.Mock implements _i10.WebSocketService {
-  MockWebSocketService() {
+class MockNotificationWebSocket extends _i1.Mock
+    implements _i10.NotificationWebSocket {
+  MockNotificationWebSocket() {
     _i1.throwOnMissingStub(this);
   }
 

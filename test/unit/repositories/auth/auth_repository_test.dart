@@ -15,7 +15,7 @@ import 'package:mockito/mockito.dart';
 
 import 'auth_repository_test.mocks.dart';
 
-@GenerateMocks([TokenManager, AuthLocalRepository, AuthRemoteRepository, WebSocketService])
+@GenerateMocks([TokenManager, AuthLocalRepository, AuthRemoteRepository, NotificationWebSocket])
 void main() {
   late MockAuthLocalRepository mockAuthLocalRepository;
   late MockAuthRemoteRepository mockAuthRemoteRepository;

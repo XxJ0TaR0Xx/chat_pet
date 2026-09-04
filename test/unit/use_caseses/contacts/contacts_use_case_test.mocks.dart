@@ -9,7 +9,8 @@ import 'package:chat_pet/domain/failures/contacts_failure/contacts_failure.dart'
     as _i6;
 import 'package:chat_pet/domain/interfaces/contacts/contacts_repository.dart'
     as _i2;
-import 'package:chat_pet/domain/models/contacts/contact_request.dart' as _i4;
+import 'package:chat_pet/domain/models/contacts/contact_model_request.dart'
+    as _i4;
 import 'package:chat_pet/domain/models/user/user_model.dart' as _i7;
 import 'package:fpdart/fpdart.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
@@ -40,12 +41,12 @@ class MockContactsRepository extends _i1.Mock
   }
 
   @override
-  _i3.Stream<_i4.ContactRequest> get incomingRequestStream =>
+  _i3.Stream<_i4.ContactModelRequest> get incomingRequestStream =>
       (super.noSuchMethod(
             Invocation.getter(#incomingRequestStream),
-            returnValue: _i3.Stream<_i4.ContactRequest>.empty(),
+            returnValue: _i3.Stream<_i4.ContactModelRequest>.empty(),
           )
-          as _i3.Stream<_i4.ContactRequest>);
+          as _i3.Stream<_i4.ContactModelRequest>);
 
   @override
   _i3.Future<_i5.Either<_i6.ContactsFailure, List<_i7.UserModel>>>
@@ -145,20 +146,23 @@ class MockContactsRepository extends _i1.Mock
           as _i3.Future<_i5.Either<_i6.ContactsFailure, _i5.Unit>>);
 
   @override
-  _i3.Future<_i5.Either<_i6.ContactsFailure, List<_i4.ContactRequest>>>
+  _i3.Future<_i5.Either<_i6.ContactsFailure, List<_i4.ContactModelRequest>>>
   incomingRequest() =>
       (super.noSuchMethod(
             Invocation.method(#incomingRequest, []),
             returnValue:
                 _i3.Future<
-                  _i5.Either<_i6.ContactsFailure, List<_i4.ContactRequest>>
+                  _i5.Either<_i6.ContactsFailure, List<_i4.ContactModelRequest>>
                 >.value(
                   _i8.dummyValue<
-                    _i5.Either<_i6.ContactsFailure, List<_i4.ContactRequest>>
+                    _i5.Either<
+                      _i6.ContactsFailure,
+                      List<_i4.ContactModelRequest>
+                    >
                   >(this, Invocation.method(#incomingRequest, [])),
                 ),
           )
           as _i3.Future<
-            _i5.Either<_i6.ContactsFailure, List<_i4.ContactRequest>>
+            _i5.Either<_i6.ContactsFailure, List<_i4.ContactModelRequest>>
           >);
 }

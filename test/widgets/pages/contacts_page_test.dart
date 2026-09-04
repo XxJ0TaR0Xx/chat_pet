@@ -1,6 +1,6 @@
 import 'package:chat_pet/core/injectable/injectable.dart';
 import 'package:chat_pet/core/localization/l10n.dart';
-import 'package:chat_pet/domain/models/contacts/contact_request.dart';
+import 'package:chat_pet/domain/models/contacts/contact_model_request.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/presentation/cubits/contact_request/contact_requests_cubit.dart';
 import 'package:chat_pet/presentation/pages/contacts/contacts_page.dart';
@@ -21,7 +21,7 @@ const _noContacts = <String, List<UserModel>>{};
 
 UserModel _user(String id, String name) => UserModel(id: id, userTag: '@$name', name: name);
 
-ContactRequest _request(String id, String senderName) => ContactRequest(
+ContactModelRequest _request(String id, String senderName) => ContactModelRequest(
   id: id,
   sender: _user('sender-$id', senderName),
 );
@@ -49,23 +49,23 @@ Future<void> _pumpContactsPage(WidgetTester tester) async {
   await tester.pump();
 }
 
-@GenerateMocks([ContactsCubit, ContactRequestsCubit])
+@GenerateMocks([ContactsCubit, ContactModelRequestsCubit])
 void main() {
   late MockContactsCubit mockContactsCubit;
-  late MockContactRequestsCubit mockContactRequestsCubit;
+  late MockContactModelRequestsCubit mockContactModelRequestsCubit;
 
   setUp(() {
     mockContactsCubit = MockContactsCubit();
-    mockContactRequestsCubit = MockContactRequestsCubit();
+    mockContactModelRequestsCubit = MockContactModelRequestsCubit();
 
     when(mockContactsCubit.state).thenReturn(const ContactsState.loading());
     when(mockContactsCubit.stream).thenAnswer((_) => const Stream.empty());
 
-    when(mockContactRequestsCubit.state).thenReturn(const ContactRequestState());
-    when(mockContactRequestsCubit.stream).thenAnswer((_) => const Stream.empty());
+    when(mockContactModelRequestsCubit.state).thenReturn(const ContactModelRequestState());
+    when(mockContactModelRequestsCubit.stream).thenAnswer((_) => const Stream.empty());
 
     getIt.registerFactory<ContactsCubit>(() => mockContactsCubit);
-    getIt.registerFactory<ContactRequestsCubit>(() => mockContactRequestsCubit);
+    getIt.registerFactory<ContactModelRequestsCubit>(() => mockContactModelRequestsCubit);
   });
 
   tearDown(getIt.reset);
@@ -203,7 +203,7 @@ void main() {
       });
 
       testWidgets('с заявками секция отображается', (tester) async {
-        when(mockContactRequestsCubit.state).thenReturn(ContactRequestState(request: [_request('r1', 'Ivan')]));
+        when(mockContactModelRequestsCubit.state).thenReturn(ContactModelRequestState(request: [_request('r1', 'Ivan')]));
         when(mockContactsCubit.state).thenReturn(const ContactsState.loaded(_noContacts));
         await _pumpContactsPage(tester);
 
@@ -212,8 +212,8 @@ void main() {
       });
 
       testWidgets('тап accept вызывает acceptRequest и обновление контактов', (tester) async {
-        when(mockContactRequestsCubit.state).thenReturn(ContactRequestState(request: [_request('r1', 'Ivan')]));
-        when(mockContactRequestsCubit.acceptRequest(any)).thenAnswer((_) async {});
+        when(mockContactModelRequestsCubit.state).thenReturn(ContactModelRequestState(request: [_request('r1', 'Ivan')]));
+        when(mockContactModelRequestsCubit.acceptRequest(any)).thenAnswer((_) async {});
         when(mockContactsCubit.state).thenReturn(const ContactsState.loaded(_noContacts));
         when(mockContactsCubit.refresh()).thenAnswer((_) async {});
         await _pumpContactsPage(tester);
@@ -221,20 +221,20 @@ void main() {
         await tester.tap(find.byIcon(Icons.check_circle_outline));
         await tester.pumpAndSettle();
 
-        verify(mockContactRequestsCubit.acceptRequest('r1')).called(1);
+        verify(mockContactModelRequestsCubit.acceptRequest('r1')).called(1);
         verify(mockContactsCubit.refresh()).called(1);
       });
 
       testWidgets('тап reject вызывает rejectRequest', (tester) async {
-        when(mockContactRequestsCubit.state).thenReturn(ContactRequestState(request: [_request('r1', 'Ivan')]));
-        when(mockContactRequestsCubit.rejectRequest(any)).thenAnswer((_) async {});
+        when(mockContactModelRequestsCubit.state).thenReturn(ContactModelRequestState(request: [_request('r1', 'Ivan')]));
+        when(mockContactModelRequestsCubit.rejectRequest(any)).thenAnswer((_) async {});
         when(mockContactsCubit.state).thenReturn(const ContactsState.loaded(_noContacts));
         await _pumpContactsPage(tester);
 
         await tester.tap(find.byIcon(Icons.cancel_outlined));
         await tester.pump();
 
-        verify(mockContactRequestsCubit.rejectRequest('r1')).called(1);
+        verify(mockContactModelRequestsCubit.rejectRequest('r1')).called(1);
       });
     });
   });

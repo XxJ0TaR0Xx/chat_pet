@@ -32,9 +32,9 @@ class _FakeContactsState_0 extends _i1.SmartFake implements _i2.ContactsState {
     : super(parent, parentInvocation);
 }
 
-class _FakeContactRequestState_1 extends _i1.SmartFake
-    implements _i3.ContactRequestState {
-  _FakeContactRequestState_1(Object parent, Invocation parentInvocation)
+class _FakeContactModelRequestState_1 extends _i1.SmartFake
+    implements _i3.ContactModelRequestState {
+  _FakeContactModelRequestState_1(Object parent, Invocation parentInvocation)
     : super(parent, parentInvocation);
 }
 
@@ -131,33 +131,33 @@ class MockContactsCubit extends _i1.Mock implements _i2.ContactsCubit {
           as _i4.Future<void>);
 }
 
-/// A class which mocks [ContactRequestsCubit].
+/// A class which mocks [ContactModelRequestsCubit].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockContactRequestsCubit extends _i1.Mock
-    implements _i3.ContactRequestsCubit {
-  MockContactRequestsCubit() {
+class MockContactModelRequestsCubit extends _i1.Mock
+    implements _i3.ContactModelRequestsCubit {
+  MockContactModelRequestsCubit() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.ContactRequestState get state =>
+  _i3.ContactModelRequestState get state =>
       (super.noSuchMethod(
             Invocation.getter(#state),
-            returnValue: _FakeContactRequestState_1(
+            returnValue: _FakeContactModelRequestState_1(
               this,
               Invocation.getter(#state),
             ),
           )
-          as _i3.ContactRequestState);
+          as _i3.ContactModelRequestState);
 
   @override
-  _i4.Stream<_i3.ContactRequestState> get stream =>
+  _i4.Stream<_i3.ContactModelRequestState> get stream =>
       (super.noSuchMethod(
             Invocation.getter(#stream),
-            returnValue: _i4.Stream<_i3.ContactRequestState>.empty(),
+            returnValue: _i4.Stream<_i3.ContactModelRequestState>.empty(),
           )
-          as _i4.Stream<_i3.ContactRequestState>);
+          as _i4.Stream<_i3.ContactModelRequestState>);
 
   @override
   bool get isClosed =>
@@ -192,13 +192,13 @@ class MockContactRequestsCubit extends _i1.Mock
           as _i4.Future<void>);
 
   @override
-  void emit(_i3.ContactRequestState? state) => super.noSuchMethod(
+  void emit(_i3.ContactModelRequestState? state) => super.noSuchMethod(
     Invocation.method(#emit, [state]),
     returnValueForMissingStub: null,
   );
 
   @override
-  void onChange(_i5.Change<_i3.ContactRequestState>? change) =>
+  void onChange(_i5.Change<_i3.ContactModelRequestState>? change) =>
       super.noSuchMethod(
         Invocation.method(#onChange, [change]),
         returnValueForMissingStub: null,

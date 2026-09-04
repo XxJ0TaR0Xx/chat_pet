@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:chat_pet/data/common/services/web_socket/web_socket_service.dart';
+import 'package:chat_pet/data/models/user/user_dto.dart';
 import 'package:chat_pet/data/repositories/contacts/contacts_repository_impl.dart';
 import 'package:chat_pet/domain/failures/contacts_failure/contacts_failure.dart';
 import 'package:chat_pet/domain/interfaces/contacts/contacts_repository.dart';
-import 'package:chat_pet/domain/models/contacts/contact_request.dart';
+import 'package:chat_pet/domain/models/contacts/contact_model_request.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -13,7 +14,7 @@ import 'package:mockito/mockito.dart';
 
 import 'contacts_repository_test.mocks.dart';
 
-@GenerateMocks([Dio, WebSocketService])
+@GenerateMocks([Dio, NotificationWebSocket])
 void main() {
   late ContactsRepository contactsRepository;
   late MockDio mockDio;
@@ -638,7 +639,7 @@ void main() {
       },
     ];
 
-    final contactRequest = ContactRequest(
+    final ContactModelRequest = ContactModelRequest(
       id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
       sender: UserModel(
         id: '3fa85f64-5717-4562-b3fc-2c963f66afa6',
@@ -669,7 +670,7 @@ void main() {
       expect(result.isRight(), isTrue);
 
       final incomingRequests = result.getOrElse((_) => []);
-      expect(incomingRequests, [contactRequest]);
+      expect(incomingRequests, [ContactModelRequest]);
 
       verify(mockDio.get(incomingRequestPath)).called(1);
     });
@@ -736,7 +737,7 @@ void main() {
         () async {
           final future = expectLater(
             contactsRepository.incomingRequestStream,
-            emits(isA<ContactRequest>()),
+            emits(isA<ContactModelRequest>()),
           );
 
           wsController.add(friendRequestEvent);
@@ -746,7 +747,7 @@ void main() {
       );
 
       test('Dont throw event with another type', () async {
-        final List<ContactRequest> received = [];
+        final List<ContactModelRequest> received = [];
         final sub = contactsRepository.incomingRequestStream.listen(received.add);
 
         wsController.add({'type': 'other_event', 'data': 'anything'});
@@ -758,7 +759,7 @@ void main() {
       });
 
       test('Dont throw event without type', () async {
-        final List<ContactRequest> received = [];
+        final List<ContactModelRequest> received = [];
         final sub = contactsRepository.incomingRequestStream.listen(received.add);
 
         wsController.add({'data': 'anything'});
