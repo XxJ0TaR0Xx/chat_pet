@@ -43,7 +43,7 @@ class SettingsPage extends StatelessWidget {
                   loading: LoadingWidget.new,
                   error: (errorMessage) => Column(
                     children: [
-                      Spacer(),
+                      const Spacer(),
                       Text(
                         errorMessage,
                         style: context.uiKitTheme?.carosTextTheme.bold.copyWith(color: Colors.white),
@@ -54,7 +54,7 @@ class SettingsPage extends StatelessWidget {
                         text: S.of(context).Repeat,
                         onTap: () => context.read<SettingCubit>().initialize(),
                       ),
-                      Spacer(),
+                      const Spacer(),
                     ],
                   ),
                   loaded: (userModel, _) => BottomSheetWidget(
@@ -65,7 +65,9 @@ class SettingsPage extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 30.w,
-                            backgroundImage: userModel.avatarUrl != null ? NetworkImage(userModel.avatarUrl!) : AssetImage('assets/images/orig.png'),
+                            backgroundImage: userModel.avatarUrl != null
+                                ? NetworkImage(userModel.avatarUrl!)
+                                : const AssetImage('assets/images/orig.png'),
                           ),
                           SpacingFoundation.horizontalSpace24,
                           Column(
@@ -89,7 +91,7 @@ class SettingsPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Spacer(),
+                          const Spacer(),
                           ChatPetIcon.icon(
                             AppIcons.qrCode,
                             color: ColorsFoundation.primary,
@@ -98,8 +100,8 @@ class SettingsPage extends StatelessWidget {
                         ],
                       ).paddingHorizontal(SpacingFoundation.horizontalSpacing24),
                       SpacingFoundation.verticalSpace20,
-                      Divider(color: ColorsFoundation.backNeutral1),
-                      SpacingFoundation.verticalSpace30,
+                      const Divider(color: ColorsFoundation.backNeutral1),
+                      SpacingFoundation.verticalSpace4,
                       _SettingsItem(
                         title: S.of(context).Account,
                         description: S.of(context).PrivacySecurityChange,
