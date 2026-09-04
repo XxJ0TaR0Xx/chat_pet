@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:chat_pet/core/localization/l10n.dart';
-import 'package:chat_pet/data/common/custom_talker/custom_talker.dart';
+import 'package:chat_pet/domain/custom_talker/custom_talker.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/domain/usecases/auth/logout_use_case.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
@@ -20,7 +20,7 @@ class SettingCubit extends Cubit<SettingState> {
       super(const SettingState.initial()) {
     initialize();
     _userSub = userCubit.stream.listen((userState) {
-      if (userState is UserStateLoaded) initialize();
+      if (userState.user != null) initialize();
     });
   }
 
@@ -28,10 +28,11 @@ class SettingCubit extends Cubit<SettingState> {
   final UserCubit _userCubit;
   late final StreamSubscription<UserState> _userSub;
 
+  UserModel? get user => _userCubit.state.user;
+
   void initialize() {
     emit(const SettingState.loading());
-    final user = _userCubit.currentUser;
-
+    final user = this.user;
     if (user != null) {
       emit(SettingState.loaded(user));
     } else {
@@ -46,7 +47,7 @@ class SettingCubit extends Cubit<SettingState> {
   }
 
   Future<void> logout() async {
-    final user = _userCubit.currentUser;
+    final user = this.user;
     if (user == null) {
       emit(SettingState.error(S.current.CouldntFindTheUser));
       return;
