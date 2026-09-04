@@ -5,7 +5,7 @@
     <application
         android:label="chat_pet"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/chat_pet">
         <activity
             android:name=".MainActivity"
             android:exported="true"
