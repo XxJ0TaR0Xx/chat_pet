@@ -77,6 +77,14 @@ class CircularStdTextTheme extends UiKitTextTheme {
     package: 'aviation_uikit',
   );
 
+  TextStyle get bookW600 => TextStyle(
+    fontFamily: 'CircularStd',
+    fontSize: 16.w,
+    fontWeight: FontWeight.w400,
+    color: foregroundColor,
+    package: 'aviation_uikit',
+  );
+
   TextStyle get bookSmall => book.copyWith(
     fontSize: 12.w,
   );
