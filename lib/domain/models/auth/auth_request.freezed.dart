@@ -21,8 +21,6 @@ mixin _$AuthRequest {
 @pragma('vm:prefer-inline')
 $AuthRequestCopyWith<AuthRequest> get copyWith => _$AuthRequestCopyWithImpl<AuthRequest>(this as AuthRequest, _$identity);
 
-  /// Serializes this AuthRequest to a JSON map.
-  Map<String, dynamic> toJson();
 
 
 @override
@@ -30,7 +28,7 @@ bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthRequest&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
 int get hashCode => Object.hash(runtimeType,email,password);
 
@@ -206,7 +204,7 @@ return $default(_that.email,_that.password);case _:
 }
 
 /// @nodoc
-@JsonSerializable(createFactory: false)
+
 
 class _AuthRequest implements AuthRequest {
   const _AuthRequest({required this.email, required this.password});
@@ -221,17 +219,14 @@ class _AuthRequest implements AuthRequest {
 @pragma('vm:prefer-inline')
 _$AuthRequestCopyWith<_AuthRequest> get copyWith => __$AuthRequestCopyWithImpl<_AuthRequest>(this, _$identity);
 
-@override
-Map<String, dynamic> toJson() {
-  return _$AuthRequestToJson(this, );
-}
+
 
 @override
 bool operator ==(Object other) {
   return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthRequest&&(identical(other.email, email) || other.email == email)&&(identical(other.password, password) || other.password == password));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
 int get hashCode => Object.hash(runtimeType,email,password);
 

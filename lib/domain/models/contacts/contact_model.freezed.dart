@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'contact.dart';
+part of 'contact_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -11,41 +11,38 @@ part of 'contact.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-
 /// @nodoc
-mixin _$Contact {
+mixin _$ContactModel {
 
  DateTime get since; UserModel get user;
-/// Create a copy of Contact
+/// Create a copy of ContactModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$ContactCopyWith<Contact> get copyWith => _$ContactCopyWithImpl<Contact>(this as Contact, _$identity);
+$ContactModelCopyWith<ContactModel> get copyWith => _$ContactModelCopyWithImpl<ContactModel>(this as ContactModel, _$identity);
 
-  /// Serializes this Contact to a JSON map.
-  Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Contact&&(identical(other.since, since) || other.since == since)&&(identical(other.user, user) || other.user == user));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ContactModel&&(identical(other.since, since) || other.since == since)&&(identical(other.user, user) || other.user == user));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
 int get hashCode => Object.hash(runtimeType,since,user);
 
 @override
 String toString() {
-  return 'Contact(since: $since, user: $user)';
+  return 'ContactModel(since: $since, user: $user)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $ContactCopyWith<$Res>  {
-  factory $ContactCopyWith(Contact value, $Res Function(Contact) _then) = _$ContactCopyWithImpl;
+abstract mixin class $ContactModelCopyWith<$Res>  {
+  factory $ContactModelCopyWith(ContactModel value, $Res Function(ContactModel) _then) = _$ContactModelCopyWithImpl;
 @useResult
 $Res call({
  DateTime since, UserModel user
@@ -56,14 +53,14 @@ $UserModelCopyWith<$Res> get user;
 
 }
 /// @nodoc
-class _$ContactCopyWithImpl<$Res>
-    implements $ContactCopyWith<$Res> {
-  _$ContactCopyWithImpl(this._self, this._then);
+class _$ContactModelCopyWithImpl<$Res>
+    implements $ContactModelCopyWith<$Res> {
+  _$ContactModelCopyWithImpl(this._self, this._then);
 
-  final Contact _self;
-  final $Res Function(Contact) _then;
+  final ContactModel _self;
+  final $Res Function(ContactModel) _then;
 
-/// Create a copy of Contact
+/// Create a copy of ContactModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? since = null,Object? user = null,}) {
   return _then(_self.copyWith(
@@ -72,7 +69,7 @@ as DateTime,user: null == user ? _self.user : user // ignore: cast_nullable_to_n
 as UserModel,
   ));
 }
-/// Create a copy of Contact
+/// Create a copy of ContactModel
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -85,8 +82,8 @@ $UserModelCopyWith<$Res> get user {
 }
 
 
-/// Adds pattern-matching-related methods to [Contact].
-extension ContactPatterns on Contact {
+/// Adds pattern-matching-related methods to [ContactModel].
+extension ContactModelPatterns on ContactModel {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -99,10 +96,10 @@ extension ContactPatterns on Contact {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _Contact value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ContactModel value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _Contact() when $default != null:
+case _ContactModel() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -121,10 +118,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _Contact value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ContactModel value)  $default,){
 final _that = this;
 switch (_that) {
-case _Contact():
+case _ContactModel():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -142,10 +139,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _Contact value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ContactModel value)?  $default,){
 final _that = this;
 switch (_that) {
-case _Contact() when $default != null:
+case _ContactModel() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -165,7 +162,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTime since,  UserModel user)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _Contact() when $default != null:
+case _ContactModel() when $default != null:
 return $default(_that.since,_that.user);case _:
   return orElse();
 
@@ -186,7 +183,7 @@ return $default(_that.since,_that.user);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTime since,  UserModel user)  $default,) {final _that = this;
 switch (_that) {
-case _Contact():
+case _ContactModel():
 return $default(_that.since,_that.user);case _:
   throw StateError('Unexpected subclass');
 
@@ -206,7 +203,7 @@ return $default(_that.since,_that.user);case _:
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTime since,  UserModel user)?  $default,) {final _that = this;
 switch (_that) {
-case _Contact() when $default != null:
+case _ContactModel() when $default != null:
 return $default(_that.since,_that.user);case _:
   return null;
 
@@ -216,46 +213,43 @@ return $default(_that.since,_that.user);case _:
 }
 
 /// @nodoc
-@JsonSerializable()
 
-class _Contact implements Contact {
-  const _Contact({required this.since, required this.user});
-  factory _Contact.fromJson(Map<String, dynamic> json) => _$ContactFromJson(json);
+
+class _ContactModel implements ContactModel {
+  const _ContactModel({required this.since, required this.user});
+  
 
 @override final  DateTime since;
 @override final  UserModel user;
 
-/// Create a copy of Contact
+/// Create a copy of ContactModel
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$ContactCopyWith<_Contact> get copyWith => __$ContactCopyWithImpl<_Contact>(this, _$identity);
+_$ContactModelCopyWith<_ContactModel> get copyWith => __$ContactModelCopyWithImpl<_ContactModel>(this, _$identity);
 
-@override
-Map<String, dynamic> toJson() {
-  return _$ContactToJson(this, );
-}
+
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Contact&&(identical(other.since, since) || other.since == since)&&(identical(other.user, user) || other.user == user));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ContactModel&&(identical(other.since, since) || other.since == since)&&(identical(other.user, user) || other.user == user));
 }
 
-@JsonKey(includeFromJson: false, includeToJson: false)
+
 @override
 int get hashCode => Object.hash(runtimeType,since,user);
 
 @override
 String toString() {
-  return 'Contact(since: $since, user: $user)';
+  return 'ContactModel(since: $since, user: $user)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$ContactCopyWith<$Res> implements $ContactCopyWith<$Res> {
-  factory _$ContactCopyWith(_Contact value, $Res Function(_Contact) _then) = __$ContactCopyWithImpl;
+abstract mixin class _$ContactModelCopyWith<$Res> implements $ContactModelCopyWith<$Res> {
+  factory _$ContactModelCopyWith(_ContactModel value, $Res Function(_ContactModel) _then) = __$ContactModelCopyWithImpl;
 @override @useResult
 $Res call({
  DateTime since, UserModel user
@@ -266,24 +260,24 @@ $Res call({
 
 }
 /// @nodoc
-class __$ContactCopyWithImpl<$Res>
-    implements _$ContactCopyWith<$Res> {
-  __$ContactCopyWithImpl(this._self, this._then);
+class __$ContactModelCopyWithImpl<$Res>
+    implements _$ContactModelCopyWith<$Res> {
+  __$ContactModelCopyWithImpl(this._self, this._then);
 
-  final _Contact _self;
-  final $Res Function(_Contact) _then;
+  final _ContactModel _self;
+  final $Res Function(_ContactModel) _then;
 
-/// Create a copy of Contact
+/// Create a copy of ContactModel
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? since = null,Object? user = null,}) {
-  return _then(_Contact(
+  return _then(_ContactModel(
 since: null == since ? _self.since : since // ignore: cast_nullable_to_non_nullable
 as DateTime,user: null == user ? _self.user : user // ignore: cast_nullable_to_non_nullable
 as UserModel,
   ));
 }
 
-/// Create a copy of Contact
+/// Create a copy of ContactModel
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
