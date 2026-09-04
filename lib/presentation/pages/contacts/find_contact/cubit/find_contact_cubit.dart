@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:chat_pet/core/localization/l10n.dart';
@@ -20,7 +19,7 @@ class FindContactCubit extends Cubit<FindContactState> {
     this._searchUsersUseCase,
     this._sendRequestUseCase,
     this._deleteContactUseCase,
-  ) : super(_Loaded([]));
+  ) : super(const _Loaded([]));
 
   final SearchContactsUseCase _searchUsersUseCase;
   final SendRequestUseCase _sendRequestUseCase;
@@ -34,7 +33,7 @@ class FindContactCubit extends Cubit<FindContactState> {
     final q = query.trim();
 
     if (q.isEmpty) {
-      emit(_Loaded([]));
+      emit(const _Loaded([]));
 
       return;
     }
@@ -61,9 +60,7 @@ class FindContactCubit extends Cubit<FindContactState> {
       (failure) => emit(_Error(S.current.ErrorMsg(failure.message))),
       (_) {
         final index = _lastContacts.indexWhere((contact) => contact.id == userId);
-        log('_lastContacts[index].friendshipStatus 1 ${_lastContacts[index].friendshipStatus}');
         _lastContacts[index] = _lastContacts[index].copyWith(friendshipStatus: FriendEnum.pendingSent);
-        log('_lastContacts[index].friendshipStatus 2 ${_lastContacts[index].friendshipStatus}');
 
         emit(_Loaded([..._lastContacts]));
       },
