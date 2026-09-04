@@ -26,11 +26,14 @@ extension TimeExtension on DateTime {
   }
 
   String toChatTime() {
-    final formatter = DateFormat('hh:mm a');
-    return formatter.format(this);
+    return DateFormat('hh:mm a').format(this);
   }
 
   bool isSameMinute(DateTime other) {
     return year == other.year && month == other.month && day == other.day && hour == other.hour && minute == other.minute;
+  }
+
+  bool isSameDay(DateTime other) {
+    return year == other.year && month == other.month && day == other.day;
   }
 }
