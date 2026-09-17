@@ -69,7 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     Expanded(
                       child: Text(
-                        'Произошла ошибка: $errorMessage',
+                        S.of(context).AnErrorOccurred(errorMessage),
                         style: context.uiKitTheme?.carosTextTheme.bold.copyWith(color: Colors.white),
                         textAlign: TextAlign.center,
                       ).paddingHorizontal(SpacingFoundation.horizontalSpacing16),
@@ -78,7 +78,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 SpacingFoundation.verticalSpace16,
                 UiKitButton.primary(
-                  text: 'Повторить',
+                  text: S.of(context).Repeat,
                   onTap: () => cubit.initialize(),
                 ),
                 const Spacer(),
@@ -149,7 +149,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           SpacingFoundation.verticalSpace24,
                           ...[
                             DescriptionProfileUiModel(
-                              title: 'Display name',
+                              title: S.of(context).DisplayName,
                               contentType: UserContentType.name,
                               description:
                                   '${(editingUserModel?.name != null && editingUserModel!.name!.isNotEmpty) ? editingUserModel?.name : S.of(context).NotFounded} ${editingUserModel?.lastName ?? ''}',
@@ -168,14 +168,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               },
                             ),
                             DescriptionProfileUiModel(
-                              title: 'Email Address',
+                              title: S.of(context).EmailAddress,
                               contentType: UserContentType.email,
                               description: editingUserModel?.email != null && editingUserModel!.email!.isNotEmpty
                                   ? editingUserModel?.email
                                   : S.of(context).NotFounded,
                             ),
                             DescriptionProfileUiModel(
-                              title: 'Address',
+                              title: S.of(context).Address,
                               contentType: UserContentType.adders,
                               description: editingUserModel?.address != null && editingUserModel!.address!.isNotEmpty
                                   ? editingUserModel?.address
@@ -192,7 +192,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               },
                             ),
                             DescriptionProfileUiModel(
-                              title: 'Phone  Number',
+                              title: S.of(context).PhoneNumber,
                               contentType: UserContentType.phone,
                               description: editingUserModel?.number != null && editingUserModel!.number!.isNotEmpty
                                   ? editingUserModel?.number
@@ -213,7 +213,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               },
                             ),
                             DescriptionProfileUiModel(
-                              title: 'Create at',
+                              title: S.of(context).CreatedAt,
                               contentType: UserContentType.createAt,
                               description: editingUserModel?.createdAt != null
                                   ? DateFormat('dd.MM.yyyy').format(editingUserModel!.createdAt!)
@@ -268,14 +268,14 @@ class _ProfilePageState extends State<ProfilePage> {
                             mainAxisAlignment: .spaceBetween,
                             children: [
                               Text(
-                                'Media Shared',
+                                S.of(context).MediaShared,
                                 style: theme?.circularStdTextTheme.book.copyWith(
                                   fontSize: 14.w,
                                   color: ColorsFoundation.backNeutral1,
                                 ),
                               ),
                               Text(
-                                'View All',
+                                S.of(context).ViewAll,
                                 style: theme?.carosTextTheme.bold.copyWith(
                                   fontSize: 16.w,
                                   color: ColorsFoundation.primary,

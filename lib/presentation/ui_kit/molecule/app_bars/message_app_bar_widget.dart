@@ -81,7 +81,7 @@ class MessageAppBarWidget extends PreferredSize {
       SpacingFoundation.horizontalSpace12,
       Expanded(
         child: Text(
-          '$selectionCount selected',
+          '$selectionCount ${S.of(context).Selected.toLowerCase()}',
           style: theme?.carosTextTheme.bold,
         ),
       ),

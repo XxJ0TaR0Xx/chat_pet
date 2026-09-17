@@ -156,7 +156,7 @@ class _SignupPageState extends State<SignupPage> {
                             controller: nameController,
                             validator: (text) {
                               if (text == null || text.trim().isEmpty) {
-                                return 'Это поле не может быть пустым';
+                                return S.of(context).ThisFieldCannotBeEmpty;
                               }
 
                               return null;
@@ -169,7 +169,7 @@ class _SignupPageState extends State<SignupPage> {
                             keyboardType: TextInputType.emailAddress,
                             validator: (text) {
                               if (text == null || text.isEmpty) {
-                                return 'Введите email';
+                                return S.of(context).EnterEmail;
                               }
 
                               final email = text.trim().toLowerCase();
@@ -177,18 +177,18 @@ class _SignupPageState extends State<SignupPage> {
                               final emailRegex = RegExp(r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$');
 
                               if (!emailRegex.hasMatch(email)) {
-                                return 'Введите корректный email';
+                                return S.of(context).EnterValidEmail;
                               }
 
                               if (!email.contains('@')) {
-                                return 'Email должен содержать @';
+                                return S.of(context).EmailMustContainAt;
                               }
 
                               final parts = email.split('@');
                               final domain = parts[1];
 
                               if (!domain.contains('.') || domain.startsWith('.') || domain.endsWith('.')) {
-                                return 'Некорректный домен';
+                                return S.of(context).InvalidDomain;
                               }
 
                               return null;
@@ -201,11 +201,11 @@ class _SignupPageState extends State<SignupPage> {
                             obscureText: obscureTextPassword,
                             validator: (text) {
                               if (text == null || text.trim().isEmpty) {
-                                return 'Это поле не может быть пустым';
+                                return S.of(context).ThisFieldCannotBeEmpty;
                               }
 
                               if (text.trim().length < 6) {
-                                return 'Пароль должен содержать не менее 6 символов';
+                                return S.of(context).PasswordMinLength;
                               }
 
                               return null;
@@ -225,15 +225,15 @@ class _SignupPageState extends State<SignupPage> {
                             controller: confirmPasswordController,
                             validator: (text) {
                               if (text == null || text.trim().isEmpty) {
-                                return 'Это поле не может быть пустым';
+                                return S.of(context).ThisFieldCannotBeEmpty;
                               }
 
                               if (text.trim().length < 6) {
-                                return 'Пароль должен содержать не менее 6 символов';
+                                return S.of(context).PasswordMinLength;
                               }
 
                               if (text.trim() != passwordController.text.trim()) {
-                                return 'Пароли не совпадают';
+                                return S.of(context).PasswordsDoNotMatch;
                               }
                               return null;
                             },

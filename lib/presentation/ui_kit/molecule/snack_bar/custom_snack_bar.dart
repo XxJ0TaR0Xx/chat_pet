@@ -52,7 +52,7 @@ class CustomSnackBar {
           ),
         ),
         SpacingFoundation.horizontalSpace16,
-        Icon(
+        const Icon(
           Icons.error_outline,
           color: Colors.white,
         ),

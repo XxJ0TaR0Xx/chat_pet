@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
+import 'package:chat_pet/core/localization/l10n.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/domain/usecases/auth/login_use_case.dart';
 import 'package:chat_pet/domain/usecases/auth/registration_use_case.dart';
+import 'package:chat_pet/presentation/utils/failure_localization/failure_localization.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'signup_state.dart';
@@ -27,11 +29,11 @@ class SignupCubit extends Cubit<SignupState> {
     );
 
     result.fold(
-      (failure) => emit(SignupState.error(failure.message)),
+      (failure) => emit(SignupState.error(failure.localize(S.current))),
       (user) async {
         final result = await _loginUseCase.call(email: email, password: password);
         result.fold(
-          (failure) => emit(SignupState.error(failure.message)),
+          (failure) => emit(SignupState.error(failure.localize(S.current))),
           (_) => emit(SignupState.loaded(user)),
         );
       },

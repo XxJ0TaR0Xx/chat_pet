@@ -130,7 +130,7 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                   spacing: SpacingFoundation.horizontalSpacing4,
                   children: [
                     Text(
-                      'Нет аккаута?',
+                      S.of(context).NoAccount,
                       style: theme?.circularStdTextTheme.medium.copyWith(
                         color: ColorsFoundation.mutedText,
                         fontSize: 13.w,

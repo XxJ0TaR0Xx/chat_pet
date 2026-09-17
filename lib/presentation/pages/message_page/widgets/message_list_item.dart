@@ -153,7 +153,7 @@ class _DateSeparator extends StatelessWidget {
             color: theme?.colorScheme.inversePrimary,
           ),
           child: Text(
-            date.isToday ? 'Today' : DateFormat('d MMMM').format(date),
+            date.isToday ? S.of(context).Today : DateFormat('d MMMM').format(date),
             style: theme?.carosTextTheme.mediumBold12,
           ).paddingAll(EdgeInsetsFoundation.all6),
         ),

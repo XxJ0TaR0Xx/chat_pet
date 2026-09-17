@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:chat_pet/core/localization/l10n.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/domain/usecases/user/update_avatar_use_case.dart';
 import 'package:chat_pet/domain/usecases/user/update_me_use_case.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
+import 'package:chat_pet/presentation/utils/failure_localization/failure_localization.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -29,7 +31,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     if (user != null) {
       emit(ProfileState.loaded(user!));
     } else {
-      emit(const ProfileState.error('Не удалось получить пользователя, пожалуйста попробуйте снова'));
+      emit(ProfileState.error(S.current.CouldntFindTheUser));
     }
   }
 
@@ -42,7 +44,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
     result.fold(
       (failure) {
-        emit(ProfileState.error(failure.message));
+        emit(ProfileState.error(failure.localize(S.current)));
         isSuccess = false;
       },
       (newUser) {
@@ -67,7 +69,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
     result.fold(
       (failure) {
-        emit(ProfileState.error(failure.message));
+        emit(ProfileState.error(failure.localize(S.current)));
         isSuccess = false;
       },
       (newUser) {

@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                     if (state is LoginStateError) {
                       CustomSnackBar(
                         context,
-                        text: 'Ошибка: ${state.errorMessage}',
+                        text: S.of(context).ErrorMsg(state.errorMessage),
                       ).showErrorMessage();
                     }
                     if (state is LoginStateLoaded) {
@@ -143,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                           label: S.of(context).YourEmail,
                           validator: (text) {
                             if (text == null || text.trim().isEmpty) {
-                              return 'Это поле не может быть пустым';
+                              return S.of(context).ThisFieldCannotBeEmpty;
                             }
 
                             return null;
@@ -163,11 +163,11 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           validator: (text) {
                             if (text == null || text.trim().isEmpty) {
-                              return 'Это поле не может быть пустым';
+                              return S.of(context).ThisFieldCannotBeEmpty;
                             }
 
                             if (text.trim().length < 6) {
-                              return 'Минимальная длина пароля 6 символов';
+                              return S.of(context).PasswordMinLength;
                             }
 
                             return null;

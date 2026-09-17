@@ -104,7 +104,7 @@ void main() {
         await tester.enterText(find.byType(TextField).first, '');
         await tester.pump();
 
-        expect(find.text('Это поле не может быть пустым'), findsWidgets);
+        expect(find.text(S.current.ThisFieldCannotBeEmpty), findsWidgets);
       });
 
       testWidgets('email: only space, show error', (tester) async {
@@ -113,7 +113,7 @@ void main() {
         await tester.enterText(find.byType(TextField).first, '      ');
         await tester.pump();
 
-        expect(find.text('Это поле не может быть пустым'), findsWidgets);
+        expect(find.text(S.current.ThisFieldCannotBeEmpty), findsWidgets);
       });
 
       testWidgets('email: not empty, nothing to show', (tester) async {
@@ -122,7 +122,7 @@ void main() {
         await tester.enterText(find.byType(TextField).first, 'user@test.com');
         await tester.pump();
 
-        expect(find.text('Это поле не может быть пустым'), findsNothing);
+        expect(find.text(S.current.ThisFieldCannotBeEmpty), findsNothing);
       });
 
       testWidgets('password: not show error', (tester) async {
@@ -131,7 +131,7 @@ void main() {
         await tester.enterText(find.byType(TextField).last, '');
         await tester.pump();
 
-        expect(find.text('Это поле не может быть пустым'), findsWidgets);
+        expect(find.text(S.current.ThisFieldCannotBeEmpty), findsWidgets);
       });
 
       testWidgets('password: short password error', (tester) async {
@@ -140,7 +140,7 @@ void main() {
         await tester.enterText(find.byType(TextField).last, '123');
         await tester.pump();
 
-        expect(find.text('Минимальная длина пароля 6 символов'), findsOneWidget);
+        expect(find.text(S.current.PasswordMinLength), findsOneWidget);
       });
 
       testWidgets('password: success', (tester) async {
@@ -149,7 +149,7 @@ void main() {
         await tester.enterText(find.byType(TextField).last, '123456');
         await tester.pump();
 
-        expect(find.text('Минимальная длина пароля 6 символов'), findsNothing);
+        expect(find.text(S.current.PasswordMinLength), findsNothing);
       });
 
       testWidgets('Show/Hide eye', (tester) async {

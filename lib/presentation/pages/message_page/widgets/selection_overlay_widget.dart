@@ -53,18 +53,18 @@ class _SelectionOverlayWidgetState extends State<SelectionOverlayWidget> with Si
 
   List<_MessageMenuItem> _menuItemsFor(bool isMe) => [
     _MessageMenuItem.regular(
-      title: 'Ответить',
+      title: S.of(context).Reply,
       icon: AppIcons.reply,
       onTap: (context, message) {},
     ),
     _MessageMenuItem.regular(
-      title: 'Переслать',
+      title: S.of(context).Forward,
       icon: AppIcons.send,
       onTap: (context, message) {},
     ),
     if (isMe)
       _MessageMenuItem.regular(
-        title: 'Изменить',
+        title: S.of(context).Edit,
         icon: AppIcons.edit,
         onTap: (_, message) {
           widget.onEditMessageTap?.call(message);
@@ -72,7 +72,7 @@ class _SelectionOverlayWidgetState extends State<SelectionOverlayWidget> with Si
         },
       ),
     _MessageMenuItem.regular(
-      title: 'Скопировать',
+      title: S.of(context).Copy,
       icon: AppIcons.copy,
       onTap: (_, message) async {
         await Clipboard.setData(ClipboardData(text: message.content));
@@ -80,7 +80,7 @@ class _SelectionOverlayWidgetState extends State<SelectionOverlayWidget> with Si
       },
     ),
     _MessageMenuItem.regular(
-      title: 'Выбрать',
+      title: S.of(context).Select,
       icon: AppIcons.iconList,
       onTap: (context, message) {
         widget.onSelectTap?.call(message);
@@ -88,6 +88,7 @@ class _SelectionOverlayWidgetState extends State<SelectionOverlayWidget> with Si
       },
     ),
     _MessageMenuItem.trash(
+      title: S.of(context).Delete,
       onTap: (context, message) async {
         await deleteMessageDialog(
           context,
@@ -249,8 +250,11 @@ class _MessageMenuItem {
     onTap: onTap,
   );
 
-  factory _MessageMenuItem.trash({required Function(BuildContext, MessageModel) onTap}) => _MessageMenuItem._(
-    title: 'Удалить',
+  factory _MessageMenuItem.trash({
+    required String title,
+    required Function(BuildContext, MessageModel) onTap,
+  }) => _MessageMenuItem._(
+    title: title,
     icon: AppIcons.trash,
     isDelete: true,
     onTap: onTap,

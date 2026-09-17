@@ -14,14 +14,14 @@ Future<void> deleteMessageDialog(
   final ValueNotifier<bool> forEveryone = ValueNotifier<bool>(false);
 
   await UiKitDialog(
-    title: 'Вы уверены что хотите удалить выбранное сообщение?',
+    title: S.of(context).AreYouSureToDeleteThisMessage,
     titleStyle: theme?.circularStdTextTheme.bookW600,
     content: [
       ValueListenableBuilder(
         valueListenable: forEveryone,
         builder: (_, value, __) => CheckboxListTile(
           title: Text(
-            'Удалить это сообщение для всех?',
+            S.of(context).DeleteThisMessageForAll,
             style: theme?.circularStdTextTheme.medium,
           ),
           contentPadding: EdgeInsets.zero,

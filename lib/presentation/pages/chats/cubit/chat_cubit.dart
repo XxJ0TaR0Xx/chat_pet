@@ -2,12 +2,14 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:chat_pet/core/localization/l10n.dart';
 import 'package:chat_pet/data/common/services/web_socket/web_socket_service.dart';
 import 'package:chat_pet/domain/models/chat/chat_model.dart';
 import 'package:chat_pet/domain/models/messages/message_model.dart';
 import 'package:chat_pet/domain/usecases/chats/create_chat_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/delete_chat_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/get_chats_use_case.dart';
+import 'package:chat_pet/presentation/utils/failure_localization/failure_localization.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -42,7 +44,7 @@ class ChatCubit extends Cubit<ChatState> {
     await Future.delayed(const Duration(seconds: 5));
 
     result.fold(
-      (failure) => emit(ChatState.error(failure.message)),
+      (failure) => emit(ChatState.error(failure.localize(S.current))),
       (result) {
         _cacheChats.clear();
         _cacheChats.addAll(result);
@@ -58,7 +60,7 @@ class ChatCubit extends Cubit<ChatState> {
     ChatModel? chatModel;
 
     result.fold(
-      (failure) => emit(ChatState.error(failure.message)),
+      (failure) => emit(ChatState.error(failure.localize(S.current))),
       (chat) {
         _cacheChats.insert(0, chat);
         emit(ChatState.loaded(List.of(_cacheChats)));

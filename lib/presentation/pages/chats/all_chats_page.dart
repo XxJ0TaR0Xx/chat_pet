@@ -87,7 +87,7 @@ class AllChatsPage extends StatelessWidget {
                                     GoRouter.of(context).push(AppRoutes.chatId.replaceFirst(':id', chatModel.id), extra: chatModel.members[0]),
                                   );
                                 } else {
-                                  CustomSnackBar(context, text: 'Не удалось создать чат').showErrorMessage();
+                                  CustomSnackBar(context, text: S.of(context).CouldntCreateChat).showErrorMessage();
                                 }
                               }
                             },

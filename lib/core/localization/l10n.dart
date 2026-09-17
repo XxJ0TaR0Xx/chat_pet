@@ -493,6 +493,603 @@ class S {
       args: [],
     );
   }
+
+  /// `No chats yet`
+  String get NoChatsYet {
+    return Intl.message('No chats yet', name: 'NoChatsYet', desc: '', args: []);
+  }
+
+  /// `Start a conversation with your friends and family`
+  String get NoChatsYetDescription {
+    return Intl.message(
+      'Start a conversation with your friends and family',
+      name: 'NoChatsYetDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Find friends`
+  String get FindFriends {
+    return Intl.message(
+      'Find friends',
+      name: 'FindFriends',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Selected`
+  String get Selected {
+    return Intl.message('Selected', name: 'Selected', desc: '', args: []);
+  }
+
+  /// `Home`
+  String get Home {
+    return Intl.message('Home', name: 'Home', desc: '', args: []);
+  }
+
+  /// `Are you sure you want to delete the selected message?`
+  String get AreYouSureToDeleteThisMessage {
+    return Intl.message(
+      'Are you sure you want to delete the selected message?',
+      name: 'AreYouSureToDeleteThisMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete this message for everyone?`
+  String get DeleteThisMessageForAll {
+    return Intl.message(
+      'Delete this message for everyone?',
+      name: 'DeleteThisMessageForAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `just now`
+  String get JustNow {
+    return Intl.message('just now', name: 'JustNow', desc: '', args: []);
+  }
+
+  /// `{count, plural, one{{count} second ago} other{{count} seconds ago}}`
+  String SecondsAgo(int count) {
+    return Intl.plural(
+      count,
+      one: '$count second ago',
+      other: '$count seconds ago',
+      name: 'SecondsAgo',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, one{{count} minute ago} other{{count} minutes ago}}`
+  String MinutesAgo(int count) {
+    return Intl.plural(
+      count,
+      one: '$count minute ago',
+      other: '$count minutes ago',
+      name: 'MinutesAgo',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, one{{count} hour ago} other{{count} hours ago}}`
+  String HoursAgo(int count) {
+    return Intl.plural(
+      count,
+      one: '$count hour ago',
+      other: '$count hours ago',
+      name: 'HoursAgo',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, one{{count} day ago} other{{count} days ago}}`
+  String DaysAgo(int count) {
+    return Intl.plural(
+      count,
+      one: '$count day ago',
+      other: '$count days ago',
+      name: 'DaysAgo',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, one{{count} month ago} other{{count} months ago}}`
+  String MonthsAgo(int count) {
+    return Intl.plural(
+      count,
+      one: '$count month ago',
+      other: '$count months ago',
+      name: 'MonthsAgo',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `{count, plural, one{{count} year ago} other{{count} years ago}}`
+  String YearsAgo(int count) {
+    return Intl.plural(
+      count,
+      one: '$count year ago',
+      other: '$count years ago',
+      name: 'YearsAgo',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Calls are coming soon`
+  String get callsAreComingSoon {
+    return Intl.message(
+      'Calls are coming soon',
+      name: 'callsAreComingSoon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No account?`
+  String get NoAccount {
+    return Intl.message('No account?', name: 'NoAccount', desc: '', args: []);
+  }
+
+  /// `This field cannot be empty`
+  String get ThisFieldCannotBeEmpty {
+    return Intl.message(
+      'This field cannot be empty',
+      name: 'ThisFieldCannotBeEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Today`
+  String get Today {
+    return Intl.message('Today', name: 'Today', desc: '', args: []);
+  }
+
+  /// `edited`
+  String get Edited {
+    return Intl.message('edited', name: 'Edited', desc: '', args: []);
+  }
+
+  /// `Reply`
+  String get Reply {
+    return Intl.message('Reply', name: 'Reply', desc: '', args: []);
+  }
+
+  /// `Forward`
+  String get Forward {
+    return Intl.message('Forward', name: 'Forward', desc: '', args: []);
+  }
+
+  /// `Edit`
+  String get Edit {
+    return Intl.message('Edit', name: 'Edit', desc: '', args: []);
+  }
+
+  /// `Copy`
+  String get Copy {
+    return Intl.message('Copy', name: 'Copy', desc: '', args: []);
+  }
+
+  /// `Select`
+  String get Select {
+    return Intl.message('Select', name: 'Select', desc: '', args: []);
+  }
+
+  /// `Delete`
+  String get Delete {
+    return Intl.message('Delete', name: 'Delete', desc: '', args: []);
+  }
+
+  /// `Editing message`
+  String get EditingMessage {
+    return Intl.message(
+      'Editing message',
+      name: 'EditingMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Write your message`
+  String get WriteYourMessage {
+    return Intl.message(
+      'Write your message',
+      name: 'WriteYourMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Display name`
+  String get DisplayName {
+    return Intl.message(
+      'Display name',
+      name: 'DisplayName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email address`
+  String get EmailAddress {
+    return Intl.message(
+      'Email address',
+      name: 'EmailAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address`
+  String get Address {
+    return Intl.message('Address', name: 'Address', desc: '', args: []);
+  }
+
+  /// `Phone number`
+  String get PhoneNumber {
+    return Intl.message(
+      'Phone number',
+      name: 'PhoneNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Created at`
+  String get CreatedAt {
+    return Intl.message('Created at', name: 'CreatedAt', desc: '', args: []);
+  }
+
+  /// `Media shared`
+  String get MediaShared {
+    return Intl.message(
+      'Media shared',
+      name: 'MediaShared',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View all`
+  String get ViewAll {
+    return Intl.message('View all', name: 'ViewAll', desc: '', args: []);
+  }
+
+  /// `An error occurred: {error}`
+  String AnErrorOccurred(Object error) {
+    return Intl.message(
+      'An error occurred: $error',
+      name: 'AnErrorOccurred',
+      desc: '',
+      args: [error],
+    );
+  }
+
+  /// `Never give up 💪`
+  String get DefaultUserStatus {
+    return Intl.message(
+      'Never give up 💪',
+      name: 'DefaultUserStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your address`
+  String get YourAddress {
+    return Intl.message(
+      'Your address',
+      name: 'YourAddress',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Address cannot be empty`
+  String get AddressCannotBeEmpty {
+    return Intl.message(
+      'Address cannot be empty',
+      name: 'AddressCannotBeEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Couldn't create chat`
+  String get CouldntCreateChat {
+    return Intl.message(
+      'Couldn\'t create chat',
+      name: 'CouldntCreateChat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not implemented`
+  String get NotImplemented {
+    return Intl.message(
+      'Not implemented',
+      name: 'NotImplemented',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter email`
+  String get EnterEmail {
+    return Intl.message('Enter email', name: 'EnterEmail', desc: '', args: []);
+  }
+
+  /// `Enter a valid email`
+  String get EnterValidEmail {
+    return Intl.message(
+      'Enter a valid email',
+      name: 'EnterValidEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email must contain @`
+  String get EmailMustContainAt {
+    return Intl.message(
+      'Email must contain @',
+      name: 'EmailMustContainAt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid domain`
+  String get InvalidDomain {
+    return Intl.message(
+      'Invalid domain',
+      name: 'InvalidDomain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password must be at least 6 characters`
+  String get PasswordMinLength {
+    return Intl.message(
+      'Password must be at least 6 characters',
+      name: 'PasswordMinLength',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Passwords do not match`
+  String get PasswordsDoNotMatch {
+    return Intl.message(
+      'Passwords do not match',
+      name: 'PasswordsDoNotMatch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid phone number`
+  String get InvalidPhoneNumber {
+    return Intl.message(
+      'Invalid phone number',
+      name: 'InvalidPhoneNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User not found`
+  String get FailureUserNotFound {
+    return Intl.message(
+      'User not found',
+      name: 'FailureUserNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No internet connection`
+  String get FailureNoInternetConnection {
+    return Intl.message(
+      'No internet connection',
+      name: 'FailureNoInternetConnection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Server error, please try again later`
+  String get FailureServerError {
+    return Intl.message(
+      'Server error, please try again later',
+      name: 'FailureServerError',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Authorization required`
+  String get FailureUnauthorized {
+    return Intl.message(
+      'Authorization required',
+      name: 'FailureUnauthorized',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Insufficient permissions`
+  String get FailureForbidden {
+    return Intl.message(
+      'Insufficient permissions',
+      name: 'FailureForbidden',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please check the entered data`
+  String get FailureValidation {
+    return Intl.message(
+      'Please check the entered data',
+      name: 'FailureValidation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown error`
+  String get FailureUnknown {
+    return Intl.message(
+      'Unknown error',
+      name: 'FailureUnknown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid email or password`
+  String get FailureWrongCredentials {
+    return Intl.message(
+      'Invalid email or password',
+      name: 'FailureWrongCredentials',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Account disabled`
+  String get FailureAccountDisabled {
+    return Intl.message(
+      'Account disabled',
+      name: 'FailureAccountDisabled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Session expired, please sign in again`
+  String get FailureSessionExpired {
+    return Intl.message(
+      'Session expired, please sign in again',
+      name: 'FailureSessionExpired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Email is already in use`
+  String get FailureEmailAlreadyInUse {
+    return Intl.message(
+      'Email is already in use',
+      name: 'FailureEmailAlreadyInUse',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Too many requests, please try again later`
+  String get FailureTooManyRequests {
+    return Intl.message(
+      'Too many requests, please try again later',
+      name: 'FailureTooManyRequests',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Operation not allowed`
+  String get FailureOperationNotAllowed {
+    return Intl.message(
+      'Operation not allowed',
+      name: 'FailureOperationNotAllowed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This email is already in use`
+  String get FailureUserEmailTaken {
+    return Intl.message(
+      'This email is already in use',
+      name: 'FailureUserEmailTaken',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unsupported file format. Allowed: JPG, PNG, WEBP, GIF`
+  String get FailureInvalidFileType {
+    return Intl.message(
+      'Unsupported file format. Allowed: JPG, PNG, WEBP, GIF',
+      name: 'FailureInvalidFileType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `File is too large. Maximum size is 5MB`
+  String get FailureFileTooLarge {
+    return Intl.message(
+      'File is too large. Maximum size is 5MB',
+      name: 'FailureFileTooLarge',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chat not found`
+  String get FailureChatNotFound {
+    return Intl.message(
+      'Chat not found',
+      name: 'FailureChatNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This user is already in your contacts`
+  String get FailureContactAlreadyAdded {
+    return Intl.message(
+      'This user is already in your contacts',
+      name: 'FailureContactAlreadyAdded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Request already sent`
+  String get FailureRequestAlreadySent {
+    return Intl.message(
+      'Request already sent',
+      name: 'FailureRequestAlreadySent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can't add yourself`
+  String get FailureCannotAddYourself {
+    return Intl.message(
+      'You can\'t add yourself',
+      name: 'FailureCannotAddYourself',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

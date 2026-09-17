@@ -12,6 +12,7 @@ import 'package:chat_pet/domain/usecases/chats/disconnect_from_chat_use_case.dar
 import 'package:chat_pet/domain/usecases/chats/get_messages_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/send_message_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/update_message_use_case.dart';
+import 'package:chat_pet/presentation/utils/failure_localization/failure_localization.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:injectable/injectable.dart';
@@ -66,7 +67,7 @@ class MessageCubit extends Cubit<MessageState> {
     final result = await _getMessagesUseCase.call(chatId: chatId, cursor: cursor);
 
     return result.fold(
-      (failure) => throw Exception(failure.message),
+      (failure) => throw Exception(failure.localize(S.current)),
       (response) {
         _nextCursor = response.cursor;
         return response.items.map(_withMessageType).toList();
@@ -155,7 +156,7 @@ class MessageCubit extends Cubit<MessageState> {
 
     //TODO WS
     result.fold(
-      (failure) => emit(_Error(S.current.ErrorMsg(failure.message))),
+      (failure) => emit(_Error(failure.localize(S.current))),
       (_) => pagingController.value = pagingController.value.filterItems((message) => !messageIds.contains(message.id)),
     );
   }

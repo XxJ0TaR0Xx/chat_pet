@@ -83,7 +83,7 @@ class SettingsPage extends StatelessWidget {
                               SpacingFoundation.verticalSpace6,
                               //TODO add from server
                               Text(
-                                'Never give up 💪',
+                                S.of(context).DefaultUserStatus,
                                 style: theme?.circularStdTextTheme.book.copyWith(
                                   fontSize: 12.w,
                                   color: ColorsFoundation.backNeutral1,

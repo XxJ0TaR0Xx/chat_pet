@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:chat_pet/core/localization/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -42,7 +43,7 @@ class MessageRenderObject extends LeafRenderObjectWidget {
 
     return TimestampedChatMessageRenderObject(
       text: text,
-      sentAt: isEditing ? 'изменино $sentAt' : sentAt,
+      sentAt: isEditing ? '${S.of(context).Edited} $sentAt' : sentAt,
       textDirection: Directionality.of(context),
       textStyle: effectiveTextStyle!,
       sentAtStyle: effectiveSentAtTextStyle!,
@@ -67,7 +68,7 @@ class MessageRenderObject extends LeafRenderObjectWidget {
     renderObject.text = text;
     renderObject.textStyle = effectiveTextStyle!;
 
-    renderObject.sentAt = isEditing ? 'изменино $sentAt' : sentAt;
+    renderObject.sentAt = isEditing ? '${S.of(context).Edited} $sentAt' : sentAt;
     renderObject.sentAtStyle = effectiveSentAtTextStyle!;
 
     renderObject.textDirection = Directionality.of(context);

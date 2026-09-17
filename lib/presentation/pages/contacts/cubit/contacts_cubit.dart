@@ -3,6 +3,7 @@ import 'package:chat_pet/core/localization/l10n.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/domain/usecases/contacts/delete_contact_use_case.dart';
 import 'package:chat_pet/domain/usecases/contacts/get_contacts_use_case.dart';
+import 'package:chat_pet/presentation/utils/failure_localization/failure_localization.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -27,7 +28,7 @@ class ContactsCubit extends Cubit<ContactsState> {
 
     result.fold(
       (failure) {
-        emit(_Error(S.current.ErrorMsg(failure.message)));
+        emit(_Error(failure.localize(S.current)));
       },
       (_) {
         _allContacts.removeWhere((contact) => contact.id == contactId);
@@ -50,7 +51,7 @@ class ContactsCubit extends Cubit<ContactsState> {
     emit(const ContactsState.loading());
     final result = await _getContactsUseCase();
     result.fold(
-      (failure) => emit(ContactsState.error(failure.message)),
+      (failure) => emit(ContactsState.error(failure.localize(S.current))),
       (contacts) {
         _allContacts = contacts;
         emit(ContactsState.loaded(_groupByLetter(contacts)));

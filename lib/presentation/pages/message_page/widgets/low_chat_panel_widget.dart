@@ -103,7 +103,7 @@ class _LowChatPanelWidgetState extends State<LowChatPanelWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Editing message',
+                    S.of(context).EditingMessage,
                     style: theme?.carosTextTheme.mediumBold12.copyWith(
                       color: theme.colorScheme.primary,
                     ),
@@ -161,7 +161,7 @@ class _LowChatPanelWidgetState extends State<LowChatPanelWidget> {
                 fillColor: ColorsFoundation.fillMessageTextField.withValues(alpha: 0.1),
                 focusColor: ColorsFoundation.fillMessageTextField.withValues(alpha: 0.1),
                 hoverColor: ColorsFoundation.fillMessageTextField.withValues(alpha: 0.1),
-                hintText: 'Write your message',
+                hintText: S.of(context).WriteYourMessage,
                 hintStyle: theme?.circularStdTextTheme.bookSmallW600.copyWith(
                   color: ColorsFoundation.fillMessageTextField.withValues(alpha: 0.5),
                 ),

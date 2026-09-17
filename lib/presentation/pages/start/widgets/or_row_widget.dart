@@ -2,17 +2,15 @@ import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 
 class OrRowWidget extends StatelessWidget {
-  final Color textColor;
-
   const OrRowWidget({
     super.key,
     this.textColor = ColorsFoundation.textColor,
   });
+  final Color textColor;
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
       spacing: SpacingFoundation.horizontalSpacing16,
       children: [
         Expanded(

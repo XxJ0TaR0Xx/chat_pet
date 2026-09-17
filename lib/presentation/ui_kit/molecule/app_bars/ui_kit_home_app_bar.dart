@@ -48,7 +48,7 @@ class UiKitHomeAppBar extends PreferredSize {
                   ),
                 ),
                 Text(
-                  title ?? 'Home',
+                  title ?? S.of(context).Home,
                   style: theme?.carosTextTheme.mediumBold.copyWith(
                     fontSize: 20.w,
                     color: theme.colorScheme.surfaceBase,

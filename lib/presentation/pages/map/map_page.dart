@@ -68,14 +68,14 @@ class _MapPageState extends State<MapPage> {
               children: [
                 SpacingFoundation.verticalSpace12,
                 Text(
-                  'Ваш адресс',
+                  S.of(context).YourAddress,
                   style: context.uiKitTheme?.carosTextTheme.mediumBold,
                 ),
                 UiKitTextField(
                   controller: _controller,
                   validator: (address) {
                     final newAddress = address?.trim();
-                    if (newAddress == null || newAddress.isEmpty) return 'Адрес не может быть пустым';
+                    if (newAddress == null || newAddress.isEmpty) return S.of(context).AddressCannotBeEmpty;
 
                     return null;
                   },
