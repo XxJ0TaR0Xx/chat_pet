@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:chat_pet/data/common/services/web_socket/socket_connection.dart';
+import 'package:chat_pet/data/mappers/notifications/notification_socket_event_mapper.dart';
 import 'package:chat_pet/domain/interfaces/token/token_manager.dart';
+import 'package:chat_pet/domain/models/notifications/notification_socket_event.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
@@ -18,6 +20,9 @@ class NotificationWebSocket {
   StreamSubscription<bool>? _authSub;
 
   Stream<Map<String, dynamic>> get stream => _connection.stream;
+
+  Stream<NotificationSocketEvent> get events =>
+      _connection.stream.map(notificationSocketEventFromJson).where((event) => event != null).cast<NotificationSocketEvent>();
 
   void connect(String url) => _connection.connect(url);
 

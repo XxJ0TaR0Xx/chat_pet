@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:chat_pet/core/localization/l10n.dart';
-import 'package:chat_pet/data/common/services/web_socket/web_socket_service.dart';
+import 'package:chat_pet/domain/interfaces/notifications/notification_repository.dart';
 import 'package:chat_pet/domain/models/chat/chat_model.dart';
 import 'package:chat_pet/domain/models/messages/message_model.dart';
+import 'package:chat_pet/domain/models/notifications/notification_socket_event.dart';
 import 'package:chat_pet/domain/usecases/chats/create_chat_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/delete_chat_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/get_chats_use_case.dart';
@@ -22,18 +22,18 @@ class ChatCubit extends Cubit<ChatState> {
     this._getChatsUseCase,
     this._createChatUseCase,
     this._deleteChatUseCase,
-    this._notificationSocket,
+    this._notificationRepository,
   ) : super(const ChatState.initial()) {
     getChats();
-    _connectChatWebSocket();
+    _listenNotifications();
   }
 
   final GetChatsUseCase _getChatsUseCase;
   final CreateChatUseCase _createChatUseCase;
   final DeleteChatUseCase _deleteChatUseCase;
 
-  final NotificationWebSocket _notificationSocket;
-  StreamSubscription<Map<String, dynamic>>? _wsSubscription;
+  final NotificationRepository _notificationRepository;
+  StreamSubscription<NotificationSocketEvent>? _notificationsSubscription;
 
   final List<ChatModel> _cacheChats = List.empty(growable: true);
 
@@ -79,17 +79,24 @@ class ChatCubit extends Cubit<ChatState> {
     if (state is ChatStateLoaded) emit(ChatState.loaded(List.of(_cacheChats)));
   }
 
-  void _connectChatWebSocket() {
-    _wsSubscription = _notificationSocket.stream.listen((event) {
-      if (event['type'] != 'new_message') return;
-      log('connectChatWebSocket ${event}');
-      // _updateLastMessageInChat(_parseMessageUseCase());
-    });
+  void _listenNotifications() {
+    _notificationsSubscription = _notificationRepository.events.listen(_handleNotification);
+  }
+
+  void _handleNotification(NotificationSocketEvent event) {
+    switch (event) {
+      case NewMessageNSEvent(:final message):
+        _updateLastMessageInChat(message);
+      case MessageEditedNSEvent(:final id, :final chatId, :final content):
+        _applyEditedMessage(chatId: chatId, messageId: id, content: content);
+      case LastMessageChangedNSEvent(:final chatId, :final lastMessage):
+        _applyLastMessageChanged(chatId: chatId, lastMessage: lastMessage);
+      case FriendRequestNSEvent():
+        break;
+    }
   }
 
   void _updateLastMessageInChat(MessageModel messageModel) {
-    if (messageModel.chatId.isEmpty) return;
-
     final index = _cacheChats.indexWhere((chat) => chat.id == messageModel.chatId);
     if (index == -1) return;
     if (_cacheChats[index].lastMessage?.id == messageModel.id) return;
@@ -102,9 +109,30 @@ class ChatCubit extends Cubit<ChatState> {
     if (state is ChatStateLoaded) emit(ChatState.loaded(List.of(_cacheChats)));
   }
 
+  void _applyEditedMessage({required String chatId, required String messageId, required String content}) {
+    final index = _cacheChats.indexWhere((chat) => chat.id == chatId);
+    if (index == -1) return;
+    if (_cacheChats[index].lastMessage?.id != messageId) return;
+
+    _cacheChats[index] = _cacheChats[index].copyWith(
+      lastMessage: _cacheChats[index].lastMessage?.copyWith(content: content),
+    );
+
+    if (state is ChatStateLoaded) emit(ChatState.loaded(List.of(_cacheChats)));
+  }
+
+  void _applyLastMessageChanged({required String chatId, required MessageModel? lastMessage}) {
+    final index = _cacheChats.indexWhere((chat) => chat.id == chatId);
+    if (index == -1) return;
+
+    _cacheChats[index] = _cacheChats[index].copyWith(lastMessage: lastMessage);
+
+    if (state is ChatStateLoaded) emit(ChatState.loaded(List.of(_cacheChats)));
+  }
+
   @override
   Future<void> close() {
-    _wsSubscription?.cancel();
+    _notificationsSubscription?.cancel();
     return super.close();
   }
 }

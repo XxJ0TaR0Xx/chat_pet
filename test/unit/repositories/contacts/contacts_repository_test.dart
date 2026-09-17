@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:chat_pet/data/common/services/web_socket/web_socket_service.dart';
+import 'package:chat_pet/data/common/services/web_socket/notification_web_socket.dart';
 import 'package:chat_pet/data/models/user/user_dto.dart';
 import 'package:chat_pet/data/repositories/contacts/contacts_repository_impl.dart';
 import 'package:chat_pet/domain/failures/contacts_failure/contacts_failure.dart';

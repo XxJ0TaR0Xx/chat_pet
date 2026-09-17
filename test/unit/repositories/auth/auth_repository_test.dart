@@ -1,6 +1,6 @@
 import 'package:chat_pet/core/storages/exceptions/secure_storage_exception.dart';
 import 'package:chat_pet/core/storages/failure/secure_storage_failure.dart';
-import 'package:chat_pet/data/common/services/web_socket/web_socket_service.dart';
+import 'package:chat_pet/data/common/services/web_socket/notification_web_socket.dart';
 import 'package:chat_pet/data/repositories/auth/auth_repository_impl.dart';
 import 'package:chat_pet/domain/failures/auth_failures/auth_failure.dart';
 import 'package:chat_pet/domain/interfaces/auth/auth_local_repository.dart';
@@ -20,7 +20,7 @@ void main() {
   late MockAuthLocalRepository mockAuthLocalRepository;
   late MockAuthRemoteRepository mockAuthRemoteRepository;
   late MockTokenManager mockTokenManager;
-  late MockWebSocketService mockWebSocketService;
+  late MockNotificationWebSocket mockWebSocketService;
   late AuthRepository authRepository;
 
   const tokens = Tokens(accessToken: 'accessToken', refreshToken: 'refreshToken');
@@ -34,7 +34,7 @@ void main() {
       mockAuthLocalRepository = MockAuthLocalRepository();
       mockAuthRemoteRepository = MockAuthRemoteRepository();
       mockTokenManager = MockTokenManager();
-      mockWebSocketService = MockWebSocketService();
+      mockWebSocketService = MockNotificationWebSocket();
       authRepository = AuthRepositoryImpl(
         authLocalRepository: mockAuthLocalRepository,
         authRemoteRepository: mockAuthRemoteRepository,

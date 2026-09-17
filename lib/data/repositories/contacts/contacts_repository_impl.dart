@@ -1,13 +1,14 @@
-import 'package:chat_pet/domain/custom_talker/custom_talker.dart';
-import 'package:chat_pet/data/common/services/web_socket/web_socket_service.dart';
 import 'package:chat_pet/data/mappers/contacts/contacts_mapper.dart';
 import 'package:chat_pet/data/mappers/user/user_mapper.dart';
 import 'package:chat_pet/data/models/contacts/contact_dto.dart';
 import 'package:chat_pet/data/models/contacts/contact_request_dto.dart';
 import 'package:chat_pet/data/models/user/user_dto.dart';
+import 'package:chat_pet/domain/custom_talker/custom_talker.dart';
 import 'package:chat_pet/domain/failures/contacts_failure/contacts_failure.dart';
 import 'package:chat_pet/domain/interfaces/contacts/contacts_repository.dart';
+import 'package:chat_pet/domain/interfaces/notifications/notification_repository.dart';
 import 'package:chat_pet/domain/models/contacts/contact_model_request.dart';
+import 'package:chat_pet/domain/models/notifications/notification_socket_event.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:dio/dio.dart';
 import 'package:fpdart/src/either.dart';
@@ -16,10 +17,10 @@ import 'package:injectable/injectable.dart';
 
 @Injectable(as: ContactsRepository)
 class ContactsRepositoryImpl implements ContactsRepository {
-  const ContactsRepositoryImpl(this._dio, this._webSocketService);
+  const ContactsRepositoryImpl(this._dio, this._notificationRepository);
 
   final Dio _dio;
-  final NotificationWebSocket _webSocketService;
+  final NotificationRepository _notificationRepository;
 
   @override
   Future<Either<ContactsFailure, List<UserModel>>> getContacts() async {
@@ -147,11 +148,8 @@ class ContactsRepositoryImpl implements ContactsRepository {
   }
 
   @override
-  Stream<ContactModelRequest> get incomingRequestStream => _webSocketService.stream
-      .where((event) {
-        return event['type'] == 'friend_request';
-      })
-      .map((e) {
-        return ContactModelRequestDto.fromJson(e).toDomain();
-      });
+  Stream<ContactModelRequest> get incomingRequestStream => _notificationRepository.events
+      .where((event) => event is FriendRequestNSEvent)
+      .cast<FriendRequestNSEvent>()
+      .map((event) => ContactModelRequest(id: event.id, sender: event.sender));
 }

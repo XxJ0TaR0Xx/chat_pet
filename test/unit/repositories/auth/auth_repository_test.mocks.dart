@@ -5,7 +5,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 
-import 'package:chat_pet/data/common/services/web_socket/web_socket_service.dart'
+import 'package:chat_pet/data/common/services/web_socket/notification_web_socket.dart'
     as _i8;
 import 'package:chat_pet/domain/interfaces/auth/auth_local_repository.dart'
     as _i5;
@@ -14,6 +14,8 @@ import 'package:chat_pet/domain/interfaces/auth/auth_remote_repository.dart'
 import 'package:chat_pet/domain/interfaces/token/token_manager.dart' as _i3;
 import 'package:chat_pet/domain/models/auth/auth_request.dart' as _i7;
 import 'package:chat_pet/domain/models/auth/tokens.dart' as _i2;
+import 'package:chat_pet/domain/models/notifications/notification_socket_event.dart'
+    as _i9;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -156,6 +158,14 @@ class MockNotificationWebSocket extends _i1.Mock
             returnValue: _i4.Stream<Map<String, dynamic>>.empty(),
           )
           as _i4.Stream<Map<String, dynamic>>);
+
+  @override
+  _i4.Stream<_i9.NotificationSocketEvent> get events =>
+      (super.noSuchMethod(
+            Invocation.getter(#events),
+            returnValue: _i4.Stream<_i9.NotificationSocketEvent>.empty(),
+          )
+          as _i4.Stream<_i9.NotificationSocketEvent>);
 
   @override
   void connect(String? url) => super.noSuchMethod(
