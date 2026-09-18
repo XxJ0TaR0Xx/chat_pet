@@ -9,6 +9,7 @@ import 'package:chat_pet/domain/models/notifications/notification_socket_event.d
 import 'package:chat_pet/domain/usecases/chats/create_chat_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/delete_chat_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/get_chats_use_case.dart';
+import 'package:chat_pet/presentation/pages/chats/cubit/incoming_chat_message.dart';
 import 'package:chat_pet/presentation/utils/failure_localization/failure_localization.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -36,6 +37,12 @@ class ChatCubit extends Cubit<ChatState> {
   StreamSubscription<NotificationSocketEvent>? _notificationsSubscription;
 
   final List<ChatModel> _cacheChats = List.empty(growable: true);
+
+  final _incomingMessageController = StreamController<IncomingChatMessage>.broadcast();
+
+  /// One-off эффект "пришло новое сообщение" — для баннера-уведомления.
+  /// Не путать с [ChatState]: это стрим разовых событий, а не снепшот списка.
+  Stream<IncomingChatMessage> get incomingMessages => _incomingMessageController.stream;
 
   Future<void> getChats() async {
     emit(const ChatState.loading());
@@ -107,6 +114,7 @@ class ChatCubit extends Cubit<ChatState> {
     );
 
     if (state is ChatStateLoaded) emit(ChatState.loaded(List.of(_cacheChats)));
+    _incomingMessageController.add(IncomingChatMessage(chat: _cacheChats[index], message: messageModel));
   }
 
   void _applyEditedMessage({required String chatId, required String messageId, required String content}) {
@@ -133,6 +141,7 @@ class ChatCubit extends Cubit<ChatState> {
   @override
   Future<void> close() {
     _notificationsSubscription?.cancel();
+    unawaited(_incomingMessageController.close());
     return super.close();
   }
 }
