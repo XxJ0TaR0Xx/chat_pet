@@ -17,6 +17,7 @@ import 'package:chat_pet/presentation/pages/message_page/widgets/selection_overl
 import 'package:chat_pet/presentation/ui_kit/molecule/common_widgets/loading_widget.dart';
 import 'package:chat_pet/presentation/ui_kit/molecule/dialogs/delete_message_dialog.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
+import 'package:chat_pet/presentation/utils/chat_session/open_chat_tracker.dart';
 import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,6 +47,7 @@ class _MessagePageState extends State<MessagePage> {
   void initState() {
     super.initState();
     currentUser = getIt<UserCubit>().state.user!;
+    getIt<OpenChatTracker>().open(widget.id);
     cubit = MessageCubit(
       getIt<GetMessagesUseCase>(),
       getIt<DeleteMessageUseCase>(),
@@ -61,6 +63,7 @@ class _MessagePageState extends State<MessagePage> {
 
   @override
   void dispose() {
+    getIt<OpenChatTracker>().close(widget.id);
     cubit.close();
     _controller.dispose();
     _contextMenuMessage.dispose();
