@@ -204,6 +204,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "NetworkUsage": MessageLookupByLibrary.simpleMessage(
       "Network usage, stogare usage",
     ),
+    "NewMessage": MessageLookupByLibrary.simpleMessage("New message"),
     "No": MessageLookupByLibrary.simpleMessage("No"),
     "NoAccount": MessageLookupByLibrary.simpleMessage("No account?"),
     "NoChatsYet": MessageLookupByLibrary.simpleMessage("No chats yet"),

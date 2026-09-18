@@ -212,6 +212,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "NetworkUsage": MessageLookupByLibrary.simpleMessage(
       "Использование сети, использование данных",
     ),
+    "NewMessage": MessageLookupByLibrary.simpleMessage("Новое сообщение"),
     "No": MessageLookupByLibrary.simpleMessage("Нет"),
     "NoAccount": MessageLookupByLibrary.simpleMessage("Нет аккаунта?"),
     "NoChatsYet": MessageLookupByLibrary.simpleMessage("Пока нет чатов"),

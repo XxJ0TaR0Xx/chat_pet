@@ -239,6 +239,11 @@ class S {
     );
   }
 
+  /// `New message`
+  String get NewMessage {
+    return Intl.message('New message', name: 'NewMessage', desc: '', args: []);
+  }
+
   /// `No`
   String get No {
     return Intl.message('No', name: 'No', desc: '', args: []);
