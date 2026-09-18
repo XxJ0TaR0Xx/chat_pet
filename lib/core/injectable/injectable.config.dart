@@ -79,6 +79,7 @@ import '../../presentation/pages/login/cubit/login_cubit.dart' as _i419;
 import '../../presentation/pages/message_page/cubit/message_cubit.dart'
     as _i538;
 import '../../presentation/pages/settings/cubit/setting_cubit.dart' as _i657;
+import '../../presentation/utils/chat_session/open_chat_tracker.dart' as _i53;
 import '../storages/interfaces/secure_storage_service.dart' as _i566;
 import 'register_module.dart' as _i291;
 
@@ -93,6 +94,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i558.FlutterSecureStorage>(
       () => registerModule.secureStorage,
     );
+    gh.lazySingleton<_i53.OpenChatTracker>(() => _i53.OpenChatTracker());
     gh.lazySingleton<_i73.UserRepository>(
       () => _i991.UserRepositoryImpl(gh<_i361.Dio>()),
     );

@@ -6,12 +6,14 @@
 import 'dart:async' as _i8;
 
 import 'package:bloc/bloc.dart' as _i10;
-import 'package:chat_pet/domain/models/chat/chat_model.dart' as _i11;
+import 'package:chat_pet/domain/models/chat/chat_model.dart' as _i12;
 import 'package:chat_pet/domain/models/user/user_model.dart' as _i9;
 import 'package:chat_pet/presentation/cubits/contact_request/contact_requests_cubit.dart'
     as _i7;
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart' as _i2;
 import 'package:chat_pet/presentation/pages/chats/cubit/chat_cubit.dart' as _i4;
+import 'package:chat_pet/presentation/pages/chats/cubit/incoming_chat_message.dart'
+    as _i11;
 import 'package:chat_pet/presentation/pages/contacts/cubit/contacts_cubit.dart'
     as _i5;
 import 'package:chat_pet/presentation/pages/login/cubit/login_cubit.dart'
@@ -240,6 +242,14 @@ class MockChatCubit extends _i1.Mock implements _i4.ChatCubit {
   }
 
   @override
+  _i8.Stream<_i11.IncomingChatMessage> get incomingMessages =>
+      (super.noSuchMethod(
+            Invocation.getter(#incomingMessages),
+            returnValue: _i8.Stream<_i11.IncomingChatMessage>.empty(),
+          )
+          as _i8.Stream<_i11.IncomingChatMessage>);
+
+  @override
   _i4.ChatState get state =>
       (super.noSuchMethod(
             Invocation.getter(#state),
@@ -270,12 +280,12 @@ class MockChatCubit extends _i1.Mock implements _i4.ChatCubit {
           as _i8.Future<void>);
 
   @override
-  _i8.Future<_i11.ChatModel?> createChat(String? friendId) =>
+  _i8.Future<_i12.ChatModel?> createChat(String? friendId) =>
       (super.noSuchMethod(
             Invocation.method(#createChat, [friendId]),
-            returnValue: _i8.Future<_i11.ChatModel?>.value(),
+            returnValue: _i8.Future<_i12.ChatModel?>.value(),
           )
-          as _i8.Future<_i11.ChatModel?>);
+          as _i8.Future<_i12.ChatModel?>);
 
   @override
   void clearUncheckedMessageCount(String? chatId) => super.noSuchMethod(
