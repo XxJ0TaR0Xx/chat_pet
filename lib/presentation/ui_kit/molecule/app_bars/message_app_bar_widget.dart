@@ -1,4 +1,4 @@
-import 'package:chat_pet/domain/models/user/user_model.dart';
+import 'package:chat_pet/domain/models/chat/chat_member_model.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,7 @@ class MessageAppBarWidget extends PreferredSize {
   });
 
   factory MessageAppBarWidget.defaultMode({
-    required UserModel userModel,
+    required ChatMemberModel userModel,
     bool isActive = true,
     Key? key,
   }) => MessageAppBarWidget._(
@@ -27,7 +27,7 @@ class MessageAppBarWidget extends PreferredSize {
   );
 
   factory MessageAppBarWidget.selectionMode({
-    required UserModel userModel,
+    required ChatMemberModel userModel,
     required VoidCallback onDeleteTap,
     required VoidCallback onForwardTap,
     required VoidCallback onClearTap,
@@ -45,7 +45,7 @@ class MessageAppBarWidget extends PreferredSize {
     key: key,
   );
 
-  final UserModel userModel;
+  final ChatMemberModel userModel;
   final bool isActive;
   final bool isSelectionMode;
   final VoidCallback? onDeleteTap;
@@ -103,7 +103,7 @@ class MessageAppBarWidget extends PreferredSize {
       SpacingFoundation.horizontalSpace12,
       AvatarWidget(
         isOnline: isActive,
-        url: userModel.avatarUrl,
+        url: userModel.user.avatarUrl,
       ),
       SpacingFoundation.horizontalSpace12,
       Expanded(
@@ -112,7 +112,7 @@ class MessageAppBarWidget extends PreferredSize {
           spacing: SpacingFoundation.verticalSpacing6,
           children: [
             Text(
-              userModel.nameAndLast,
+              userModel.user.nameAndLast,
               style: theme?.carosTextTheme.mediumBold,
               overflow: TextOverflow.ellipsis,
             ),

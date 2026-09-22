@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ChatDto {
 
- String get id; List<UserDto> get members;@JsonKey(name: 'is_group') bool get isGroup; String? get name;@JsonKey(name: 'create_at') DateTime? get createAt;@JsonKey(name: 'display_name') String? get displayName;@JsonKey(name: 'display_avatar_url') String? get avatarUrl;@JsonKey(name: 'last_message') MessageDto? get lastMessage; int get uncheckedMessageCount;
+ String get id; List<ChatMemberDto> get members;@JsonKey(name: 'is_group') bool get isGroup; String? get name;@JsonKey(name: 'create_at') DateTime? get createAt;@JsonKey(name: 'display_name') String? get displayName;@JsonKey(name: 'display_avatar_url') String? get avatarUrl;@JsonKey(name: 'last_message') MessageDto? get lastMessage;@JsonKey(name: 'unread_count') int get unreadCount;
 /// Create a copy of ChatDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ChatDtoCopyWith<ChatDto> get copyWith => _$ChatDtoCopyWithImpl<ChatDto>(this as
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatDto&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other.members, members)&&(identical(other.isGroup, isGroup) || other.isGroup == isGroup)&&(identical(other.name, name) || other.name == name)&&(identical(other.createAt, createAt) || other.createAt == createAt)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.lastMessage, lastMessage) || other.lastMessage == lastMessage)&&(identical(other.uncheckedMessageCount, uncheckedMessageCount) || other.uncheckedMessageCount == uncheckedMessageCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatDto&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other.members, members)&&(identical(other.isGroup, isGroup) || other.isGroup == isGroup)&&(identical(other.name, name) || other.name == name)&&(identical(other.createAt, createAt) || other.createAt == createAt)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.lastMessage, lastMessage) || other.lastMessage == lastMessage)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(members),isGroup,name,createAt,displayName,avatarUrl,lastMessage,uncheckedMessageCount);
+int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(members),isGroup,name,createAt,displayName,avatarUrl,lastMessage,unreadCount);
 
 @override
 String toString() {
-  return 'ChatDto(id: $id, members: $members, isGroup: $isGroup, name: $name, createAt: $createAt, displayName: $displayName, avatarUrl: $avatarUrl, lastMessage: $lastMessage, uncheckedMessageCount: $uncheckedMessageCount)';
+  return 'ChatDto(id: $id, members: $members, isGroup: $isGroup, name: $name, createAt: $createAt, displayName: $displayName, avatarUrl: $avatarUrl, lastMessage: $lastMessage, unreadCount: $unreadCount)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ChatDtoCopyWith<$Res>  {
   factory $ChatDtoCopyWith(ChatDto value, $Res Function(ChatDto) _then) = _$ChatDtoCopyWithImpl;
 @useResult
 $Res call({
- String id, List<UserDto> members,@JsonKey(name: 'is_group') bool isGroup, String? name,@JsonKey(name: 'create_at') DateTime? createAt,@JsonKey(name: 'display_name') String? displayName,@JsonKey(name: 'display_avatar_url') String? avatarUrl,@JsonKey(name: 'last_message') MessageDto? lastMessage, int uncheckedMessageCount
+ String id, List<ChatMemberDto> members,@JsonKey(name: 'is_group') bool isGroup, String? name,@JsonKey(name: 'create_at') DateTime? createAt,@JsonKey(name: 'display_name') String? displayName,@JsonKey(name: 'display_avatar_url') String? avatarUrl,@JsonKey(name: 'last_message') MessageDto? lastMessage,@JsonKey(name: 'unread_count') int unreadCount
 });
 
 
@@ -65,17 +65,17 @@ class _$ChatDtoCopyWithImpl<$Res>
 
 /// Create a copy of ChatDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? members = null,Object? isGroup = null,Object? name = freezed,Object? createAt = freezed,Object? displayName = freezed,Object? avatarUrl = freezed,Object? lastMessage = freezed,Object? uncheckedMessageCount = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? members = null,Object? isGroup = null,Object? name = freezed,Object? createAt = freezed,Object? displayName = freezed,Object? avatarUrl = freezed,Object? lastMessage = freezed,Object? unreadCount = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,members: null == members ? _self.members : members // ignore: cast_nullable_to_non_nullable
-as List<UserDto>,isGroup: null == isGroup ? _self.isGroup : isGroup // ignore: cast_nullable_to_non_nullable
+as List<ChatMemberDto>,isGroup: null == isGroup ? _self.isGroup : isGroup // ignore: cast_nullable_to_non_nullable
 as bool,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String?,createAt: freezed == createAt ? _self.createAt : createAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
 as String?,lastMessage: freezed == lastMessage ? _self.lastMessage : lastMessage // ignore: cast_nullable_to_non_nullable
-as MessageDto?,uncheckedMessageCount: null == uncheckedMessageCount ? _self.uncheckedMessageCount : uncheckedMessageCount // ignore: cast_nullable_to_non_nullable
+as MessageDto?,unreadCount: null == unreadCount ? _self.unreadCount : unreadCount // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
@@ -173,10 +173,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  List<UserDto> members, @JsonKey(name: 'is_group')  bool isGroup,  String? name, @JsonKey(name: 'create_at')  DateTime? createAt, @JsonKey(name: 'display_name')  String? displayName, @JsonKey(name: 'display_avatar_url')  String? avatarUrl, @JsonKey(name: 'last_message')  MessageDto? lastMessage,  int uncheckedMessageCount)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  List<ChatMemberDto> members, @JsonKey(name: 'is_group')  bool isGroup,  String? name, @JsonKey(name: 'create_at')  DateTime? createAt, @JsonKey(name: 'display_name')  String? displayName, @JsonKey(name: 'display_avatar_url')  String? avatarUrl, @JsonKey(name: 'last_message')  MessageDto? lastMessage, @JsonKey(name: 'unread_count')  int unreadCount)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ChatDto() when $default != null:
-return $default(_that.id,_that.members,_that.isGroup,_that.name,_that.createAt,_that.displayName,_that.avatarUrl,_that.lastMessage,_that.uncheckedMessageCount);case _:
+return $default(_that.id,_that.members,_that.isGroup,_that.name,_that.createAt,_that.displayName,_that.avatarUrl,_that.lastMessage,_that.unreadCount);case _:
   return orElse();
 
 }
@@ -194,10 +194,10 @@ return $default(_that.id,_that.members,_that.isGroup,_that.name,_that.createAt,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  List<UserDto> members, @JsonKey(name: 'is_group')  bool isGroup,  String? name, @JsonKey(name: 'create_at')  DateTime? createAt, @JsonKey(name: 'display_name')  String? displayName, @JsonKey(name: 'display_avatar_url')  String? avatarUrl, @JsonKey(name: 'last_message')  MessageDto? lastMessage,  int uncheckedMessageCount)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  List<ChatMemberDto> members, @JsonKey(name: 'is_group')  bool isGroup,  String? name, @JsonKey(name: 'create_at')  DateTime? createAt, @JsonKey(name: 'display_name')  String? displayName, @JsonKey(name: 'display_avatar_url')  String? avatarUrl, @JsonKey(name: 'last_message')  MessageDto? lastMessage, @JsonKey(name: 'unread_count')  int unreadCount)  $default,) {final _that = this;
 switch (_that) {
 case _ChatDto():
-return $default(_that.id,_that.members,_that.isGroup,_that.name,_that.createAt,_that.displayName,_that.avatarUrl,_that.lastMessage,_that.uncheckedMessageCount);case _:
+return $default(_that.id,_that.members,_that.isGroup,_that.name,_that.createAt,_that.displayName,_that.avatarUrl,_that.lastMessage,_that.unreadCount);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -214,10 +214,10 @@ return $default(_that.id,_that.members,_that.isGroup,_that.name,_that.createAt,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  List<UserDto> members, @JsonKey(name: 'is_group')  bool isGroup,  String? name, @JsonKey(name: 'create_at')  DateTime? createAt, @JsonKey(name: 'display_name')  String? displayName, @JsonKey(name: 'display_avatar_url')  String? avatarUrl, @JsonKey(name: 'last_message')  MessageDto? lastMessage,  int uncheckedMessageCount)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  List<ChatMemberDto> members, @JsonKey(name: 'is_group')  bool isGroup,  String? name, @JsonKey(name: 'create_at')  DateTime? createAt, @JsonKey(name: 'display_name')  String? displayName, @JsonKey(name: 'display_avatar_url')  String? avatarUrl, @JsonKey(name: 'last_message')  MessageDto? lastMessage, @JsonKey(name: 'unread_count')  int unreadCount)?  $default,) {final _that = this;
 switch (_that) {
 case _ChatDto() when $default != null:
-return $default(_that.id,_that.members,_that.isGroup,_that.name,_that.createAt,_that.displayName,_that.avatarUrl,_that.lastMessage,_that.uncheckedMessageCount);case _:
+return $default(_that.id,_that.members,_that.isGroup,_that.name,_that.createAt,_that.displayName,_that.avatarUrl,_that.lastMessage,_that.unreadCount);case _:
   return null;
 
 }
@@ -229,12 +229,12 @@ return $default(_that.id,_that.members,_that.isGroup,_that.name,_that.createAt,_
 @JsonSerializable()
 
 class _ChatDto extends ChatDto {
-  const _ChatDto({required this.id, required final  List<UserDto> members, @JsonKey(name: 'is_group') required this.isGroup, this.name, @JsonKey(name: 'create_at') this.createAt, @JsonKey(name: 'display_name') this.displayName, @JsonKey(name: 'display_avatar_url') this.avatarUrl, @JsonKey(name: 'last_message') this.lastMessage, this.uncheckedMessageCount = 0}): _members = members,super._();
+  const _ChatDto({required this.id, required final  List<ChatMemberDto> members, @JsonKey(name: 'is_group') required this.isGroup, this.name, @JsonKey(name: 'create_at') this.createAt, @JsonKey(name: 'display_name') this.displayName, @JsonKey(name: 'display_avatar_url') this.avatarUrl, @JsonKey(name: 'last_message') this.lastMessage, @JsonKey(name: 'unread_count') this.unreadCount = 0}): _members = members,super._();
   factory _ChatDto.fromJson(Map<String, dynamic> json) => _$ChatDtoFromJson(json);
 
 @override final  String id;
- final  List<UserDto> _members;
-@override List<UserDto> get members {
+ final  List<ChatMemberDto> _members;
+@override List<ChatMemberDto> get members {
   if (_members is EqualUnmodifiableListView) return _members;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_members);
@@ -246,7 +246,7 @@ class _ChatDto extends ChatDto {
 @override@JsonKey(name: 'display_name') final  String? displayName;
 @override@JsonKey(name: 'display_avatar_url') final  String? avatarUrl;
 @override@JsonKey(name: 'last_message') final  MessageDto? lastMessage;
-@override@JsonKey() final  int uncheckedMessageCount;
+@override@JsonKey(name: 'unread_count') final  int unreadCount;
 
 /// Create a copy of ChatDto
 /// with the given fields replaced by the non-null parameter values.
@@ -261,16 +261,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatDto&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other._members, _members)&&(identical(other.isGroup, isGroup) || other.isGroup == isGroup)&&(identical(other.name, name) || other.name == name)&&(identical(other.createAt, createAt) || other.createAt == createAt)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.lastMessage, lastMessage) || other.lastMessage == lastMessage)&&(identical(other.uncheckedMessageCount, uncheckedMessageCount) || other.uncheckedMessageCount == uncheckedMessageCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatDto&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other._members, _members)&&(identical(other.isGroup, isGroup) || other.isGroup == isGroup)&&(identical(other.name, name) || other.name == name)&&(identical(other.createAt, createAt) || other.createAt == createAt)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.lastMessage, lastMessage) || other.lastMessage == lastMessage)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(_members),isGroup,name,createAt,displayName,avatarUrl,lastMessage,uncheckedMessageCount);
+int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(_members),isGroup,name,createAt,displayName,avatarUrl,lastMessage,unreadCount);
 
 @override
 String toString() {
-  return 'ChatDto(id: $id, members: $members, isGroup: $isGroup, name: $name, createAt: $createAt, displayName: $displayName, avatarUrl: $avatarUrl, lastMessage: $lastMessage, uncheckedMessageCount: $uncheckedMessageCount)';
+  return 'ChatDto(id: $id, members: $members, isGroup: $isGroup, name: $name, createAt: $createAt, displayName: $displayName, avatarUrl: $avatarUrl, lastMessage: $lastMessage, unreadCount: $unreadCount)';
 }
 
 
@@ -281,7 +281,7 @@ abstract mixin class _$ChatDtoCopyWith<$Res> implements $ChatDtoCopyWith<$Res> {
   factory _$ChatDtoCopyWith(_ChatDto value, $Res Function(_ChatDto) _then) = __$ChatDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id, List<UserDto> members,@JsonKey(name: 'is_group') bool isGroup, String? name,@JsonKey(name: 'create_at') DateTime? createAt,@JsonKey(name: 'display_name') String? displayName,@JsonKey(name: 'display_avatar_url') String? avatarUrl,@JsonKey(name: 'last_message') MessageDto? lastMessage, int uncheckedMessageCount
+ String id, List<ChatMemberDto> members,@JsonKey(name: 'is_group') bool isGroup, String? name,@JsonKey(name: 'create_at') DateTime? createAt,@JsonKey(name: 'display_name') String? displayName,@JsonKey(name: 'display_avatar_url') String? avatarUrl,@JsonKey(name: 'last_message') MessageDto? lastMessage,@JsonKey(name: 'unread_count') int unreadCount
 });
 
 
@@ -298,17 +298,17 @@ class __$ChatDtoCopyWithImpl<$Res>
 
 /// Create a copy of ChatDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? members = null,Object? isGroup = null,Object? name = freezed,Object? createAt = freezed,Object? displayName = freezed,Object? avatarUrl = freezed,Object? lastMessage = freezed,Object? uncheckedMessageCount = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? members = null,Object? isGroup = null,Object? name = freezed,Object? createAt = freezed,Object? displayName = freezed,Object? avatarUrl = freezed,Object? lastMessage = freezed,Object? unreadCount = null,}) {
   return _then(_ChatDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,members: null == members ? _self._members : members // ignore: cast_nullable_to_non_nullable
-as List<UserDto>,isGroup: null == isGroup ? _self.isGroup : isGroup // ignore: cast_nullable_to_non_nullable
+as List<ChatMemberDto>,isGroup: null == isGroup ? _self.isGroup : isGroup // ignore: cast_nullable_to_non_nullable
 as bool,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String?,createAt: freezed == createAt ? _self.createAt : createAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
 as String?,lastMessage: freezed == lastMessage ? _self.lastMessage : lastMessage // ignore: cast_nullable_to_non_nullable
-as MessageDto?,uncheckedMessageCount: null == uncheckedMessageCount ? _self.uncheckedMessageCount : uncheckedMessageCount // ignore: cast_nullable_to_non_nullable
+as MessageDto?,unreadCount: null == unreadCount ? _self.unreadCount : unreadCount // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }

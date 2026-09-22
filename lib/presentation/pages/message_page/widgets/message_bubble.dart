@@ -1,4 +1,5 @@
 import 'package:chat_pet/core/injectable/injectable.dart';
+import 'package:chat_pet/domain/models/chat/chat_member_model.dart';
 import 'package:chat_pet/domain/models/messages/message_model.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
@@ -6,6 +7,7 @@ import 'package:chat_pet/presentation/pages/message_page/widgets/message_render_
 import 'package:chat_pet/presentation/ui_kit/extension/time_extension.dart';
 import 'package:chat_pet/presentation/ui_kit/theme/ui_kit_theme_data.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
+import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
 
 class MessageBubble extends StatelessWidget {
@@ -16,6 +18,8 @@ class MessageBubble extends StatelessWidget {
     this.isGroup = false,
     this.isSelectingMode = false,
     this.isSelected = false,
+    this.readCursor,
+    this.resolveReadStatus,
     super.key,
   });
 
@@ -24,12 +28,16 @@ class MessageBubble extends StatelessWidget {
     required UserModel author,
     bool isFirstInGroup = false,
     bool isGroup = false,
+    ValueListenable<List<ChatMemberModel>>? readCursor,
+    MessageReadStatus Function(MessageModel message)? resolveReadStatus,
     Key? key,
   }) => MessageBubble._(
     message: message,
     author: author,
     isFirstInGroup: isFirstInGroup,
     isGroup: isGroup,
+    readCursor: readCursor,
+    resolveReadStatus: resolveReadStatus,
     key: key,
   );
 
@@ -58,6 +66,11 @@ class MessageBubble extends StatelessWidget {
 
   final bool isSelectingMode;
   final bool isSelected;
+
+  /// Курсор прочтения собеседника(-ов) — null, если статус не отслеживается
+  /// (превью сообщения в контекстном меню, режим выбора).
+  final ValueListenable<List<ChatMemberModel>>? readCursor;
+  final MessageReadStatus Function(MessageModel message)? resolveReadStatus;
 
   @override
   Widget build(BuildContext context) {
@@ -113,6 +126,23 @@ class MessageBubble extends StatelessWidget {
   Widget _messageBubble(UiKitThemeData? theme, {bool isMe = true}) {
     final correctColor = (isMe ? theme?.colorScheme.primary : theme?.colorScheme.surface2) ?? Colors.green;
 
+    Widget buildContent(MessageReadStatus? readStatus) => MessageRenderObject(
+      text: message.content,
+      sentAt: message.createAt.toChatTime(),
+      style: theme?.circularStdTextTheme.bookSmall.copyWith(
+        color: isMe ? theme.colorScheme.inversePrimary : ColorsFoundation.anotherMessageColor,
+      ),
+      sentAtStyle: theme?.circularStdTextTheme.bookSmall10.copyWith(
+        color: isMe ? theme.colorScheme.inversePrimary : theme.colorScheme.mutedColor,
+      ),
+      isEditing: message.isEditing,
+      readStatus: readStatus,
+      readTickColor: theme?.colorScheme.uiPrimary3,
+    );
+
+    final readCursor = this.readCursor;
+    final resolveReadStatus = this.resolveReadStatus;
+
     return CustomPaint(
       size: Size(SpacingFoundation.messageBubbleMaxWidth, double.infinity),
       painter: _MessageBubblePainter(
@@ -128,17 +158,12 @@ class MessageBubble extends StatelessWidget {
           horizontal: SpacingFoundation.horizontalSpacing14,
           vertical: SpacingFoundation.verticalSpacing12,
         ),
-        child: MessageRenderObject(
-          text: message.content,
-          sentAt: message.createAt.toChatTime(),
-          style: theme?.circularStdTextTheme.bookSmall.copyWith(
-            color: isMe ? theme.colorScheme.inversePrimary : ColorsFoundation.anotherMessageColor,
-          ),
-          sentAtStyle: theme?.circularStdTextTheme.bookSmall10.copyWith(
-            color: isMe ? theme.colorScheme.inversePrimary : theme.colorScheme.mutedColor,
-          ),
-          isEditing: message.isEditing,
-        ),
+        child: isMe && readCursor != null && resolveReadStatus != null
+            ? ValueListenableBuilder<List<ChatMemberModel>>(
+                valueListenable: readCursor,
+                builder: (_, __, ___) => buildContent(resolveReadStatus(message)),
+              )
+            : buildContent(null),
       ),
     );
   }

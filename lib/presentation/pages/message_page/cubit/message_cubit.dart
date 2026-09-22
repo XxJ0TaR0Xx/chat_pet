@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:chat_pet/core/localization/l10n.dart';
 import 'package:chat_pet/domain/custom_talker/custom_talker.dart';
+import 'package:chat_pet/domain/models/chat/chat_member_model.dart';
 import 'package:chat_pet/domain/models/chat/chat_socket_event.dart';
 import 'package:chat_pet/domain/models/messages/message_model.dart';
 import 'package:chat_pet/domain/usecases/chats/chat_web_socket_use_case.dart';
@@ -10,9 +11,11 @@ import 'package:chat_pet/domain/usecases/chats/delete_message_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/delete_messages_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/disconnect_from_chat_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/get_messages_use_case.dart';
+import 'package:chat_pet/domain/usecases/chats/read_messages_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/send_message_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/update_message_use_case.dart';
 import 'package:chat_pet/presentation/utils/failure_localization/failure_localization.dart';
+import 'package:flutter/widgets.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:injectable/injectable.dart';
@@ -31,19 +34,28 @@ class MessageCubit extends Cubit<MessageState> {
     this._updateMessageUseCase,
     this._chatWebSocketUseCase,
     this._disconnectFromChatUseCase,
-    this._sendMessageUseCase, {
+    this._sendMessageUseCase,
+    this._readMessagesUseCase, {
     required this.chatId,
     required this.currentUserId,
-  }) : super(const MessageState.initial()) {
+    required List<ChatMemberModel> otherMembers,
+  }) : otherMembers = ValueNotifier(otherMembers),
+       super(const MessageState.initial()) {
     pagingController = PagingController<String, MessageModel>(
       getNextPageKey: _getNextPageKey,
       fetchPage: _fetchPage,
     );
     _connectChatWebSocket();
+    _readMessagesUseCase.call(chatId);
   }
 
   final String chatId;
   final String currentUserId;
+
+  /// Все участники чата, кроме текущего пользователя.
+  /// Для 1-на-1 чата это всегда один элемент — собеседник.
+  final ValueNotifier<List<ChatMemberModel>> otherMembers;
+
   final GetMessagesUseCase _getMessagesUseCase;
   final DeleteMessageUseCase _deleteMessageUseCase;
   final DeleteMessagesUseCase _deleteMessagesUseCase;
@@ -51,6 +63,7 @@ class MessageCubit extends Cubit<MessageState> {
   final ChatWebSocketUseCase _chatWebSocketUseCase;
   final DisconnectFromChatUseCase _disconnectFromChatUseCase;
   final SendMessageUseCase _sendMessageUseCase;
+  final ReadMessagesUseCase _readMessagesUseCase;
 
   late final PagingController<String, MessageModel> pagingController;
   StreamSubscription<ChatSocketEvent>? _wsSubscription;
@@ -89,7 +102,30 @@ class MessageCubit extends Cubit<MessageState> {
         _handleDeleteMessage(messageId);
       case MessageEditedEvent(:final messageId, :final content):
         _handelUpdateMessage(messageId, content);
+      case ChatReadEvent(:final userId, :final readAt):
+        _handelChatRead(userId, readAt);
     }
+  }
+
+  void _handelChatRead(String userId, DateTime readAt) {
+    final members = otherMembers.value;
+
+    final index = members.indexWhere((m) => m.id == userId);
+    if (index == -1) return;
+    final current = members[index].lastReadAt;
+    if (current != null && !readAt.isAfter(current)) return;
+
+    final updated = List<ChatMemberModel>.of(members)..[index] = members[index].copyWith(lastReadAt: readAt);
+    otherMembers.value = updated;
+  }
+
+  MessageReadStatus readStatusFor(MessageModel message) {
+    if (message.messageSender != MessageSender.me) return MessageReadStatus.sent;
+
+    final members = otherMembers.value;
+    final isRead = members.isNotEmpty && members.every((m) => m.lastReadAt != null && !m.lastReadAt!.isBefore(message.createAt));
+
+    return isRead ? MessageReadStatus.read : MessageReadStatus.sent;
   }
 
   void _handleIncomingMessage(MessageModel message) {
@@ -105,6 +141,10 @@ class MessageCubit extends Cubit<MessageState> {
         ...pages.skip(1),
       ],
     );
+
+    if (message.senderId != currentUserId) {
+      _readMessagesUseCase.call(chatId);
+    }
   }
 
   void _handleDeleteMessage(String messageId) {
@@ -170,6 +210,7 @@ class MessageCubit extends Cubit<MessageState> {
     _wsSubscription?.cancel();
     _disconnectFromChatUseCase.call();
     pagingController.dispose();
+    otherMembers.dispose();
     return super.close();
   }
 }

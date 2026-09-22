@@ -19,3 +19,13 @@ final class MessageEditedEvent extends ChatSocketEvent {
   final String messageId;
   final String content;
 }
+
+final class ChatReadEvent extends ChatSocketEvent {
+  const ChatReadEvent({
+    required this.userId,
+    required this.readAt,
+  });
+
+  final String userId;
+  final DateTime readAt;
+}

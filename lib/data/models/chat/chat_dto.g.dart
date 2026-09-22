@@ -9,7 +9,7 @@ part of 'chat_dto.dart';
 _ChatDto _$ChatDtoFromJson(Map<String, dynamic> json) => _ChatDto(
   id: json['id'] as String,
   members: (json['members'] as List<dynamic>)
-      .map((e) => UserDto.fromJson(e as Map<String, dynamic>))
+      .map((e) => ChatMemberDto.fromJson(e as Map<String, dynamic>))
       .toList(),
   isGroup: json['is_group'] as bool,
   name: json['name'] as String?,
@@ -21,7 +21,7 @@ _ChatDto _$ChatDtoFromJson(Map<String, dynamic> json) => _ChatDto(
   lastMessage: json['last_message'] == null
       ? null
       : MessageDto.fromJson(json['last_message'] as Map<String, dynamic>),
-  uncheckedMessageCount: (json['uncheckedMessageCount'] as num?)?.toInt() ?? 0,
+  unreadCount: (json['unread_count'] as num?)?.toInt() ?? 0,
 );
 
 Map<String, dynamic> _$ChatDtoToJson(_ChatDto instance) => <String, dynamic>{
@@ -33,5 +33,5 @@ Map<String, dynamic> _$ChatDtoToJson(_ChatDto instance) => <String, dynamic>{
   'display_name': instance.displayName,
   'display_avatar_url': instance.avatarUrl,
   'last_message': instance.lastMessage,
-  'uncheckedMessageCount': instance.uncheckedMessageCount,
+  'unread_count': instance.unreadCount,
 };

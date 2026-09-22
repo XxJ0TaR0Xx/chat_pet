@@ -1,9 +1,11 @@
 import 'package:bouncy_effect/bouncy_effect.dart';
+import 'package:chat_pet/domain/models/chat/chat_member_model.dart';
 import 'package:chat_pet/domain/models/messages/message_model.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/presentation/pages/message_page/widgets/message_bubble.dart';
 import 'package:chat_pet/presentation/ui_kit/extension/time_extension.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
+import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -16,6 +18,8 @@ class MessageListItem extends StatelessWidget {
     this.isMenuMessage = false,
     this.isSelectionMode = false,
     this.isSelected = false,
+    this.readCursor,
+    this.resolveReadStatus,
   });
 
   factory MessageListItem.menu({
@@ -36,11 +40,15 @@ class MessageListItem extends StatelessWidget {
     required UserModel currentUser,
     required UserModel interlocutor,
     MessageModel? prevModel,
+    ValueListenable<List<ChatMemberModel>>? readCursor,
+    MessageReadStatus Function(MessageModel message)? resolveReadStatus,
   }) => MessageListItem._(
     model: model,
     currentUser: currentUser,
     interlocutor: interlocutor,
     prevModel: prevModel,
+    readCursor: readCursor,
+    resolveReadStatus: resolveReadStatus,
   );
 
   factory MessageListItem.selectionMode({
@@ -65,6 +73,8 @@ class MessageListItem extends StatelessWidget {
   final bool isMenuMessage;
   final bool isSelectionMode;
   final bool isSelected;
+  final ValueListenable<List<ChatMemberModel>>? readCursor;
+  final MessageReadStatus Function(MessageModel message)? resolveReadStatus;
 
   bool get _isFirstInGroup =>
       model.messageSender == MessageSender.another && (prevModel == null || prevModel!.messageSender != MessageSender.another);
@@ -89,6 +99,8 @@ class MessageListItem extends StatelessWidget {
       MessageSender.me => MessageBubble.defaultMode(
         author: currentUser,
         message: model,
+        readCursor: readCursor,
+        resolveReadStatus: resolveReadStatus,
       ).paddingOnly(bottom: _bottomPadding),
       MessageSender.another => MessageBubble.defaultMode(
         author: interlocutor,

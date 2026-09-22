@@ -43,6 +43,8 @@ abstract interface class ChatRepository {
     bool forEveryone,
   );
 
+  Future<void> readMessages(String chatId);
+
   Stream<ChatSocketEvent> connectToChat(String chatId);
 
   void disconnectFromChat();

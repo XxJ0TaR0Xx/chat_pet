@@ -81,7 +81,7 @@ class ChatCubit extends Cubit<ChatState> {
   void clearUncheckedMessageCount(String chatId) {
     final index = _cacheChats.indexWhere((chat) => chat.id == chatId);
     if (index == -1) return;
-    _cacheChats[index] = _cacheChats[index].copyWith(uncheckedMessageCount: 0);
+    _cacheChats[index] = _cacheChats[index].copyWith(unreadCount: 0);
 
     if (state is ChatStateLoaded) emit(ChatState.loaded(List.of(_cacheChats)));
   }
@@ -110,7 +110,7 @@ class ChatCubit extends Cubit<ChatState> {
 
     _cacheChats[index] = _cacheChats[index].copyWith(
       lastMessage: messageModel,
-      uncheckedMessageCount: _cacheChats[index].uncheckedMessageCount + 1,
+      unreadCount: _cacheChats[index].unreadCount + 1,
     );
 
     if (state is ChatStateLoaded) emit(ChatState.loaded(List.of(_cacheChats)));

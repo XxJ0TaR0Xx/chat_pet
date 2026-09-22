@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ChatModel {
 
- String get id; List<UserModel> get members; bool get isGroup; String? get name; DateTime? get createAt; String? get displayName; String? get avatarUrl; MessageModel? get lastMessage; int get uncheckedMessageCount;
+ String get id; List<ChatMemberModel> get members; bool get isGroup; String? get name; DateTime? get createAt; String? get displayName; String? get avatarUrl; MessageModel? get lastMessage; int get unreadCount;
 /// Create a copy of ChatModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $ChatModelCopyWith<ChatModel> get copyWith => _$ChatModelCopyWithImpl<ChatModel>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatModel&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other.members, members)&&(identical(other.isGroup, isGroup) || other.isGroup == isGroup)&&(identical(other.name, name) || other.name == name)&&(identical(other.createAt, createAt) || other.createAt == createAt)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.lastMessage, lastMessage) || other.lastMessage == lastMessage)&&(identical(other.uncheckedMessageCount, uncheckedMessageCount) || other.uncheckedMessageCount == uncheckedMessageCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ChatModel&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other.members, members)&&(identical(other.isGroup, isGroup) || other.isGroup == isGroup)&&(identical(other.name, name) || other.name == name)&&(identical(other.createAt, createAt) || other.createAt == createAt)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.lastMessage, lastMessage) || other.lastMessage == lastMessage)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(members),isGroup,name,createAt,displayName,avatarUrl,lastMessage,uncheckedMessageCount);
+int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(members),isGroup,name,createAt,displayName,avatarUrl,lastMessage,unreadCount);
 
 @override
 String toString() {
-  return 'ChatModel(id: $id, members: $members, isGroup: $isGroup, name: $name, createAt: $createAt, displayName: $displayName, avatarUrl: $avatarUrl, lastMessage: $lastMessage, uncheckedMessageCount: $uncheckedMessageCount)';
+  return 'ChatModel(id: $id, members: $members, isGroup: $isGroup, name: $name, createAt: $createAt, displayName: $displayName, avatarUrl: $avatarUrl, lastMessage: $lastMessage, unreadCount: $unreadCount)';
 }
 
 
@@ -45,7 +45,7 @@ abstract mixin class $ChatModelCopyWith<$Res>  {
   factory $ChatModelCopyWith(ChatModel value, $Res Function(ChatModel) _then) = _$ChatModelCopyWithImpl;
 @useResult
 $Res call({
- String id, List<UserModel> members, bool isGroup, String? name, DateTime? createAt, String? displayName, String? avatarUrl, MessageModel? lastMessage, int uncheckedMessageCount
+ String id, List<ChatMemberModel> members, bool isGroup, String? name, DateTime? createAt, String? displayName, String? avatarUrl, MessageModel? lastMessage, int unreadCount
 });
 
 
@@ -62,17 +62,17 @@ class _$ChatModelCopyWithImpl<$Res>
 
 /// Create a copy of ChatModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? members = null,Object? isGroup = null,Object? name = freezed,Object? createAt = freezed,Object? displayName = freezed,Object? avatarUrl = freezed,Object? lastMessage = freezed,Object? uncheckedMessageCount = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? members = null,Object? isGroup = null,Object? name = freezed,Object? createAt = freezed,Object? displayName = freezed,Object? avatarUrl = freezed,Object? lastMessage = freezed,Object? unreadCount = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,members: null == members ? _self.members : members // ignore: cast_nullable_to_non_nullable
-as List<UserModel>,isGroup: null == isGroup ? _self.isGroup : isGroup // ignore: cast_nullable_to_non_nullable
+as List<ChatMemberModel>,isGroup: null == isGroup ? _self.isGroup : isGroup // ignore: cast_nullable_to_non_nullable
 as bool,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String?,createAt: freezed == createAt ? _self.createAt : createAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
 as String?,lastMessage: freezed == lastMessage ? _self.lastMessage : lastMessage // ignore: cast_nullable_to_non_nullable
-as MessageModel?,uncheckedMessageCount: null == uncheckedMessageCount ? _self.uncheckedMessageCount : uncheckedMessageCount // ignore: cast_nullable_to_non_nullable
+as MessageModel?,unreadCount: null == unreadCount ? _self.unreadCount : unreadCount // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
@@ -170,10 +170,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  List<UserModel> members,  bool isGroup,  String? name,  DateTime? createAt,  String? displayName,  String? avatarUrl,  MessageModel? lastMessage,  int uncheckedMessageCount)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  List<ChatMemberModel> members,  bool isGroup,  String? name,  DateTime? createAt,  String? displayName,  String? avatarUrl,  MessageModel? lastMessage,  int unreadCount)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ChatModel() when $default != null:
-return $default(_that.id,_that.members,_that.isGroup,_that.name,_that.createAt,_that.displayName,_that.avatarUrl,_that.lastMessage,_that.uncheckedMessageCount);case _:
+return $default(_that.id,_that.members,_that.isGroup,_that.name,_that.createAt,_that.displayName,_that.avatarUrl,_that.lastMessage,_that.unreadCount);case _:
   return orElse();
 
 }
@@ -191,10 +191,10 @@ return $default(_that.id,_that.members,_that.isGroup,_that.name,_that.createAt,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  List<UserModel> members,  bool isGroup,  String? name,  DateTime? createAt,  String? displayName,  String? avatarUrl,  MessageModel? lastMessage,  int uncheckedMessageCount)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  List<ChatMemberModel> members,  bool isGroup,  String? name,  DateTime? createAt,  String? displayName,  String? avatarUrl,  MessageModel? lastMessage,  int unreadCount)  $default,) {final _that = this;
 switch (_that) {
 case _ChatModel():
-return $default(_that.id,_that.members,_that.isGroup,_that.name,_that.createAt,_that.displayName,_that.avatarUrl,_that.lastMessage,_that.uncheckedMessageCount);case _:
+return $default(_that.id,_that.members,_that.isGroup,_that.name,_that.createAt,_that.displayName,_that.avatarUrl,_that.lastMessage,_that.unreadCount);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -211,10 +211,10 @@ return $default(_that.id,_that.members,_that.isGroup,_that.name,_that.createAt,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  List<UserModel> members,  bool isGroup,  String? name,  DateTime? createAt,  String? displayName,  String? avatarUrl,  MessageModel? lastMessage,  int uncheckedMessageCount)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  List<ChatMemberModel> members,  bool isGroup,  String? name,  DateTime? createAt,  String? displayName,  String? avatarUrl,  MessageModel? lastMessage,  int unreadCount)?  $default,) {final _that = this;
 switch (_that) {
 case _ChatModel() when $default != null:
-return $default(_that.id,_that.members,_that.isGroup,_that.name,_that.createAt,_that.displayName,_that.avatarUrl,_that.lastMessage,_that.uncheckedMessageCount);case _:
+return $default(_that.id,_that.members,_that.isGroup,_that.name,_that.createAt,_that.displayName,_that.avatarUrl,_that.lastMessage,_that.unreadCount);case _:
   return null;
 
 }
@@ -226,12 +226,12 @@ return $default(_that.id,_that.members,_that.isGroup,_that.name,_that.createAt,_
 
 
 class _ChatModel extends ChatModel {
-  const _ChatModel({required this.id, required final  List<UserModel> members, required this.isGroup, this.name, this.createAt, this.displayName, this.avatarUrl, this.lastMessage, this.uncheckedMessageCount = 0}): _members = members,super._();
+  const _ChatModel({required this.id, required final  List<ChatMemberModel> members, required this.isGroup, this.name, this.createAt, this.displayName, this.avatarUrl, this.lastMessage, this.unreadCount = 0}): _members = members,super._();
   
 
 @override final  String id;
- final  List<UserModel> _members;
-@override List<UserModel> get members {
+ final  List<ChatMemberModel> _members;
+@override List<ChatMemberModel> get members {
   if (_members is EqualUnmodifiableListView) return _members;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_members);
@@ -243,7 +243,7 @@ class _ChatModel extends ChatModel {
 @override final  String? displayName;
 @override final  String? avatarUrl;
 @override final  MessageModel? lastMessage;
-@override@JsonKey() final  int uncheckedMessageCount;
+@override@JsonKey() final  int unreadCount;
 
 /// Create a copy of ChatModel
 /// with the given fields replaced by the non-null parameter values.
@@ -255,16 +255,16 @@ _$ChatModelCopyWith<_ChatModel> get copyWith => __$ChatModelCopyWithImpl<_ChatMo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatModel&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other._members, _members)&&(identical(other.isGroup, isGroup) || other.isGroup == isGroup)&&(identical(other.name, name) || other.name == name)&&(identical(other.createAt, createAt) || other.createAt == createAt)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.lastMessage, lastMessage) || other.lastMessage == lastMessage)&&(identical(other.uncheckedMessageCount, uncheckedMessageCount) || other.uncheckedMessageCount == uncheckedMessageCount));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ChatModel&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other._members, _members)&&(identical(other.isGroup, isGroup) || other.isGroup == isGroup)&&(identical(other.name, name) || other.name == name)&&(identical(other.createAt, createAt) || other.createAt == createAt)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.lastMessage, lastMessage) || other.lastMessage == lastMessage)&&(identical(other.unreadCount, unreadCount) || other.unreadCount == unreadCount));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(_members),isGroup,name,createAt,displayName,avatarUrl,lastMessage,uncheckedMessageCount);
+int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(_members),isGroup,name,createAt,displayName,avatarUrl,lastMessage,unreadCount);
 
 @override
 String toString() {
-  return 'ChatModel(id: $id, members: $members, isGroup: $isGroup, name: $name, createAt: $createAt, displayName: $displayName, avatarUrl: $avatarUrl, lastMessage: $lastMessage, uncheckedMessageCount: $uncheckedMessageCount)';
+  return 'ChatModel(id: $id, members: $members, isGroup: $isGroup, name: $name, createAt: $createAt, displayName: $displayName, avatarUrl: $avatarUrl, lastMessage: $lastMessage, unreadCount: $unreadCount)';
 }
 
 
@@ -275,7 +275,7 @@ abstract mixin class _$ChatModelCopyWith<$Res> implements $ChatModelCopyWith<$Re
   factory _$ChatModelCopyWith(_ChatModel value, $Res Function(_ChatModel) _then) = __$ChatModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, List<UserModel> members, bool isGroup, String? name, DateTime? createAt, String? displayName, String? avatarUrl, MessageModel? lastMessage, int uncheckedMessageCount
+ String id, List<ChatMemberModel> members, bool isGroup, String? name, DateTime? createAt, String? displayName, String? avatarUrl, MessageModel? lastMessage, int unreadCount
 });
 
 
@@ -292,17 +292,17 @@ class __$ChatModelCopyWithImpl<$Res>
 
 /// Create a copy of ChatModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? members = null,Object? isGroup = null,Object? name = freezed,Object? createAt = freezed,Object? displayName = freezed,Object? avatarUrl = freezed,Object? lastMessage = freezed,Object? uncheckedMessageCount = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? members = null,Object? isGroup = null,Object? name = freezed,Object? createAt = freezed,Object? displayName = freezed,Object? avatarUrl = freezed,Object? lastMessage = freezed,Object? unreadCount = null,}) {
   return _then(_ChatModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,members: null == members ? _self._members : members // ignore: cast_nullable_to_non_nullable
-as List<UserModel>,isGroup: null == isGroup ? _self.isGroup : isGroup // ignore: cast_nullable_to_non_nullable
+as List<ChatMemberModel>,isGroup: null == isGroup ? _self.isGroup : isGroup // ignore: cast_nullable_to_non_nullable
 as bool,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String?,createAt: freezed == createAt ? _self.createAt : createAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String?,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
 as String?,lastMessage: freezed == lastMessage ? _self.lastMessage : lastMessage // ignore: cast_nullable_to_non_nullable
-as MessageModel?,uncheckedMessageCount: null == uncheckedMessageCount ? _self.uncheckedMessageCount : uncheckedMessageCount // ignore: cast_nullable_to_non_nullable
+as MessageModel?,unreadCount: null == unreadCount ? _self.unreadCount : unreadCount // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }

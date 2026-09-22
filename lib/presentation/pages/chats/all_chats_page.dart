@@ -117,7 +117,7 @@ class AllChatsPage extends StatelessWidget {
                                 secondName: chatModel?.name,
                                 date: chatModel?.lastMessage?.createAt ?? DateTime.now(),
                                 lastMessage: chatModel?.lastMessage?.content ?? '',
-                                uncheckMessage: chatModel?.uncheckedMessageCount ?? 0,
+                                uncheckMessage: chatModel?.unreadCount ?? 0,
                                 avatarUrl: chatModel?.avatarUrl,
                                 padding: EdgeInsets.only(
                                   left: SpacingFoundation.horizontalSpacing24,

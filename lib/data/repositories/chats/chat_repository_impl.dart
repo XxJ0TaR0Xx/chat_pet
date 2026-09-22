@@ -199,6 +199,17 @@ class ChatRepositoryImpl implements ChatRepository {
   }
 
   @override
+  Future<void> readMessages(String chatId) async {
+    try {
+      await _dio.post('$_chatPath/$chatId/read');
+    } on DioException catch (e, st) {
+      talk.error('ChatRepositoryImpl DioException readMessages error: $e, st $st');
+    } catch (e, st) {
+      talk.error('ChatRepositoryImpl readMessages error: $e, st $st');
+    }
+  }
+
+  @override
   Stream<ChatSocketEvent> connectToChat(String chatId) {
     _activeSocket?.dispose();
     talk.info('Connect to chat $chatId');

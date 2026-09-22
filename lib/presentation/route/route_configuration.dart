@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:chat_pet/core/injectable/injectable.dart';
 import 'package:chat_pet/core/localization/l10n.dart';
-import 'package:chat_pet/domain/models/user/user_model.dart';
+import 'package:chat_pet/domain/models/chat/chat_member_model.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
 import 'package:chat_pet/presentation/pages/chats/all_chats_page.dart';
 import 'package:chat_pet/presentation/pages/contacts/contacts_page.dart';
@@ -98,7 +98,7 @@ final class RouteConfiguration {
                       parentNavigatorKey: _rootNavigationKey,
                       builder: (context, state) => MessagePage(
                         id: state.pathParameters['id']!,
-                        interlocutorModel: state.extra as UserModel,
+                        interlocutorModel: state.extra as ChatMemberModel,
                       ),
                     ),
                   ],

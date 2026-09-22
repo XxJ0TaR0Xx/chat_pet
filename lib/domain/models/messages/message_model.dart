@@ -19,3 +19,6 @@ abstract class MessageModel with _$MessageModel {
 enum ContentType { text, image, video, audio }
 
 enum MessageSender { me, another }
+
+/// Курсорный read-статус (last_read_at), без per-message read receipts.
+enum MessageReadStatus { sent, read }

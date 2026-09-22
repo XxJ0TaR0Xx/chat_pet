@@ -1,4 +1,5 @@
 import 'package:chat_pet/core/injectable/injectable.dart';
+import 'package:chat_pet/domain/models/chat/chat_member_model.dart';
 import 'package:chat_pet/domain/models/messages/message_model.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/domain/usecases/chats/chat_web_socket_use_case.dart';
@@ -6,6 +7,7 @@ import 'package:chat_pet/domain/usecases/chats/delete_message_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/delete_messages_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/disconnect_from_chat_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/get_messages_use_case.dart';
+import 'package:chat_pet/domain/usecases/chats/read_messages_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/send_message_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/update_message_use_case.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
@@ -28,7 +30,7 @@ class MessagePage extends StatefulWidget {
   const MessagePage({required this.id, required this.interlocutorModel, super.key});
 
   final String id;
-  final UserModel interlocutorModel;
+  final ChatMemberModel interlocutorModel;
 
   @override
   State<MessagePage> createState() => _MessagePageState();
@@ -56,8 +58,10 @@ class _MessagePageState extends State<MessagePage> {
       getIt<ChatWebSocketUseCase>(),
       getIt<DisconnectFromChatUseCase>(),
       getIt<SendMessageUseCase>(),
+      getIt<ReadMessagesUseCase>(),
       chatId: widget.id,
       currentUserId: currentUser.id,
+      otherMembers: [widget.interlocutorModel],
     );
   }
 
@@ -148,7 +152,7 @@ class _MessagePageState extends State<MessagePage> {
                   Expanded(
                     child: _MessagesList(
                       currentUser: currentUser,
-                      interlocutor: widget.interlocutorModel,
+                      interlocutor: widget.interlocutorModel.user,
                       contextMenuMessage: _contextMenuMessage,
                       onMessageSelected: _selectContextMenuMessage,
                       selection: _selection,
@@ -160,7 +164,7 @@ class _MessagePageState extends State<MessagePage> {
             SelectionOverlayWidget(
               contextMenuMessage: _contextMenuMessage,
               currentUser: currentUser,
-              interlocutor: widget.interlocutorModel,
+              interlocutor: widget.interlocutorModel.user,
               onDismiss: _clearSelection,
               safeAreaPadding: safeAreaPadding,
               onEditMessageTap: (message) {
@@ -194,7 +198,8 @@ class _MessagesList extends StatelessWidget {
   Widget build(BuildContext context) {
     final uiKitTheme = context.uiKitTheme;
 
-    final pagingController = context.read<MessageCubit>().pagingController;
+    final cubit = context.read<MessageCubit>();
+    final pagingController = cubit.pagingController;
 
     return PagingListener<String, MessageModel>(
       controller: pagingController,
@@ -243,6 +248,8 @@ class _MessagesList extends StatelessWidget {
                       prevModel: prevModel,
                       currentUser: currentUser,
                       interlocutor: interlocutor,
+                      readCursor: cubit.otherMembers,
+                      resolveReadStatus: cubit.readStatusFor,
                     );
 
                     return Builder(

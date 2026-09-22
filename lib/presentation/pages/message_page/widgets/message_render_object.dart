@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:chat_pet/core/localization/l10n.dart';
+import 'package:chat_pet/domain/models/messages/message_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -18,6 +19,8 @@ class MessageRenderObject extends LeafRenderObjectWidget {
     this.style,
     this.sentAtStyle,
     this.isEditing = false,
+    this.readStatus,
+    this.readTickColor,
     super.key,
   });
 
@@ -26,6 +29,11 @@ class MessageRenderObject extends LeafRenderObjectWidget {
   final TextStyle? style;
   final TextStyle? sentAtStyle;
   final bool isEditing;
+
+  /// null — статус не отслеживается (чужое сообщение). Иначе одна галочка —
+  /// отправлено, две — прочитано собеседником (курсорный read receipt).
+  final MessageReadStatus? readStatus;
+  final Color? readTickColor;
 
   @override
   RenderObject createRenderObject(BuildContext context) {
@@ -47,6 +55,8 @@ class MessageRenderObject extends LeafRenderObjectWidget {
       textDirection: Directionality.of(context),
       textStyle: effectiveTextStyle!,
       sentAtStyle: effectiveSentAtTextStyle!,
+      readStatus: readStatus,
+      readTickColor: readTickColor,
     );
   }
 
@@ -72,6 +82,8 @@ class MessageRenderObject extends LeafRenderObjectWidget {
     renderObject.sentAtStyle = effectiveSentAtTextStyle!;
 
     renderObject.textDirection = Directionality.of(context);
+    renderObject.readStatus = readStatus;
+    renderObject.readTickColor = readTickColor;
   }
 }
 
@@ -88,12 +100,16 @@ class TimestampedChatMessageRenderObject extends RenderBox {
     required TextStyle sentAtStyle,
     required TextStyle textStyle,
     required TextDirection textDirection,
+    MessageReadStatus? readStatus,
+    Color? readTickColor,
   }) {
     _text = text;
     _sentAt = sentAt;
     _textStyle = textStyle;
     _sentAtStyle = sentAtStyle;
     _textDirection = textDirection;
+    _readStatus = readStatus;
+    _readTickColor = readTickColor;
     _textPainter = TextPainter(
       text: textTextSpan,
       textDirection: _textDirection,
@@ -111,6 +127,8 @@ class TimestampedChatMessageRenderObject extends RenderBox {
   late TextPainter _sentAtTextPainter;
   late TextStyle _sentAtStyle;
   late TextStyle _textStyle;
+  MessageReadStatus? _readStatus;
+  Color? _readTickColor;
   late bool _sentAtFitsOnLastLine;
   late double _lineHeight;
   late double _lastMessageLineWidth;
@@ -138,6 +156,20 @@ class TimestampedChatMessageRenderObject extends RenderBox {
     // `sentAtTextSpan` is a computed property that incorporates both the raw
     // string value and the [TextStyle], so we have to update the whole [TextSpan]
     // any time either value is updated.
+    _sentAtTextPainter.text = sentAtTextSpan;
+    markNeedsLayout();
+  }
+
+  set readStatus(MessageReadStatus? val) {
+    if (val == _readStatus) return;
+    _readStatus = val;
+    _sentAtTextPainter.text = sentAtTextSpan;
+    markNeedsLayout();
+  }
+
+  set readTickColor(Color? val) {
+    if (val == _readTickColor) return;
+    _readTickColor = val;
     _sentAtTextPainter.text = sentAtTextSpan;
     markNeedsLayout();
   }
@@ -179,7 +211,23 @@ class TimestampedChatMessageRenderObject extends RenderBox {
   }
 
   TextSpan get textTextSpan => TextSpan(text: _text, style: _textStyle);
-  TextSpan get sentAtTextSpan => TextSpan(text: _sentAt, style: _sentAtStyle);
+
+  TextSpan get sentAtTextSpan {
+    final status = _readStatus;
+    if (status == null) return TextSpan(text: _sentAt, style: _sentAtStyle);
+
+    final isRead = status == MessageReadStatus.read;
+    return TextSpan(
+      text: '$_sentAt ',
+      style: _sentAtStyle,
+      children: [
+        TextSpan(
+          text: isRead ? '✓✓' : '✓',
+          style: _sentAtStyle.copyWith(color: isRead ? (_readTickColor ?? _sentAtStyle.color) : _sentAtStyle.color),
+        ),
+      ],
+    );
+  }
 
   @override
   void describeSemanticsConfiguration(SemanticsConfiguration config) {
