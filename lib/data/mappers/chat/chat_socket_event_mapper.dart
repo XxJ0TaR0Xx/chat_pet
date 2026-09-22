@@ -12,6 +12,11 @@ ChatSocketEvent? chatSocketEventFromJson(Map<String, dynamic> json) {
       final id = json['id'];
       return id is String ? MessageDeletedEvent(id) : null;
 
+    case 'messages_deleted':
+      final rawIds = json['ids'];
+      final ids = rawIds is List<dynamic> ? rawIds.map((e) => e as String).toList() : null;
+      return ids != null ? MessagesDeletedEvent(ids) : null;
+
     case 'message_edited':
       final id = json['id'];
       final content = json['content'];

@@ -14,6 +14,11 @@ final class MessageDeletedEvent extends ChatSocketEvent {
   final String messageId;
 }
 
+final class MessagesDeletedEvent extends ChatSocketEvent {
+  const MessagesDeletedEvent(this.messagesIds);
+  final List<String> messagesIds;
+}
+
 final class MessageEditedEvent extends ChatSocketEvent {
   const MessageEditedEvent({required this.messageId, required this.content});
   final String messageId;

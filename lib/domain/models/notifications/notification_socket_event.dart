@@ -42,6 +42,7 @@ final class MessageEditedNSEvent extends NotificationSocketEvent {
 final class LastMessageChangedNSEvent extends NotificationSocketEvent {
   const LastMessageChangedNSEvent({
     required this.chatId,
+    required this.unreadCount,
     this.lastMessage,
   });
 
@@ -49,4 +50,7 @@ final class LastMessageChangedNSEvent extends NotificationSocketEvent {
 
   /// null означает, что в чате не осталось сообщений (последнее было удалено/скрыто).
   final MessageModel? lastMessage;
+
+  /// Авторитетное значение с бэка — не декрементим на клиенте, а присваиваем.
+  final int unreadCount;
 }

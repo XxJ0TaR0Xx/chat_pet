@@ -100,6 +100,8 @@ class MessageCubit extends Cubit<MessageState> {
         _handleIncomingMessage(message);
       case MessageDeletedEvent(:final messageId):
         _handleDeleteMessage(messageId);
+      case MessagesDeletedEvent(:final messagesIds):
+        _handleDeleteMessages(messagesIds);
       case MessageEditedEvent(:final messageId, :final content):
         _handelUpdateMessage(messageId, content);
       case ChatReadEvent(:final userId, :final readAt):
@@ -153,6 +155,12 @@ class MessageCubit extends Cubit<MessageState> {
     pagingController.value = pagingController.value.filterItems((message) => message.id != messageId);
   }
 
+  void _handleDeleteMessages(List<String> messagesIds) {
+    if (messagesIds.isEmpty) return;
+
+    pagingController.value = pagingController.value.filterItems((message) => !messagesIds.contains(message.id));
+  }
+
   void _handelUpdateMessage(String messageId, String updatedContent) {
     if (messageId.isEmpty || updatedContent.isEmpty) return;
 
@@ -188,16 +196,10 @@ class MessageCubit extends Cubit<MessageState> {
   }
 
   Future<void> deleteMessages(List<String> messageIds, bool forEveryone) async {
-    final result = await _deleteMessagesUseCase.call(
+    await _deleteMessagesUseCase.call(
       chatId: chatId,
       messageIds: messageIds,
       forEveryone: forEveryone,
-    );
-
-    //TODO WS
-    result.fold(
-      (failure) => emit(_Error(failure.localize(S.current))),
-      (_) => pagingController.value = pagingController.value.filterItems((message) => !messageIds.contains(message.id)),
     );
   }
 

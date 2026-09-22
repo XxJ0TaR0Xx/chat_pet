@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:chat_pet/core/injectable/injectable.dart';
 import 'package:chat_pet/core/localization/l10n.dart';
 import 'package:chat_pet/domain/interfaces/notifications/notification_repository.dart';
 import 'package:chat_pet/domain/models/chat/chat_model.dart';
@@ -10,6 +11,7 @@ import 'package:chat_pet/domain/usecases/chats/create_chat_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/delete_chat_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/get_chats_use_case.dart';
 import 'package:chat_pet/presentation/pages/chats/cubit/incoming_chat_message.dart';
+import 'package:chat_pet/presentation/utils/chat_session/open_chat_tracker.dart';
 import 'package:chat_pet/presentation/utils/failure_localization/failure_localization.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -96,8 +98,8 @@ class ChatCubit extends Cubit<ChatState> {
         _updateLastMessageInChat(message);
       case MessageEditedNSEvent(:final id, :final chatId, :final content):
         _applyEditedMessage(chatId: chatId, messageId: id, content: content);
-      case LastMessageChangedNSEvent(:final chatId, :final lastMessage):
-        _applyLastMessageChanged(chatId: chatId, lastMessage: lastMessage);
+      case LastMessageChangedNSEvent(:final chatId, :final lastMessage, :final unreadCount):
+        _applyLastMessageChanged(chatId: chatId, lastMessage: lastMessage, unreadCount: unreadCount);
       case FriendRequestNSEvent():
         break;
     }
@@ -108,9 +110,14 @@ class ChatCubit extends Cubit<ChatState> {
     if (index == -1) return;
     if (_cacheChats[index].lastMessage?.id == messageModel.id) return;
 
+    int draftUnreadCount = _cacheChats[index].unreadCount;
+    final chatOpenNow = getIt<OpenChatTracker>().openChatId.value != messageModel.chatId;
+
+    if (chatOpenNow) draftUnreadCount++;
+
     _cacheChats[index] = _cacheChats[index].copyWith(
       lastMessage: messageModel,
-      unreadCount: _cacheChats[index].unreadCount + 1,
+      unreadCount: draftUnreadCount,
     );
 
     if (state is ChatStateLoaded) emit(ChatState.loaded(List.of(_cacheChats)));
@@ -129,11 +136,18 @@ class ChatCubit extends Cubit<ChatState> {
     if (state is ChatStateLoaded) emit(ChatState.loaded(List.of(_cacheChats)));
   }
 
-  void _applyLastMessageChanged({required String chatId, required MessageModel? lastMessage}) {
+  void _applyLastMessageChanged({
+    required String chatId,
+    required MessageModel? lastMessage,
+    required int unreadCount,
+  }) {
     final index = _cacheChats.indexWhere((chat) => chat.id == chatId);
     if (index == -1) return;
 
-    _cacheChats[index] = _cacheChats[index].copyWith(lastMessage: lastMessage);
+    _cacheChats[index] = _cacheChats[index].copyWith(
+      lastMessage: lastMessage,
+      unreadCount: unreadCount,
+    );
 
     if (state is ChatStateLoaded) emit(ChatState.loaded(List.of(_cacheChats)));
   }

@@ -37,12 +37,14 @@ NotificationSocketEvent? notificationSocketEventFromJson(Map<String, dynamic> js
 
     case 'last_message_changed':
       final chatId = json['chat_id'];
-      if (chatId is! String) return null;
+      final unreadCount = json['unread_count'];
+      if (chatId is! String || unreadCount is! num) return null;
 
       final lastMessage = json['last_message'];
 
       return LastMessageChangedNSEvent(
         chatId: chatId,
+        unreadCount: unreadCount.toInt(),
         lastMessage: lastMessage is Map<String, dynamic> ? MessageDto.fromJson(lastMessage).toDomain() : null,
       );
 
