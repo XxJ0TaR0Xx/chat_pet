@@ -10,7 +10,7 @@ import 'package:injectable/injectable.dart';
 part 'login_state.dart';
 part 'login_cubit.freezed.dart';
 
-@LazySingleton()
+@injectable
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(
     this._loginUseCase,
