@@ -53,5 +53,6 @@ abstract interface class ChatRepository {
     String chaId, {
     required String content,
     ContentType contentType,
+    String? replyToId,
   });
 }

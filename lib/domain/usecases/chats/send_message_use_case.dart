@@ -12,5 +12,11 @@ class SendMessageUseCase {
     required String chaId,
     required String content,
     ContentType contentType = ContentType.text,
-  }) => _chatRepository.sendMessage(chaId, content: content, contentType: contentType);
+    String? replyToId,
+  }) => _chatRepository.sendMessage(
+    chaId,
+    content: content,
+    contentType: contentType,
+    replyToId: replyToId,
+  );
 }

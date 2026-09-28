@@ -227,7 +227,16 @@ class ChatRepositoryImpl implements ChatRepository {
   }
 
   @override
-  void sendMessage(String chatId, {required String content, ContentType contentType = ContentType.text}) {
-    _activeSocket?.sendMessage({'content': content, 'content_type': contentType.name});
+  void sendMessage(
+    String chatId, {
+    required String content,
+    ContentType contentType = ContentType.text,
+    String? replyToId,
+  }) {
+    _activeSocket?.sendMessage({
+      'content': content,
+      'content_type': contentType.name,
+      if (replyToId != null) 'reply_to_id': replyToId,
+    });
   }
 }
