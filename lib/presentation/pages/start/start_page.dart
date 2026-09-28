@@ -85,10 +85,11 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                 AutoSizeText(
                   S.of(context).ConnectFriendsEasilyQuickly,
                   maxLines: 4,
+                  minFontSize: 50.w.floorToDouble(),
                   wrapWords: false,
                   style: theme?.carosTextTheme.medium.copyWith(
-                    fontSize: 68.w,
                     color: ColorsFoundation.lightSurface,
+                    fontSize: 68.w,
                   ),
                 ),
                 SpacingFoundation.verticalSpace16,
