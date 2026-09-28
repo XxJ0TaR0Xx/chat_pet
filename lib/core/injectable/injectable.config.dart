@@ -45,6 +45,7 @@ import '../../domain/usecases/auth/init_use_case.dart' as _i104;
 import '../../domain/usecases/auth/login_use_case.dart' as _i629;
 import '../../domain/usecases/auth/logout_use_case.dart' as _i635;
 import '../../domain/usecases/auth/registration_use_case.dart' as _i314;
+import '../../domain/usecases/auth/watch_auth_status_use_case.dart' as _i997;
 import '../../domain/usecases/chats/chat_web_socket_use_case.dart' as _i190;
 import '../../domain/usecases/chats/create_chat_use_case.dart' as _i396;
 import '../../domain/usecases/chats/delete_chat_use_case.dart' as _i730;
@@ -104,7 +105,10 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i415.SecureStorageServiceImpl(gh<_i558.FlutterSecureStorage>()),
     );
     gh.singleton<_i866.TokenManager>(() => _i1003.TokenManagerImpl());
-    gh.factory<_i361.Dio>(() => registerModule.dio, instanceName: 'basicDio');
+    gh.lazySingleton<_i361.Dio>(
+      () => registerModule.dio,
+      instanceName: 'basicDio',
+    );
     gh.factory<_i59.GetMeUseCase>(
       () => _i59.GetMeUseCase(gh<_i73.UserRepository>()),
     );
@@ -144,7 +148,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i136.NotificationRepository>(),
       ),
     );
-    gh.factory<_i508.AuthRepository>(
+    gh.lazySingleton<_i508.AuthRepository>(
       () => _i24.AuthRepositoryImpl(
         authLocalRepository: gh<_i615.AuthLocalRepository>(),
         authRemoteRepository: gh<_i286.AuthRemoteRepository>(),
@@ -155,8 +159,18 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i104.InitUseCase>(
       () => _i104.InitUseCase(gh<_i508.AuthRepository>()),
     );
+    gh.factory<_i997.WatchAuthStatusUseCase>(
+      () => _i997.WatchAuthStatusUseCase(gh<_i508.AuthRepository>()),
+    );
     gh.factory<_i314.RegistrationUseCase>(
       () => _i314.RegistrationUseCase(gh<_i374.RegistrationRepository>()),
+    );
+    gh.lazySingleton<_i40.UserCubit>(
+      () => _i40.UserCubit(
+        gh<_i59.GetMeUseCase>(),
+        gh<_i104.InitUseCase>(),
+        gh<_i997.WatchAuthStatusUseCase>(),
+      ),
     );
     gh.factory<_i190.ChatWebSocketUseCase>(
       () => _i190.ChatWebSocketUseCase(gh<_i316.ChatRepository>()),
@@ -190,9 +204,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i1032.UpdateMessageUseCase>(
       () => _i1032.UpdateMessageUseCase(gh<_i316.ChatRepository>()),
-    );
-    gh.lazySingleton<_i40.UserCubit>(
-      () => _i40.UserCubit(gh<_i59.GetMeUseCase>(), gh<_i104.InitUseCase>()),
     );
     gh.factory<_i889.AcceptRequestUseCase>(
       () => _i889.AcceptRequestUseCase(gh<_i113.ContactsRepository>()),

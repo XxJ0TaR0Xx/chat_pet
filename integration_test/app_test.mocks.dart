@@ -119,6 +119,15 @@ class MockUserCubit extends _i1.Mock implements _i2.UserCubit {
           as _i8.Future<void>);
 
   @override
+  _i8.Future<void> close() =>
+      (super.noSuchMethod(
+            Invocation.method(#close, []),
+            returnValue: _i8.Future<void>.value(),
+            returnValueForMissingStub: _i8.Future<void>.value(),
+          )
+          as _i8.Future<void>);
+
+  @override
   void emit(_i2.UserState? state) => super.noSuchMethod(
     Invocation.method(#emit, [state]),
     returnValueForMissingStub: null,
@@ -141,15 +150,6 @@ class MockUserCubit extends _i1.Mock implements _i2.UserCubit {
     Invocation.method(#onError, [error, stackTrace]),
     returnValueForMissingStub: null,
   );
-
-  @override
-  _i8.Future<void> close() =>
-      (super.noSuchMethod(
-            Invocation.method(#close, []),
-            returnValue: _i8.Future<void>.value(),
-            returnValueForMissingStub: _i8.Future<void>.value(),
-          )
-          as _i8.Future<void>);
 }
 
 /// A class which mocks [LoginCubit].
