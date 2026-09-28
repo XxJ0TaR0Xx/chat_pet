@@ -20,6 +20,9 @@ class UiKitColorScheme extends ColorScheme {
     this.transparent = ColorsFoundation.transparent,
     super.surface = ColorsFoundation.backHelloPage,
     this.green = ColorsFoundation.green,
+    this.replyColor = ColorsFoundation.replyMessageColor,
+    this.replyOwnColor = ColorsFoundation.replyOwnMessageColor,
+    this.replyAccentColor = ColorsFoundation.replyAccentMessageColor,
   }) : super.dark(primary: uiPrimary, inversePrimary: inversePrimary);
 
   const UiKitColorScheme.light({
@@ -39,6 +42,9 @@ class UiKitColorScheme extends ColorScheme {
     this.transparent = ColorsFoundation.transparent,
     super.surface = ColorsFoundation.lightSurface,
     this.green = ColorsFoundation.green,
+    this.replyColor = ColorsFoundation.replyMessageColor,
+    this.replyOwnColor = ColorsFoundation.replyOwnMessageColor,
+    this.replyAccentColor = ColorsFoundation.replyAccentMessageColor,
   }) : super.light(primary: uiPrimary, inversePrimary: inversePrimary);
 
   final Color surfaceBase;
@@ -57,6 +63,9 @@ class UiKitColorScheme extends ColorScheme {
   final Color mutedColor;
   final Color transparent;
   final Color green;
+  final Color replyColor;
+  final Color replyOwnColor;
+  final Color replyAccentColor;
 
   @override
   final Color inversePrimary;
