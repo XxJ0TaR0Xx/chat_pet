@@ -3,6 +3,7 @@ import 'dart:ui' as ui show ImageFilter;
 import 'package:chat_pet/domain/models/messages/message_model.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/presentation/pages/message_page/cubit/message_cubit.dart';
+import 'package:chat_pet/presentation/pages/message_page/models/reply_preview.dart';
 import 'package:chat_pet/presentation/pages/message_page/widgets/message_list_item.dart';
 import 'package:chat_pet/presentation/ui_kit/molecule/dialogs/delete_message_dialog.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
@@ -28,7 +29,9 @@ class SelectionOverlayWidget extends StatefulWidget {
     required this.interlocutor,
     required this.onDismiss,
     required this.safeAreaPadding,
+    required this.authorNameOf,
     this.onEditMessageTap,
+    this.onReplyTap,
     this.onSelectTap,
     super.key,
   });
@@ -38,7 +41,9 @@ class SelectionOverlayWidget extends StatefulWidget {
   final UserModel interlocutor;
   final VoidCallback onDismiss;
   final EdgeInsets safeAreaPadding;
+  final AuthorNameResolver authorNameOf;
   final ValueChanged<MessageModel>? onEditMessageTap;
+  final ValueChanged<MessageModel>? onReplyTap;
   final ValueChanged<MessageModel>? onSelectTap;
 
   @override
@@ -55,7 +60,10 @@ class _SelectionOverlayWidgetState extends State<SelectionOverlayWidget> with Si
     _MessageMenuItem.regular(
       title: S.of(context).Reply,
       icon: AppIcons.reply,
-      onTap: (context, message) {},
+      onTap: (context, message) {
+        widget.onReplyTap?.call(message);
+        widget.onDismiss.call();
+      },
     ),
     _MessageMenuItem.regular(
       title: S.of(context).Forward,
@@ -184,6 +192,7 @@ class _SelectionOverlayWidgetState extends State<SelectionOverlayWidget> with Si
                               prevModel: selected.prevModel,
                               currentUser: widget.currentUser,
                               interlocutor: widget.interlocutor,
+                              authorNameOf: widget.authorNameOf,
                             ),
                           ),
                         ),
