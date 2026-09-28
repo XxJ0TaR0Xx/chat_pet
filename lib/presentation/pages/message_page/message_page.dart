@@ -11,8 +11,10 @@ import 'package:chat_pet/domain/usecases/chats/read_messages_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/send_message_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/update_message_use_case.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
+import 'package:chat_pet/presentation/pages/message_page/controllers/message_composer_controller.dart';
 import 'package:chat_pet/presentation/pages/message_page/controllers/message_selection_controller.dart';
 import 'package:chat_pet/presentation/pages/message_page/cubit/message_cubit.dart';
+import 'package:chat_pet/presentation/pages/message_page/models/reply_preview.dart';
 import 'package:chat_pet/presentation/pages/message_page/widgets/low_chat_panel_widget.dart';
 import 'package:chat_pet/presentation/pages/message_page/widgets/message_list_item.dart';
 import 'package:chat_pet/presentation/pages/message_page/widgets/selection_overlay_widget.dart';
@@ -20,10 +22,11 @@ import 'package:chat_pet/presentation/ui_kit/molecule/common_widgets/loading_wid
 import 'package:chat_pet/presentation/ui_kit/molecule/dialogs/delete_message_dialog.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:chat_pet/presentation/utils/chat_session/open_chat_tracker.dart';
-import 'package:flutter/foundation.dart' show ValueListenable;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:collection/collection.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class MessagePage extends StatefulWidget {
@@ -37,12 +40,11 @@ class MessagePage extends StatefulWidget {
 }
 
 class _MessagePageState extends State<MessagePage> {
-  final TextEditingController _controller = TextEditingController();
   late final MessageCubit cubit;
   late final UserModel currentUser;
 
   final ValueNotifier<ContextMenuMessage?> _contextMenuMessage = ValueNotifier(null);
-  final ValueNotifier<MessageModel?> _editingMessage = ValueNotifier(null);
+  final MessageComposerController _composer = MessageComposerController();
   final _selection = MessageSelectionController();
 
   @override
@@ -63,31 +65,40 @@ class _MessagePageState extends State<MessagePage> {
       currentUserId: currentUser.id,
       otherMembers: [widget.interlocutorModel],
     );
+
+    cubit.pagingController.addListener(_syncComposer);
   }
 
   @override
   void dispose() {
+    cubit.pagingController.removeListener(_syncComposer);
     getIt<OpenChatTracker>().close(widget.id);
     cubit.close();
-    _controller.dispose();
     _contextMenuMessage.dispose();
-    _editingMessage.dispose();
+    _composer.dispose();
     _selection.dispose();
     super.dispose();
   }
 
+  void _syncComposer() {
+    final items = cubit.pagingController.items ?? const <MessageModel>[];
+    _composer.syncTarget((id) => items.firstWhereOrNull((m) => m.id == id));
+  }
+
   void _handleSendMessage() {
-    final content = _controller.text.trim();
+    final content = _composer.controller.text.trim();
     if (content.isEmpty) return;
 
-    if (_editingMessage.value != null) {
-      cubit.updateMessage(content, _editingMessage.value!.id);
-      _editingMessage.value = null;
-    } else {
-      cubit.sendMessage(content: content);
+    switch (_composer.value) {
+      case ComposerModeIdle():
+        cubit.sendMessage(content: content);
+      case ComposerEditing(:final message):
+        if (content != message.content) cubit.updateMessage(content, message.id);
+      case ComposerReply(:final message):
+        cubit.sendMessage(content: content, replyToId: message.id);
     }
 
-    _controller.clear();
+    _composer.cancel();
   }
 
   void _selectContextMenuMessage(MessageModel model, MessageModel? prevModel, Rect anchorRect) {
@@ -97,6 +108,10 @@ class _MessagePageState extends State<MessagePage> {
   void _clearSelection() {
     _contextMenuMessage.value = null;
   }
+
+  String _authorNameOf(String senderId) => senderId == currentUser.id ? S.of(context).You : widget.interlocutorModel.user.nameAndLast;
+
+  void _startReply(MessageModel message) => _composer.startReply(message, authorName: _authorNameOf(message.senderId));
 
   @override
   Widget build(BuildContext context) {
@@ -112,11 +127,7 @@ class _MessagePageState extends State<MessagePage> {
               backgroundColor: context.uiKitTheme?.colorScheme.surfaceBase,
               bottomNavigationBar: Padding(
                 padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
-                child: LowChatPanelWidget(
-                  controller: _controller,
-                  onSendMessageTap: _handleSendMessage,
-                  editingMessage: _editingMessage,
-                ),
+                child: LowChatPanelWidget(composer: _composer, onSendMessageTap: _handleSendMessage),
               ),
               body: Column(
                 children: [
@@ -156,6 +167,8 @@ class _MessagePageState extends State<MessagePage> {
                       contextMenuMessage: _contextMenuMessage,
                       onMessageSelected: _selectContextMenuMessage,
                       selection: _selection,
+                      authorNameOf: _authorNameOf,
+                      onSwipe: _startReply,
                     ),
                   ),
                 ],
@@ -167,9 +180,9 @@ class _MessagePageState extends State<MessagePage> {
               interlocutor: widget.interlocutorModel.user,
               onDismiss: _clearSelection,
               safeAreaPadding: safeAreaPadding,
-              onEditMessageTap: (message) {
-                _editingMessage.value = message;
-              },
+              onEditMessageTap: _composer.startEditing,
+              authorNameOf: _authorNameOf,
+              onReplyTap: _startReply,
               onSelectTap: (message) => _selection.select(message.id),
             ),
           ],
@@ -186,6 +199,8 @@ class _MessagesList extends StatelessWidget {
     required this.contextMenuMessage,
     required this.onMessageSelected,
     required this.selection,
+    required this.authorNameOf,
+    this.onSwipe,
   });
 
   final UserModel currentUser;
@@ -193,10 +208,13 @@ class _MessagesList extends StatelessWidget {
   final ValueListenable<ContextMenuMessage?> contextMenuMessage;
   final MessageSelectionController selection;
   final void Function(MessageModel model, MessageModel? prevModel, Rect anchorRect) onMessageSelected;
+  final AuthorNameResolver authorNameOf;
+  final ValueChanged<MessageModel>? onSwipe;
 
   @override
   Widget build(BuildContext context) {
     final uiKitTheme = context.uiKitTheme;
+    final onSwipe = this.onSwipe;
 
     final cubit = context.read<MessageCubit>();
     final pagingController = cubit.pagingController;
@@ -234,6 +252,7 @@ class _MessagesList extends StatelessWidget {
                       currentUser: currentUser,
                       interlocutor: interlocutor,
                       isSelected: selection.contains(model.id),
+                      authorNameOf: authorNameOf,
                     );
 
                     return InkWell(
@@ -250,6 +269,8 @@ class _MessagesList extends StatelessWidget {
                       interlocutor: interlocutor,
                       readCursor: cubit.otherMembers,
                       resolveReadStatus: cubit.readStatusFor,
+                      onSwipe: onSwipe == null ? null : () => onSwipe(model),
+                      authorNameOf: authorNameOf,
                     );
 
                     return Builder(
