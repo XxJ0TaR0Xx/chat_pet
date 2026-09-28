@@ -39,6 +39,14 @@ class MockAuthRepository extends _i1.Mock implements _i2.AuthRepository {
   }
 
   @override
+  _i3.Stream<bool> get isAuthorized =>
+      (super.noSuchMethod(
+            Invocation.getter(#isAuthorized),
+            returnValue: _i3.Stream<bool>.empty(),
+          )
+          as _i3.Stream<bool>);
+
+  @override
   _i3.Future<_i4.Either<_i5.AuthFailure, void>> login({
     required String? email,
     required String? password,
