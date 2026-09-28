@@ -18,7 +18,7 @@ class ColorsFoundation {
   static const Color primary = Color(0xAA24786D);
   static const Color primary2 = Color(0xAA20A090);
   static const Color primary3 = Color(0xAA8DEEE2);
-  static const Color primary4 = Color(0xAA58C3B6);
+  static const Color primary4 = Color(0xFFE8F7EB);
   static const Color primary5 = Color(0xFF051D13);
   static const Color borderColor = Color(0xFF363F3B);
   static const Color red = Color(0xFFF04A4C);
@@ -36,4 +36,7 @@ class ColorsFoundation {
   static const Color anotherMessageColor = Color(0xFF000E08);
   static const Color mutedBorderColor = Color(0xFFEEFAF8);
   static const Color fillMessageTextField = Color(0xFF797C7B);
+  static const Color replyMessageColor = Color(0xFFEAF4FF);
+  static const Color replyOwnMessageColor = Color(0x5924786D);
+  static const Color replyAccentMessageColor = Color(0xFF657170);
 }
