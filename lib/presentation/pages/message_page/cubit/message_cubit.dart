@@ -6,6 +6,7 @@ import 'package:chat_pet/domain/custom_talker/custom_talker.dart';
 import 'package:chat_pet/domain/models/chat/chat_member_model.dart';
 import 'package:chat_pet/domain/models/chat/chat_socket_event.dart';
 import 'package:chat_pet/domain/models/messages/message_model.dart';
+import 'package:chat_pet/domain/models/messages/reply_to_message_model.dart';
 import 'package:chat_pet/domain/usecases/chats/chat_web_socket_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/delete_message_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/delete_messages_use_case.dart';
@@ -152,26 +153,39 @@ class MessageCubit extends Cubit<MessageState> {
   void _handleDeleteMessage(String messageId) {
     if (messageId.isEmpty) return;
 
-    pagingController.value = pagingController.value.filterItems((message) => message.id != messageId);
+    _removeMessages({messageId});
   }
 
   void _handleDeleteMessages(List<String> messagesIds) {
     if (messagesIds.isEmpty) return;
 
-    pagingController.value = pagingController.value.filterItems((message) => !messagesIds.contains(message.id));
+    _removeMessages(messagesIds.toSet());
+  }
+
+  /// Удаляет сообщения из ленты и помечает удалёнными цитаты, которые на них ссылались.
+  void _removeMessages(Set<String> ids) {
+    pagingController.value = pagingController.value.filterItems((message) => !ids.contains(message.id)).mapItems((message) {
+      final reply = message.replyTo;
+      if (reply == null || reply is DeletedReplyTo || !ids.contains(reply.id)) return message;
+
+      return message.copyWith(replyTo: ReplyToMessageModel.deleted(id: reply.id));
+    });
   }
 
   void _handelUpdateMessage(String messageId, String updatedContent) {
     if (messageId.isEmpty || updatedContent.isEmpty) return;
 
-    pagingController.value = pagingController.value.mapItems(
-      (message) => message.id == messageId
-          ? message.copyWith(
-              content: updatedContent,
-              isEditing: true,
-            )
-          : message,
-    );
+    pagingController.value = pagingController.value.mapItems((message) {
+      if (message.id == messageId) {
+        return message.copyWith(content: updatedContent, isEditing: true);
+      }
+
+      if (message.replyTo case final AvailableReplyTo reply when reply.id == messageId) {
+        return message.copyWith(replyTo: reply.copyWith(content: updatedContent));
+      }
+
+      return message;
+    });
   }
 
   MessageModel _withMessageType(MessageModel message) =>
@@ -203,8 +217,13 @@ class MessageCubit extends Cubit<MessageState> {
     );
   }
 
-  void sendMessage({required String content, ContentType contentType = ContentType.text}) {
-    _sendMessageUseCase.call(chaId: chatId, content: content, contentType: contentType);
+  void sendMessage({required String content, ContentType contentType = ContentType.text, String? replyToId}) {
+    _sendMessageUseCase.call(
+      chaId: chatId,
+      content: content,
+      contentType: contentType,
+      replyToId: replyToId,
+    );
   }
 
   @override
