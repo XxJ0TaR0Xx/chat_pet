@@ -1095,6 +1095,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Reply to {name}`
+  String ReplyTo(Object name) {
+    return Intl.message(
+      'Reply to $name',
+      name: 'ReplyTo',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `You`
+  String get You {
+    return Intl.message('You', name: 'You', desc: '', args: []);
+  }
+
+  /// `Attachment`
+  String get Attachment {
+    return Intl.message('Attachment', name: 'Attachment', desc: '', args: []);
+  }
+
+  /// `Message deleted`
+  String get MessageDeleted {
+    return Intl.message(
+      'Message deleted',
+      name: 'MessageDeleted',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

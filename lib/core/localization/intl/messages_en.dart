@@ -36,10 +36,12 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m5(count) =>
       "${Intl.plural(count, one: '${count} month ago', other: '${count} months ago')}";
 
-  static String m6(count) =>
-      "${Intl.plural(count, one: '${count} second ago', other: '${count} seconds ago')}";
+  static String m6(name) => "Reply to ${name}";
 
   static String m7(count) =>
+      "${Intl.plural(count, one: '${count} second ago', other: '${count} seconds ago')}";
+
+  static String m8(count) =>
       "${Intl.plural(count, one: '${count} year ago', other: '${count} years ago')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -61,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "AreYouSureYouWantToGetOut": MessageLookupByLibrary.simpleMessage(
       "Are you sure you want to get out?",
     ),
+    "Attachment": MessageLookupByLibrary.simpleMessage("Attachment"),
     "Calls": MessageLookupByLibrary.simpleMessage("Calls"),
     "Cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "Chat": MessageLookupByLibrary.simpleMessage("Chat"),
@@ -198,6 +201,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "MediaShared": MessageLookupByLibrary.simpleMessage("Media shared"),
     "Message": MessageLookupByLibrary.simpleMessage("Message"),
+    "MessageDeleted": MessageLookupByLibrary.simpleMessage("Message deleted"),
     "MinutesAgo": m4,
     "MonthsAgo": m5,
     "MyContact": MessageLookupByLibrary.simpleMessage("My contact"),
@@ -232,8 +236,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "Repeat": MessageLookupByLibrary.simpleMessage("Repeat"),
     "Reply": MessageLookupByLibrary.simpleMessage("Reply"),
+    "ReplyTo": m6,
     "Save": MessageLookupByLibrary.simpleMessage("Save"),
-    "SecondsAgo": m6,
+    "SecondsAgo": m7,
     "Select": MessageLookupByLibrary.simpleMessage("Select"),
     "SelectYourAddress": MessageLookupByLibrary.simpleMessage(
       "Select your address",
@@ -267,8 +272,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "WriteYourMessage": MessageLookupByLibrary.simpleMessage(
       "Write your message",
     ),
-    "YearsAgo": m7,
+    "YearsAgo": m8,
     "Yes": MessageLookupByLibrary.simpleMessage("Yes"),
+    "You": MessageLookupByLibrary.simpleMessage("You"),
     "YourAddress": MessageLookupByLibrary.simpleMessage("Your address"),
     "YourEmail": MessageLookupByLibrary.simpleMessage("Your email"),
     "YourName": MessageLookupByLibrary.simpleMessage("Your name"),

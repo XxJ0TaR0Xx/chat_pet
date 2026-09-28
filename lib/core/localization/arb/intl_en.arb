@@ -158,5 +158,14 @@
   "FailureChatNotFound": "Chat not found",
   "FailureContactAlreadyAdded": "This user is already in your contacts",
   "FailureRequestAlreadySent": "Request already sent",
-  "FailureCannotAddYourself": "You can't add yourself"
+  "FailureCannotAddYourself": "You can't add yourself",
+  "ReplyTo": "Reply to {name}",
+  "@ReplyTo": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "You": "You",
+  "Attachment": "Attachment",
+  "MessageDeleted": "Message deleted"
 }

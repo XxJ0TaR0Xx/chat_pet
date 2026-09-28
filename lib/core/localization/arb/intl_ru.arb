@@ -158,5 +158,14 @@
   "FailureChatNotFound": "Чат не найден",
   "FailureContactAlreadyAdded": "Этот пользователь уже в контактах",
   "FailureRequestAlreadySent": "Заявка уже отправлена",
-  "FailureCannotAddYourself": "Нельзя добавить самого себя"
+  "FailureCannotAddYourself": "Нельзя добавить самого себя",
+  "ReplyTo": "Ответ: {name}",
+  "@ReplyTo": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "You": "Вы",
+  "Attachment": "Вложение",
+  "MessageDeleted": "Сообщение удалено"
 }

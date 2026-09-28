@@ -36,10 +36,12 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m5(count) =>
       "${Intl.plural(count, one: '${count} месяц назад', few: '${count} месяца назад', many: '${count} месяцев назад', other: '${count} месяца назад')}";
 
-  static String m6(count) =>
-      "${Intl.plural(count, one: '${count} секунду назад', few: '${count} секунды назад', many: '${count} секунд назад', other: '${count} секунды назад')}";
+  static String m6(name) => "Ответ: ${name}";
 
   static String m7(count) =>
+      "${Intl.plural(count, one: '${count} секунду назад', few: '${count} секунды назад', many: '${count} секунд назад', other: '${count} секунды назад')}";
+
+  static String m8(count) =>
       "${Intl.plural(count, one: '${count} год назад', few: '${count} года назад', many: '${count} лет назад', other: '${count} года назад')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -61,6 +63,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "AreYouSureYouWantToGetOut": MessageLookupByLibrary.simpleMessage(
       "Вы уверены что хотите выйти?",
     ),
+    "Attachment": MessageLookupByLibrary.simpleMessage("Вложение"),
     "Calls": MessageLookupByLibrary.simpleMessage("Calls"),
     "Cancel": MessageLookupByLibrary.simpleMessage("Отменить"),
     "Chat": MessageLookupByLibrary.simpleMessage("Чат"),
@@ -206,6 +209,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "MediaShared": MessageLookupByLibrary.simpleMessage("Общие медиафайлы"),
     "Message": MessageLookupByLibrary.simpleMessage("Message"),
+    "MessageDeleted": MessageLookupByLibrary.simpleMessage("Сообщение удалено"),
     "MinutesAgo": m4,
     "MonthsAgo": m5,
     "MyContact": MessageLookupByLibrary.simpleMessage("Мои контакты"),
@@ -240,8 +244,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "Repeat": MessageLookupByLibrary.simpleMessage("Повторить"),
     "Reply": MessageLookupByLibrary.simpleMessage("Ответить"),
+    "ReplyTo": m6,
     "Save": MessageLookupByLibrary.simpleMessage("Сохранить"),
-    "SecondsAgo": m6,
+    "SecondsAgo": m7,
     "Select": MessageLookupByLibrary.simpleMessage("Выбрать"),
     "SelectYourAddress": MessageLookupByLibrary.simpleMessage(
       "Выберите ваш адресс",
@@ -275,8 +280,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "WriteYourMessage": MessageLookupByLibrary.simpleMessage(
       "Напишите сообщение",
     ),
-    "YearsAgo": m7,
+    "YearsAgo": m8,
     "Yes": MessageLookupByLibrary.simpleMessage("Да"),
+    "You": MessageLookupByLibrary.simpleMessage("Вы"),
     "YourAddress": MessageLookupByLibrary.simpleMessage("Ваш адрес"),
     "YourEmail": MessageLookupByLibrary.simpleMessage("Ваша почта"),
     "YourName": MessageLookupByLibrary.simpleMessage("Ваше имя"),
