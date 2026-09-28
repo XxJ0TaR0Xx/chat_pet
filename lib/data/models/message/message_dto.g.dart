@@ -14,6 +14,9 @@ _MessageDto _$MessageDtoFromJson(Map<String, dynamic> json) => _MessageDto(
   createAt: DateTime.parse(json['created_at'] as String),
   content: json['content'] as String,
   isEditing: json['is_edited'] as bool? ?? false,
+  replyTo: json['reply_to'] == null
+      ? null
+      : ReplyToMessageDto.fromJson(json['reply_to'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$MessageDtoToJson(_MessageDto instance) =>
@@ -25,6 +28,7 @@ Map<String, dynamic> _$MessageDtoToJson(_MessageDto instance) =>
       'created_at': instance.createAt.toIso8601String(),
       'content': instance.content,
       'is_edited': instance.isEditing,
+      'reply_to': instance.replyTo,
     };
 
 const _$ContentTypeEnumMap = {

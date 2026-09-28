@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MessageModel {
 
- String get id; String get chatId; String get senderId; ContentType get contentType; DateTime get createAt; String get content; MessageSender get messageSender; bool get isEditing;
+ String get id; String get chatId; String get senderId; ContentType get contentType; DateTime get createAt; String get content; MessageSender get messageSender; bool get isEditing; ReplyToMessageModel? get replyTo;
 /// Create a copy of MessageModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $MessageModelCopyWith<MessageModel> get copyWith => _$MessageModelCopyWithImpl<M
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageModel&&(identical(other.id, id) || other.id == id)&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.contentType, contentType) || other.contentType == contentType)&&(identical(other.createAt, createAt) || other.createAt == createAt)&&(identical(other.content, content) || other.content == content)&&(identical(other.messageSender, messageSender) || other.messageSender == messageSender)&&(identical(other.isEditing, isEditing) || other.isEditing == isEditing));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageModel&&(identical(other.id, id) || other.id == id)&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.contentType, contentType) || other.contentType == contentType)&&(identical(other.createAt, createAt) || other.createAt == createAt)&&(identical(other.content, content) || other.content == content)&&(identical(other.messageSender, messageSender) || other.messageSender == messageSender)&&(identical(other.isEditing, isEditing) || other.isEditing == isEditing)&&(identical(other.replyTo, replyTo) || other.replyTo == replyTo));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,chatId,senderId,contentType,createAt,content,messageSender,isEditing);
+int get hashCode => Object.hash(runtimeType,id,chatId,senderId,contentType,createAt,content,messageSender,isEditing,replyTo);
 
 @override
 String toString() {
-  return 'MessageModel(id: $id, chatId: $chatId, senderId: $senderId, contentType: $contentType, createAt: $createAt, content: $content, messageSender: $messageSender, isEditing: $isEditing)';
+  return 'MessageModel(id: $id, chatId: $chatId, senderId: $senderId, contentType: $contentType, createAt: $createAt, content: $content, messageSender: $messageSender, isEditing: $isEditing, replyTo: $replyTo)';
 }
 
 
@@ -45,11 +45,11 @@ abstract mixin class $MessageModelCopyWith<$Res>  {
   factory $MessageModelCopyWith(MessageModel value, $Res Function(MessageModel) _then) = _$MessageModelCopyWithImpl;
 @useResult
 $Res call({
- String id, String chatId, String senderId, ContentType contentType, DateTime createAt, String content, MessageSender messageSender, bool isEditing
+ String id, String chatId, String senderId, ContentType contentType, DateTime createAt, String content, MessageSender messageSender, bool isEditing, ReplyToMessageModel? replyTo
 });
 
 
-
+$ReplyToMessageModelCopyWith<$Res>? get replyTo;
 
 }
 /// @nodoc
@@ -62,7 +62,7 @@ class _$MessageModelCopyWithImpl<$Res>
 
 /// Create a copy of MessageModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? chatId = null,Object? senderId = null,Object? contentType = null,Object? createAt = null,Object? content = null,Object? messageSender = null,Object? isEditing = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? chatId = null,Object? senderId = null,Object? contentType = null,Object? createAt = null,Object? content = null,Object? messageSender = null,Object? isEditing = null,Object? replyTo = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,chatId: null == chatId ? _self.chatId : chatId // ignore: cast_nullable_to_non_nullable
@@ -72,10 +72,23 @@ as ContentType,createAt: null == createAt ? _self.createAt : createAt // ignore:
 as DateTime,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,messageSender: null == messageSender ? _self.messageSender : messageSender // ignore: cast_nullable_to_non_nullable
 as MessageSender,isEditing: null == isEditing ? _self.isEditing : isEditing // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,replyTo: freezed == replyTo ? _self.replyTo : replyTo // ignore: cast_nullable_to_non_nullable
+as ReplyToMessageModel?,
   ));
 }
+/// Create a copy of MessageModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ReplyToMessageModelCopyWith<$Res>? get replyTo {
+    if (_self.replyTo == null) {
+    return null;
+  }
 
+  return $ReplyToMessageModelCopyWith<$Res>(_self.replyTo!, (value) {
+    return _then(_self.copyWith(replyTo: value));
+  });
+}
 }
 
 
@@ -157,10 +170,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String chatId,  String senderId,  ContentType contentType,  DateTime createAt,  String content,  MessageSender messageSender,  bool isEditing)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String chatId,  String senderId,  ContentType contentType,  DateTime createAt,  String content,  MessageSender messageSender,  bool isEditing,  ReplyToMessageModel? replyTo)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MessageModel() when $default != null:
-return $default(_that.id,_that.chatId,_that.senderId,_that.contentType,_that.createAt,_that.content,_that.messageSender,_that.isEditing);case _:
+return $default(_that.id,_that.chatId,_that.senderId,_that.contentType,_that.createAt,_that.content,_that.messageSender,_that.isEditing,_that.replyTo);case _:
   return orElse();
 
 }
@@ -178,10 +191,10 @@ return $default(_that.id,_that.chatId,_that.senderId,_that.contentType,_that.cre
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String chatId,  String senderId,  ContentType contentType,  DateTime createAt,  String content,  MessageSender messageSender,  bool isEditing)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String chatId,  String senderId,  ContentType contentType,  DateTime createAt,  String content,  MessageSender messageSender,  bool isEditing,  ReplyToMessageModel? replyTo)  $default,) {final _that = this;
 switch (_that) {
 case _MessageModel():
-return $default(_that.id,_that.chatId,_that.senderId,_that.contentType,_that.createAt,_that.content,_that.messageSender,_that.isEditing);case _:
+return $default(_that.id,_that.chatId,_that.senderId,_that.contentType,_that.createAt,_that.content,_that.messageSender,_that.isEditing,_that.replyTo);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +211,10 @@ return $default(_that.id,_that.chatId,_that.senderId,_that.contentType,_that.cre
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String chatId,  String senderId,  ContentType contentType,  DateTime createAt,  String content,  MessageSender messageSender,  bool isEditing)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String chatId,  String senderId,  ContentType contentType,  DateTime createAt,  String content,  MessageSender messageSender,  bool isEditing,  ReplyToMessageModel? replyTo)?  $default,) {final _that = this;
 switch (_that) {
 case _MessageModel() when $default != null:
-return $default(_that.id,_that.chatId,_that.senderId,_that.contentType,_that.createAt,_that.content,_that.messageSender,_that.isEditing);case _:
+return $default(_that.id,_that.chatId,_that.senderId,_that.contentType,_that.createAt,_that.content,_that.messageSender,_that.isEditing,_that.replyTo);case _:
   return null;
 
 }
@@ -213,7 +226,7 @@ return $default(_that.id,_that.chatId,_that.senderId,_that.contentType,_that.cre
 
 
 class _MessageModel implements MessageModel {
-  const _MessageModel({required this.id, required this.chatId, required this.senderId, required this.contentType, required this.createAt, required this.content, this.messageSender = MessageSender.me, this.isEditing = false});
+  const _MessageModel({required this.id, required this.chatId, required this.senderId, required this.contentType, required this.createAt, required this.content, this.messageSender = MessageSender.me, this.isEditing = false, this.replyTo});
   
 
 @override final  String id;
@@ -224,6 +237,7 @@ class _MessageModel implements MessageModel {
 @override final  String content;
 @override@JsonKey() final  MessageSender messageSender;
 @override@JsonKey() final  bool isEditing;
+@override final  ReplyToMessageModel? replyTo;
 
 /// Create a copy of MessageModel
 /// with the given fields replaced by the non-null parameter values.
@@ -235,16 +249,16 @@ _$MessageModelCopyWith<_MessageModel> get copyWith => __$MessageModelCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageModel&&(identical(other.id, id) || other.id == id)&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.contentType, contentType) || other.contentType == contentType)&&(identical(other.createAt, createAt) || other.createAt == createAt)&&(identical(other.content, content) || other.content == content)&&(identical(other.messageSender, messageSender) || other.messageSender == messageSender)&&(identical(other.isEditing, isEditing) || other.isEditing == isEditing));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageModel&&(identical(other.id, id) || other.id == id)&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.contentType, contentType) || other.contentType == contentType)&&(identical(other.createAt, createAt) || other.createAt == createAt)&&(identical(other.content, content) || other.content == content)&&(identical(other.messageSender, messageSender) || other.messageSender == messageSender)&&(identical(other.isEditing, isEditing) || other.isEditing == isEditing)&&(identical(other.replyTo, replyTo) || other.replyTo == replyTo));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,chatId,senderId,contentType,createAt,content,messageSender,isEditing);
+int get hashCode => Object.hash(runtimeType,id,chatId,senderId,contentType,createAt,content,messageSender,isEditing,replyTo);
 
 @override
 String toString() {
-  return 'MessageModel(id: $id, chatId: $chatId, senderId: $senderId, contentType: $contentType, createAt: $createAt, content: $content, messageSender: $messageSender, isEditing: $isEditing)';
+  return 'MessageModel(id: $id, chatId: $chatId, senderId: $senderId, contentType: $contentType, createAt: $createAt, content: $content, messageSender: $messageSender, isEditing: $isEditing, replyTo: $replyTo)';
 }
 
 
@@ -255,11 +269,11 @@ abstract mixin class _$MessageModelCopyWith<$Res> implements $MessageModelCopyWi
   factory _$MessageModelCopyWith(_MessageModel value, $Res Function(_MessageModel) _then) = __$MessageModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String chatId, String senderId, ContentType contentType, DateTime createAt, String content, MessageSender messageSender, bool isEditing
+ String id, String chatId, String senderId, ContentType contentType, DateTime createAt, String content, MessageSender messageSender, bool isEditing, ReplyToMessageModel? replyTo
 });
 
 
-
+@override $ReplyToMessageModelCopyWith<$Res>? get replyTo;
 
 }
 /// @nodoc
@@ -272,7 +286,7 @@ class __$MessageModelCopyWithImpl<$Res>
 
 /// Create a copy of MessageModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? chatId = null,Object? senderId = null,Object? contentType = null,Object? createAt = null,Object? content = null,Object? messageSender = null,Object? isEditing = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? chatId = null,Object? senderId = null,Object? contentType = null,Object? createAt = null,Object? content = null,Object? messageSender = null,Object? isEditing = null,Object? replyTo = freezed,}) {
   return _then(_MessageModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,chatId: null == chatId ? _self.chatId : chatId // ignore: cast_nullable_to_non_nullable
@@ -282,11 +296,24 @@ as ContentType,createAt: null == createAt ? _self.createAt : createAt // ignore:
 as DateTime,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,messageSender: null == messageSender ? _self.messageSender : messageSender // ignore: cast_nullable_to_non_nullable
 as MessageSender,isEditing: null == isEditing ? _self.isEditing : isEditing // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,replyTo: freezed == replyTo ? _self.replyTo : replyTo // ignore: cast_nullable_to_non_nullable
+as ReplyToMessageModel?,
   ));
 }
 
+/// Create a copy of MessageModel
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ReplyToMessageModelCopyWith<$Res>? get replyTo {
+    if (_self.replyTo == null) {
+    return null;
+  }
 
+  return $ReplyToMessageModelCopyWith<$Res>(_self.replyTo!, (value) {
+    return _then(_self.copyWith(replyTo: value));
+  });
+}
 }
 
 // dart format on

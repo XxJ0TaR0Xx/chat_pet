@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MessageDto {
 
- String get id;@JsonKey(name: 'chat_id') String get chatId;@JsonKey(name: 'sender_id') String get senderId;@JsonKey(name: 'content_type') ContentType get contentType;@JsonKey(name: 'created_at') DateTime get createAt; String get content;@JsonKey(name: 'is_edited') bool get isEditing;
+ String get id;@JsonKey(name: 'chat_id') String get chatId;@JsonKey(name: 'sender_id') String get senderId;@JsonKey(name: 'content_type') ContentType get contentType;@JsonKey(name: 'created_at') DateTime get createAt; String get content;@JsonKey(name: 'is_edited') bool get isEditing;@JsonKey(name: 'reply_to') ReplyToMessageDto? get replyTo;
 /// Create a copy of MessageDto
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $MessageDtoCopyWith<MessageDto> get copyWith => _$MessageDtoCopyWithImpl<Message
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageDto&&(identical(other.id, id) || other.id == id)&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.contentType, contentType) || other.contentType == contentType)&&(identical(other.createAt, createAt) || other.createAt == createAt)&&(identical(other.content, content) || other.content == content)&&(identical(other.isEditing, isEditing) || other.isEditing == isEditing));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageDto&&(identical(other.id, id) || other.id == id)&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.contentType, contentType) || other.contentType == contentType)&&(identical(other.createAt, createAt) || other.createAt == createAt)&&(identical(other.content, content) || other.content == content)&&(identical(other.isEditing, isEditing) || other.isEditing == isEditing)&&(identical(other.replyTo, replyTo) || other.replyTo == replyTo));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,chatId,senderId,contentType,createAt,content,isEditing);
+int get hashCode => Object.hash(runtimeType,id,chatId,senderId,contentType,createAt,content,isEditing,replyTo);
 
 @override
 String toString() {
-  return 'MessageDto(id: $id, chatId: $chatId, senderId: $senderId, contentType: $contentType, createAt: $createAt, content: $content, isEditing: $isEditing)';
+  return 'MessageDto(id: $id, chatId: $chatId, senderId: $senderId, contentType: $contentType, createAt: $createAt, content: $content, isEditing: $isEditing, replyTo: $replyTo)';
 }
 
 
@@ -48,11 +48,11 @@ abstract mixin class $MessageDtoCopyWith<$Res>  {
   factory $MessageDtoCopyWith(MessageDto value, $Res Function(MessageDto) _then) = _$MessageDtoCopyWithImpl;
 @useResult
 $Res call({
- String id,@JsonKey(name: 'chat_id') String chatId,@JsonKey(name: 'sender_id') String senderId,@JsonKey(name: 'content_type') ContentType contentType,@JsonKey(name: 'created_at') DateTime createAt, String content,@JsonKey(name: 'is_edited') bool isEditing
+ String id,@JsonKey(name: 'chat_id') String chatId,@JsonKey(name: 'sender_id') String senderId,@JsonKey(name: 'content_type') ContentType contentType,@JsonKey(name: 'created_at') DateTime createAt, String content,@JsonKey(name: 'is_edited') bool isEditing,@JsonKey(name: 'reply_to') ReplyToMessageDto? replyTo
 });
 
 
-
+$ReplyToMessageDtoCopyWith<$Res>? get replyTo;
 
 }
 /// @nodoc
@@ -65,7 +65,7 @@ class _$MessageDtoCopyWithImpl<$Res>
 
 /// Create a copy of MessageDto
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? chatId = null,Object? senderId = null,Object? contentType = null,Object? createAt = null,Object? content = null,Object? isEditing = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? chatId = null,Object? senderId = null,Object? contentType = null,Object? createAt = null,Object? content = null,Object? isEditing = null,Object? replyTo = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,chatId: null == chatId ? _self.chatId : chatId // ignore: cast_nullable_to_non_nullable
@@ -74,10 +74,23 @@ as String,contentType: null == contentType ? _self.contentType : contentType // 
 as ContentType,createAt: null == createAt ? _self.createAt : createAt // ignore: cast_nullable_to_non_nullable
 as DateTime,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,isEditing: null == isEditing ? _self.isEditing : isEditing // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,replyTo: freezed == replyTo ? _self.replyTo : replyTo // ignore: cast_nullable_to_non_nullable
+as ReplyToMessageDto?,
   ));
 }
+/// Create a copy of MessageDto
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ReplyToMessageDtoCopyWith<$Res>? get replyTo {
+    if (_self.replyTo == null) {
+    return null;
+  }
 
+  return $ReplyToMessageDtoCopyWith<$Res>(_self.replyTo!, (value) {
+    return _then(_self.copyWith(replyTo: value));
+  });
+}
 }
 
 
@@ -159,10 +172,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'chat_id')  String chatId, @JsonKey(name: 'sender_id')  String senderId, @JsonKey(name: 'content_type')  ContentType contentType, @JsonKey(name: 'created_at')  DateTime createAt,  String content, @JsonKey(name: 'is_edited')  bool isEditing)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'chat_id')  String chatId, @JsonKey(name: 'sender_id')  String senderId, @JsonKey(name: 'content_type')  ContentType contentType, @JsonKey(name: 'created_at')  DateTime createAt,  String content, @JsonKey(name: 'is_edited')  bool isEditing, @JsonKey(name: 'reply_to')  ReplyToMessageDto? replyTo)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MessageDto() when $default != null:
-return $default(_that.id,_that.chatId,_that.senderId,_that.contentType,_that.createAt,_that.content,_that.isEditing);case _:
+return $default(_that.id,_that.chatId,_that.senderId,_that.contentType,_that.createAt,_that.content,_that.isEditing,_that.replyTo);case _:
   return orElse();
 
 }
@@ -180,10 +193,10 @@ return $default(_that.id,_that.chatId,_that.senderId,_that.contentType,_that.cre
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'chat_id')  String chatId, @JsonKey(name: 'sender_id')  String senderId, @JsonKey(name: 'content_type')  ContentType contentType, @JsonKey(name: 'created_at')  DateTime createAt,  String content, @JsonKey(name: 'is_edited')  bool isEditing)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'chat_id')  String chatId, @JsonKey(name: 'sender_id')  String senderId, @JsonKey(name: 'content_type')  ContentType contentType, @JsonKey(name: 'created_at')  DateTime createAt,  String content, @JsonKey(name: 'is_edited')  bool isEditing, @JsonKey(name: 'reply_to')  ReplyToMessageDto? replyTo)  $default,) {final _that = this;
 switch (_that) {
 case _MessageDto():
-return $default(_that.id,_that.chatId,_that.senderId,_that.contentType,_that.createAt,_that.content,_that.isEditing);case _:
+return $default(_that.id,_that.chatId,_that.senderId,_that.contentType,_that.createAt,_that.content,_that.isEditing,_that.replyTo);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +213,10 @@ return $default(_that.id,_that.chatId,_that.senderId,_that.contentType,_that.cre
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'chat_id')  String chatId, @JsonKey(name: 'sender_id')  String senderId, @JsonKey(name: 'content_type')  ContentType contentType, @JsonKey(name: 'created_at')  DateTime createAt,  String content, @JsonKey(name: 'is_edited')  bool isEditing)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'chat_id')  String chatId, @JsonKey(name: 'sender_id')  String senderId, @JsonKey(name: 'content_type')  ContentType contentType, @JsonKey(name: 'created_at')  DateTime createAt,  String content, @JsonKey(name: 'is_edited')  bool isEditing, @JsonKey(name: 'reply_to')  ReplyToMessageDto? replyTo)?  $default,) {final _that = this;
 switch (_that) {
 case _MessageDto() when $default != null:
-return $default(_that.id,_that.chatId,_that.senderId,_that.contentType,_that.createAt,_that.content,_that.isEditing);case _:
+return $default(_that.id,_that.chatId,_that.senderId,_that.contentType,_that.createAt,_that.content,_that.isEditing,_that.replyTo);case _:
   return null;
 
 }
@@ -215,7 +228,7 @@ return $default(_that.id,_that.chatId,_that.senderId,_that.contentType,_that.cre
 @JsonSerializable()
 
 class _MessageDto implements MessageDto {
-  const _MessageDto({required this.id, @JsonKey(name: 'chat_id') required this.chatId, @JsonKey(name: 'sender_id') required this.senderId, @JsonKey(name: 'content_type') required this.contentType, @JsonKey(name: 'created_at') required this.createAt, required this.content, @JsonKey(name: 'is_edited') this.isEditing = false});
+  const _MessageDto({required this.id, @JsonKey(name: 'chat_id') required this.chatId, @JsonKey(name: 'sender_id') required this.senderId, @JsonKey(name: 'content_type') required this.contentType, @JsonKey(name: 'created_at') required this.createAt, required this.content, @JsonKey(name: 'is_edited') this.isEditing = false, @JsonKey(name: 'reply_to') this.replyTo});
   factory _MessageDto.fromJson(Map<String, dynamic> json) => _$MessageDtoFromJson(json);
 
 @override final  String id;
@@ -225,6 +238,7 @@ class _MessageDto implements MessageDto {
 @override@JsonKey(name: 'created_at') final  DateTime createAt;
 @override final  String content;
 @override@JsonKey(name: 'is_edited') final  bool isEditing;
+@override@JsonKey(name: 'reply_to') final  ReplyToMessageDto? replyTo;
 
 /// Create a copy of MessageDto
 /// with the given fields replaced by the non-null parameter values.
@@ -239,16 +253,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageDto&&(identical(other.id, id) || other.id == id)&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.contentType, contentType) || other.contentType == contentType)&&(identical(other.createAt, createAt) || other.createAt == createAt)&&(identical(other.content, content) || other.content == content)&&(identical(other.isEditing, isEditing) || other.isEditing == isEditing));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageDto&&(identical(other.id, id) || other.id == id)&&(identical(other.chatId, chatId) || other.chatId == chatId)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.contentType, contentType) || other.contentType == contentType)&&(identical(other.createAt, createAt) || other.createAt == createAt)&&(identical(other.content, content) || other.content == content)&&(identical(other.isEditing, isEditing) || other.isEditing == isEditing)&&(identical(other.replyTo, replyTo) || other.replyTo == replyTo));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,chatId,senderId,contentType,createAt,content,isEditing);
+int get hashCode => Object.hash(runtimeType,id,chatId,senderId,contentType,createAt,content,isEditing,replyTo);
 
 @override
 String toString() {
-  return 'MessageDto(id: $id, chatId: $chatId, senderId: $senderId, contentType: $contentType, createAt: $createAt, content: $content, isEditing: $isEditing)';
+  return 'MessageDto(id: $id, chatId: $chatId, senderId: $senderId, contentType: $contentType, createAt: $createAt, content: $content, isEditing: $isEditing, replyTo: $replyTo)';
 }
 
 
@@ -259,11 +273,11 @@ abstract mixin class _$MessageDtoCopyWith<$Res> implements $MessageDtoCopyWith<$
   factory _$MessageDtoCopyWith(_MessageDto value, $Res Function(_MessageDto) _then) = __$MessageDtoCopyWithImpl;
 @override @useResult
 $Res call({
- String id,@JsonKey(name: 'chat_id') String chatId,@JsonKey(name: 'sender_id') String senderId,@JsonKey(name: 'content_type') ContentType contentType,@JsonKey(name: 'created_at') DateTime createAt, String content,@JsonKey(name: 'is_edited') bool isEditing
+ String id,@JsonKey(name: 'chat_id') String chatId,@JsonKey(name: 'sender_id') String senderId,@JsonKey(name: 'content_type') ContentType contentType,@JsonKey(name: 'created_at') DateTime createAt, String content,@JsonKey(name: 'is_edited') bool isEditing,@JsonKey(name: 'reply_to') ReplyToMessageDto? replyTo
 });
 
 
-
+@override $ReplyToMessageDtoCopyWith<$Res>? get replyTo;
 
 }
 /// @nodoc
@@ -276,7 +290,7 @@ class __$MessageDtoCopyWithImpl<$Res>
 
 /// Create a copy of MessageDto
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? chatId = null,Object? senderId = null,Object? contentType = null,Object? createAt = null,Object? content = null,Object? isEditing = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? chatId = null,Object? senderId = null,Object? contentType = null,Object? createAt = null,Object? content = null,Object? isEditing = null,Object? replyTo = freezed,}) {
   return _then(_MessageDto(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,chatId: null == chatId ? _self.chatId : chatId // ignore: cast_nullable_to_non_nullable
@@ -285,11 +299,24 @@ as String,contentType: null == contentType ? _self.contentType : contentType // 
 as ContentType,createAt: null == createAt ? _self.createAt : createAt // ignore: cast_nullable_to_non_nullable
 as DateTime,content: null == content ? _self.content : content // ignore: cast_nullable_to_non_nullable
 as String,isEditing: null == isEditing ? _self.isEditing : isEditing // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,replyTo: freezed == replyTo ? _self.replyTo : replyTo // ignore: cast_nullable_to_non_nullable
+as ReplyToMessageDto?,
   ));
 }
 
+/// Create a copy of MessageDto
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ReplyToMessageDtoCopyWith<$Res>? get replyTo {
+    if (_self.replyTo == null) {
+    return null;
+  }
 
+  return $ReplyToMessageDtoCopyWith<$Res>(_self.replyTo!, (value) {
+    return _then(_self.copyWith(replyTo: value));
+  });
+}
 }
 
 // dart format on

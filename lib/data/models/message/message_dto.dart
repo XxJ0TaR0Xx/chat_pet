@@ -1,3 +1,4 @@
+import 'package:chat_pet/data/models/message/reply_to_message_dto.dart';
 import 'package:chat_pet/domain/models/messages/message_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -14,6 +15,7 @@ abstract class MessageDto with _$MessageDto {
     @JsonKey(name: 'created_at') required DateTime createAt,
     required String content,
     @JsonKey(name: 'is_edited') @Default(false) bool isEditing,
+    @JsonKey(name: 'reply_to') ReplyToMessageDto? replyTo,
   }) = _MessageDto;
 
   factory MessageDto.fromJson(Map<String, dynamic> json) => _$MessageDtoFromJson(json);

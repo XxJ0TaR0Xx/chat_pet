@@ -1,3 +1,4 @@
+import 'package:chat_pet/domain/models/messages/reply_to_message_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'message_model.freezed.dart';
@@ -13,6 +14,7 @@ abstract class MessageModel with _$MessageModel {
     required String content,
     @Default(MessageSender.me) MessageSender messageSender,
     @Default(false) bool isEditing,
+    ReplyToMessageModel? replyTo,
   }) = _MessageModel;
 }
 
