@@ -1,8 +1,10 @@
 import 'package:chat_pet/core/injectable/injectable.dart';
 import 'package:chat_pet/domain/models/chat/chat_member_model.dart';
 import 'package:chat_pet/domain/models/messages/message_model.dart';
+import 'package:chat_pet/domain/models/messages/reply_to_message_model.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
+import 'package:chat_pet/presentation/pages/message_page/models/reply_preview.dart';
 import 'package:chat_pet/presentation/pages/message_page/widgets/message_render_object.dart';
 import 'package:chat_pet/presentation/ui_kit/extension/time_extension.dart';
 import 'package:chat_pet/presentation/ui_kit/theme/ui_kit_theme_data.dart';
@@ -10,10 +12,13 @@ import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/foundation.dart' show ValueListenable;
 import 'package:flutter/material.dart';
 
+const _bubbleRadius = 16.0;
+
 class MessageBubble extends StatelessWidget {
   const MessageBubble._({
     required this.message,
     required this.author,
+    this.reply,
     this.isFirstInGroup = false,
     this.isGroup = false,
     this.isSelectingMode = false,
@@ -26,6 +31,7 @@ class MessageBubble extends StatelessWidget {
   factory MessageBubble.defaultMode({
     required MessageModel message,
     required UserModel author,
+    ReplyPreview? reply,
     bool isFirstInGroup = false,
     bool isGroup = false,
     ValueListenable<List<ChatMemberModel>>? readCursor,
@@ -34,6 +40,7 @@ class MessageBubble extends StatelessWidget {
   }) => MessageBubble._(
     message: message,
     author: author,
+    reply: reply,
     isFirstInGroup: isFirstInGroup,
     isGroup: isGroup,
     readCursor: readCursor,
@@ -45,12 +52,14 @@ class MessageBubble extends StatelessWidget {
     required MessageModel message,
     required UserModel author,
     required bool isSelected,
+    ReplyPreview? reply,
     bool isFirstInGroup = false,
     bool isGroup = false,
     Key? key,
   }) => MessageBubble._(
     message: message,
     author: author,
+    reply: reply,
     isSelected: isSelected,
     isFirstInGroup: isFirstInGroup,
     isGroup: isGroup,
@@ -60,6 +69,7 @@ class MessageBubble extends StatelessWidget {
 
   final MessageModel message;
   final UserModel author;
+  final ReplyPreview? reply;
 
   final bool isFirstInGroup;
   final bool isGroup;
@@ -84,7 +94,6 @@ class MessageBubble extends StatelessWidget {
         children: [
           RadioGroup<bool>(
             groupValue: true,
-
             onChanged: (_) {},
             child: Radio<bool>(
               value: isSelected,
@@ -125,12 +134,13 @@ class MessageBubble extends StatelessWidget {
 
   Widget _messageBubble(UiKitThemeData? theme, {bool isMe = true}) {
     final correctColor = (isMe ? theme?.colorScheme.primary : theme?.colorScheme.surface2) ?? Colors.green;
+    final contentColor = isMe ? theme?.colorScheme.inversePrimary : ColorsFoundation.anotherMessageColor;
 
     Widget buildContent(MessageReadStatus? readStatus) => MessageRenderObject(
       text: message.content,
       sentAt: message.createAt.toChatTime(),
       style: theme?.circularStdTextTheme.bookSmall.copyWith(
-        color: isMe ? theme.colorScheme.inversePrimary : ColorsFoundation.anotherMessageColor,
+        color: contentColor,
       ),
       sentAtStyle: theme?.circularStdTextTheme.bookSmall10.copyWith(
         color: isMe ? theme.colorScheme.inversePrimary : theme.colorScheme.mutedColor,
@@ -143,12 +153,12 @@ class MessageBubble extends StatelessWidget {
     final readCursor = this.readCursor;
     final resolveReadStatus = this.resolveReadStatus;
 
-    return CustomPaint(
+    final messagePainter = CustomPaint(
       size: Size(SpacingFoundation.messageBubbleMaxWidth, double.infinity),
       painter: _MessageBubblePainter(
         isMe: isMe,
         color: correctColor,
-        radius: 16.0,
+        radius: _bubbleRadius,
       ),
       child: Container(
         constraints: BoxConstraints(
@@ -165,6 +175,73 @@ class MessageBubble extends StatelessWidget {
               )
             : buildContent(null),
       ),
+    );
+
+    final reply = this.reply;
+    if (reply == null) return messagePainter;
+
+    return Column(
+      crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _ReplyPreviewBox(preview: reply, isMe: isMe, contentColor: contentColor),
+        messagePainter,
+      ],
+    );
+  }
+}
+
+class _ReplyPreviewBox extends StatelessWidget {
+  const _ReplyPreviewBox({required this.preview, required this.isMe, this.contentColor});
+
+  final ReplyPreview preview;
+  final bool isMe;
+  final Color? contentColor;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = context.uiKitTheme;
+    final scheme = theme?.colorScheme;
+    final textStyle = theme?.circularStdTextTheme.bookSmall.copyWith(color: contentColor);
+
+    final content = switch (preview.reply) {
+      AvailableReplyTo(:final content, :final contentType) => [
+        Text(
+          S.of(context).ReplyTo(preview.authorName ?? ''),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: theme?.circularStdTextTheme.bookSmall.copyWith(
+            color: isMe ? scheme?.primary : scheme?.replyAccentColor,
+          ),
+        ),
+        Text(
+          contentType == ContentType.text ? content : S.of(context).Attachment,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: textStyle,
+        ),
+      ],
+      DeletedReplyTo() => [
+        Text(S.of(context).MessageDeleted, style: textStyle?.copyWith(fontStyle: FontStyle.italic)),
+      ],
+    };
+
+    return Container(
+      constraints: BoxConstraints(maxWidth: SpacingFoundation.messageBubbleMaxWidth),
+      decoration: BoxDecoration(
+        color: isMe ? scheme?.replyOwnColor : scheme?.replyColor,
+        borderRadius: BorderRadius.only(
+          topLeft: const Radius.circular(_bubbleRadius),
+          topRight: const Radius.circular(_bubbleRadius),
+          bottomLeft: isMe ? const Radius.circular(_bubbleRadius) : Radius.zero,
+          bottomRight: isMe ? Radius.zero : const Radius.circular(_bubbleRadius),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: content,
+      ).paddingAll(EdgeInsetsFoundation.all8),
     );
   }
 }
