@@ -55,11 +55,10 @@ extension SettingStatePatterns on SettingState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( SettingStateInitial value)?  initial,TResult Function( SettingStateLoading value)?  loading,TResult Function( SettingStateLoaded value)?  loaded,TResult Function( SettingStateError value)?  error,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( SettingStateLoading value)?  loading,TResult Function( SettingStateLoaded value)?  loaded,TResult Function( SettingStateError value)?  error,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case SettingStateInitial() when initial != null:
-return initial(_that);case SettingStateLoading() when loading != null:
+case SettingStateLoading() when loading != null:
 return loading(_that);case SettingStateLoaded() when loaded != null:
 return loaded(_that);case SettingStateError() when error != null:
 return error(_that);case _:
@@ -80,11 +79,10 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( SettingStateInitial value)  initial,required TResult Function( SettingStateLoading value)  loading,required TResult Function( SettingStateLoaded value)  loaded,required TResult Function( SettingStateError value)  error,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( SettingStateLoading value)  loading,required TResult Function( SettingStateLoaded value)  loaded,required TResult Function( SettingStateError value)  error,}){
 final _that = this;
 switch (_that) {
-case SettingStateInitial():
-return initial(_that);case SettingStateLoading():
+case SettingStateLoading():
 return loading(_that);case SettingStateLoaded():
 return loaded(_that);case SettingStateError():
 return error(_that);case _:
@@ -104,11 +102,10 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( SettingStateInitial value)?  initial,TResult? Function( SettingStateLoading value)?  loading,TResult? Function( SettingStateLoaded value)?  loaded,TResult? Function( SettingStateError value)?  error,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( SettingStateLoading value)?  loading,TResult? Function( SettingStateLoaded value)?  loaded,TResult? Function( SettingStateError value)?  error,}){
 final _that = this;
 switch (_that) {
-case SettingStateInitial() when initial != null:
-return initial(_that);case SettingStateLoading() when loading != null:
+case SettingStateLoading() when loading != null:
 return loading(_that);case SettingStateLoaded() when loaded != null:
 return loaded(_that);case SettingStateError() when error != null:
 return error(_that);case _:
@@ -128,10 +125,9 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( UserModel userModel,  String? transientError)?  loaded,TResult Function( String errorMessage)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loading,TResult Function( UserModel userModel,  String? transientError)?  loaded,TResult Function( String errorMessage)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case SettingStateInitial() when initial != null:
-return initial();case SettingStateLoading() when loading != null:
+case SettingStateLoading() when loading != null:
 return loading();case SettingStateLoaded() when loaded != null:
 return loaded(_that.userModel,_that.transientError);case SettingStateError() when error != null:
 return error(_that.errorMessage);case _:
@@ -152,10 +148,9 @@ return error(_that.errorMessage);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( UserModel userModel,  String? transientError)  loaded,required TResult Function( String errorMessage)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loading,required TResult Function( UserModel userModel,  String? transientError)  loaded,required TResult Function( String errorMessage)  error,}) {final _that = this;
 switch (_that) {
-case SettingStateInitial():
-return initial();case SettingStateLoading():
+case SettingStateLoading():
 return loading();case SettingStateLoaded():
 return loaded(_that.userModel,_that.transientError);case SettingStateError():
 return error(_that.errorMessage);case _:
@@ -175,10 +170,9 @@ return error(_that.errorMessage);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( UserModel userModel,  String? transientError)?  loaded,TResult? Function( String errorMessage)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loading,TResult? Function( UserModel userModel,  String? transientError)?  loaded,TResult? Function( String errorMessage)?  error,}) {final _that = this;
 switch (_that) {
-case SettingStateInitial() when initial != null:
-return initial();case SettingStateLoading() when loading != null:
+case SettingStateLoading() when loading != null:
 return loading();case SettingStateLoaded() when loaded != null:
 return loaded(_that.userModel,_that.transientError);case SettingStateError() when error != null:
 return error(_that.errorMessage);case _:
@@ -188,38 +182,6 @@ return error(_that.errorMessage);case _:
 }
 
 }
-
-/// @nodoc
-
-
-class SettingStateInitial implements SettingState {
-  const SettingStateInitial();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SettingStateInitial);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'SettingState.initial()';
-}
-
-
-}
-
-
-
 
 /// @nodoc
 

@@ -45,7 +45,6 @@ import '../../domain/usecases/auth/init_use_case.dart' as _i104;
 import '../../domain/usecases/auth/login_use_case.dart' as _i629;
 import '../../domain/usecases/auth/logout_use_case.dart' as _i635;
 import '../../domain/usecases/auth/registration_use_case.dart' as _i314;
-import '../../domain/usecases/auth/watch_auth_status_use_case.dart' as _i997;
 import '../../domain/usecases/chats/chat_web_socket_use_case.dart' as _i190;
 import '../../domain/usecases/chats/create_chat_use_case.dart' as _i396;
 import '../../domain/usecases/chats/delete_chat_use_case.dart' as _i730;
@@ -71,6 +70,7 @@ import '../../domain/usecases/contacts/send_request_use_case.dart' as _i555;
 import '../../domain/usecases/user/get_me_use_case.dart' as _i59;
 import '../../domain/usecases/user/update_avatar_use_case.dart' as _i74;
 import '../../domain/usecases/user/update_me_use_case.dart' as _i778;
+import '../../domain/usecases/user/watch_current_user_use_case.dart' as _i317;
 import '../../presentation/cubits/contact_request/contact_requests_cubit.dart'
     as _i241;
 import '../../presentation/cubits/user/user_cubit.dart' as _i40;
@@ -81,6 +81,7 @@ import '../../presentation/pages/contacts/find_contact/cubit/find_contact_cubit.
 import '../../presentation/pages/login/cubit/login_cubit.dart' as _i419;
 import '../../presentation/pages/message_page/cubit/message_cubit.dart'
     as _i538;
+import '../../presentation/pages/profile/cubit/profile_cubit.dart' as _i855;
 import '../../presentation/pages/settings/cubit/setting_cubit.dart' as _i657;
 import '../../presentation/utils/chat_session/open_chat_tracker.dart' as _i53;
 import '../storages/interfaces/secure_storage_service.dart' as _i566;
@@ -98,25 +99,16 @@ extension GetItInjectableX on _i174.GetIt {
       () => registerModule.secureStorage,
     );
     gh.lazySingleton<_i53.OpenChatTracker>(() => _i53.OpenChatTracker());
-    gh.lazySingleton<_i73.UserRepository>(
-      () => _i991.UserRepositoryImpl(gh<_i361.Dio>()),
-    );
     gh.singleton<_i566.SecureStorageService>(
       () => _i415.SecureStorageServiceImpl(gh<_i558.FlutterSecureStorage>()),
     );
-    gh.singleton<_i866.TokenManager>(() => _i1003.TokenManagerImpl());
+    gh.singleton<_i866.TokenManager>(
+      () => _i1003.TokenManagerImpl(),
+      dispose: (i) => i.dispose(),
+    );
     gh.lazySingleton<_i361.Dio>(
       () => registerModule.dio,
       instanceName: 'basicDio',
-    );
-    gh.factory<_i59.GetMeUseCase>(
-      () => _i59.GetMeUseCase(gh<_i73.UserRepository>()),
-    );
-    gh.factory<_i74.UpdateAvatarUseCase>(
-      () => _i74.UpdateAvatarUseCase(gh<_i73.UserRepository>()),
-    );
-    gh.factory<_i778.UpdateMeUseCase>(
-      () => _i778.UpdateMeUseCase(gh<_i73.UserRepository>()),
     );
     gh.lazySingleton<_i969.NotificationWebSocket>(
       () => _i969.NotificationWebSocket(gh<_i866.TokenManager>()),
@@ -139,6 +131,10 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i361.Dio>(),
       ),
     );
+    gh.lazySingleton<_i73.UserRepository>(
+      () => _i991.UserRepositoryImpl(gh<_i361.Dio>(), gh<_i866.TokenManager>()),
+      dispose: (i) => i.dispose(),
+    );
     gh.lazySingleton<_i316.ChatRepository>(
       () => _i310.ChatRepositoryImpl(gh<_i361.Dio>(), gh<_i866.TokenManager>()),
     );
@@ -159,18 +155,20 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i104.InitUseCase>(
       () => _i104.InitUseCase(gh<_i508.AuthRepository>()),
     );
-    gh.factory<_i997.WatchAuthStatusUseCase>(
-      () => _i997.WatchAuthStatusUseCase(gh<_i508.AuthRepository>()),
+    gh.factory<_i59.GetMeUseCase>(
+      () => _i59.GetMeUseCase(gh<_i73.UserRepository>()),
+    );
+    gh.factory<_i74.UpdateAvatarUseCase>(
+      () => _i74.UpdateAvatarUseCase(gh<_i73.UserRepository>()),
+    );
+    gh.factory<_i778.UpdateMeUseCase>(
+      () => _i778.UpdateMeUseCase(gh<_i73.UserRepository>()),
     );
     gh.factory<_i314.RegistrationUseCase>(
       () => _i314.RegistrationUseCase(gh<_i374.RegistrationRepository>()),
     );
-    gh.lazySingleton<_i40.UserCubit>(
-      () => _i40.UserCubit(
-        gh<_i59.GetMeUseCase>(),
-        gh<_i104.InitUseCase>(),
-        gh<_i997.WatchAuthStatusUseCase>(),
-      ),
+    gh.factory<_i317.WatchCurrentUserUseCase>(
+      () => _i317.WatchCurrentUserUseCase(gh<_i73.UserRepository>()),
     );
     gh.factory<_i190.ChatWebSocketUseCase>(
       () => _i190.ChatWebSocketUseCase(gh<_i316.ChatRepository>()),
@@ -205,6 +203,19 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1032.UpdateMessageUseCase>(
       () => _i1032.UpdateMessageUseCase(gh<_i316.ChatRepository>()),
     );
+    gh.lazySingleton<_i40.UserCubit>(
+      () => _i40.UserCubit(
+        gh<_i59.GetMeUseCase>(),
+        gh<_i104.InitUseCase>(),
+        gh<_i317.WatchCurrentUserUseCase>(),
+      ),
+    );
+    gh.factory<_i629.LoginUseCase>(
+      () => _i629.LoginUseCase(
+        gh<_i508.AuthRepository>(),
+        gh<_i73.UserRepository>(),
+      ),
+    );
     gh.factory<_i889.AcceptRequestUseCase>(
       () => _i889.AcceptRequestUseCase(gh<_i113.ContactsRepository>()),
     );
@@ -228,9 +239,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i555.SendRequestUseCase>(
       () => _i555.SendRequestUseCase(gh<_i113.ContactsRepository>()),
-    );
-    gh.factory<_i629.LoginUseCase>(
-      () => _i629.LoginUseCase(gh<_i508.AuthRepository>()),
     );
     gh.factory<_i635.LogoutUseCase>(
       () => _i635.LogoutUseCase(gh<_i508.AuthRepository>()),
@@ -266,6 +274,13 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i781.IncomingRequestStreamUseCase>(),
       ),
     );
+    gh.factory<_i855.ProfileCubit>(
+      () => _i855.ProfileCubit(
+        gh<_i778.UpdateMeUseCase>(),
+        gh<_i74.UpdateAvatarUseCase>(),
+        gh<_i317.WatchCurrentUserUseCase>(),
+      ),
+    );
     gh.factory<_i419.LoginCubit>(
       () => _i419.LoginCubit(gh<_i629.LoginUseCase>()),
     );
@@ -283,7 +298,10 @@ extension GetItInjectableX on _i174.GetIt {
       ),
     );
     gh.factory<_i657.SettingCubit>(
-      () => _i657.SettingCubit(gh<_i635.LogoutUseCase>(), gh<_i40.UserCubit>()),
+      () => _i657.SettingCubit(
+        gh<_i635.LogoutUseCase>(),
+        gh<_i317.WatchCurrentUserUseCase>(),
+      ),
     );
     return this;
   }
