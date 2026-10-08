@@ -16,7 +16,7 @@ import 'package:dio/dio.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 
-@Injectable(as: AuthRepository)
+@LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl({
     required AuthLocalRepository authLocalRepository,
@@ -33,7 +33,10 @@ class AuthRepositoryImpl implements AuthRepository {
   final TokenManager _tokenCache;
   final NotificationWebSocket _webSocketService;
 
-  Completer<String>? _refreshCompleter;
+  Future<String>? _refreshFuture;
+
+  @override
+  Stream<bool> get isAuthorized => _tokenCache.isAuthorized;
 
   @override
   FutureOr<void> init() async {
@@ -95,10 +98,7 @@ class AuthRepositoryImpl implements AuthRepository {
     }
 
     try {
-      await _authLocalRepository.removeTokens();
-      _webSocketService.disconnect();
-
-      _tokenCache.clear();
+      await _terminateLocalSession();
     } on SecureStorageException catch (e, st) {
       throw e.toFailure(st);
     } catch (e, st) {
@@ -108,11 +108,9 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<String> refreshTokens() async {
-    if (_refreshCompleter != null) return _refreshCompleter!.future;
+  Future<String> refreshTokens() => _refreshFuture ??= _refreshTokens().whenComplete(() => _refreshFuture = null);
 
-    _refreshCompleter = Completer();
-
+  Future<String> _refreshTokens() async {
     talk.info('Tokens refresh started');
 
     try {
@@ -122,13 +120,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
       final accessToken = await RetryUtil.run<String>(
         maxAttempts: 3,
-        retryIf: (error, st) {
-          if (error is DioException) {
-            final failure = AuthFailure.fromDioException(error, st);
-            return failure is! SessionExpiredFailure;
-          }
-          return true;
-        },
+        retryIf: (error, st) => error is! DioException || _mapRefreshError(error, st) is! SessionExpiredFailure,
         action: () async {
           final newTokens = await _authRemoteRepository.refresh(refreshToken);
 
@@ -142,18 +134,43 @@ class AuthRepositoryImpl implements AuthRepository {
 
       talk.info('Token refresh successful');
 
-      _refreshCompleter!.complete(accessToken);
       return accessToken;
+    } on AuthFailure catch (failure) {
+      await _onRefreshFailed(failure);
+      rethrow;
     } on DioException catch (e, st) {
-      throw AuthFailure.fromDioException(e, st);
+      final failure = _mapRefreshError(e, st);
+      await _onRefreshFailed(failure);
+      throw failure;
     } on SecureStorageException catch (e, st) {
       throw e.toFailure(st);
     } catch (e, st) {
-      talk.error('Login error: $e, st $st');
+      talk.error('Token refresh error: $e, st $st');
       throw UnknownAuthFailure(stackTrace: st);
-    } finally {
-      _refreshCompleter = null;
     }
+  }
+
+  AuthFailure _mapRefreshError(DioException e, StackTrace st) {
+    if (e.response?.statusCode == 401) return SessionExpiredFailure(stackTrace: st);
+    return AuthFailure.fromDioException(e, st);
+  }
+
+  Future<void> _onRefreshFailed(AuthFailure failure) async {
+    if (failure is! SessionExpiredFailure) return;
+
+    talk.warning('Session expired, terminating local session');
+
+    try {
+      await _terminateLocalSession();
+    } catch (e, st) {
+      talk.error('Local session cleanup failed: $e, st $st');
+    }
+  }
+
+  Future<void> _terminateLocalSession() async {
+    _tokenCache.clear();
+    _webSocketService.disconnect();
+    await _authLocalRepository.removeTokens();
   }
 
   void _connectWebSocketService() {
