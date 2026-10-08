@@ -6,10 +6,10 @@
 import 'dart:async' as _i3;
 
 import 'package:chat_pet/domain/failures/user_failures/user_failures.dart'
-    as _i5;
+    as _i6;
 import 'package:chat_pet/domain/interfaces/user/user_repository.dart' as _i2;
-import 'package:chat_pet/domain/models/user/user_model.dart' as _i6;
-import 'package:fpdart/fpdart.dart' as _i4;
+import 'package:chat_pet/domain/models/user/user_model.dart' as _i4;
+import 'package:fpdart/fpdart.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i7;
 
@@ -37,48 +37,56 @@ class MockUserRepository extends _i1.Mock implements _i2.UserRepository {
   }
 
   @override
-  _i3.Future<_i4.Either<_i5.UserFailure, _i6.UserModel>> getMe() =>
+  _i3.Stream<_i4.UserModel?> watchCurrentUser() =>
+      (super.noSuchMethod(
+            Invocation.method(#watchCurrentUser, []),
+            returnValue: _i3.Stream<_i4.UserModel?>.empty(),
+          )
+          as _i3.Stream<_i4.UserModel?>);
+
+  @override
+  _i3.Future<_i5.Either<_i6.UserFailure, _i4.UserModel>> getMe() =>
       (super.noSuchMethod(
             Invocation.method(#getMe, []),
             returnValue:
-                _i3.Future<_i4.Either<_i5.UserFailure, _i6.UserModel>>.value(
-                  _i7.dummyValue<_i4.Either<_i5.UserFailure, _i6.UserModel>>(
+                _i3.Future<_i5.Either<_i6.UserFailure, _i4.UserModel>>.value(
+                  _i7.dummyValue<_i5.Either<_i6.UserFailure, _i4.UserModel>>(
                     this,
                     Invocation.method(#getMe, []),
                   ),
                 ),
           )
-          as _i3.Future<_i4.Either<_i5.UserFailure, _i6.UserModel>>);
+          as _i3.Future<_i5.Either<_i6.UserFailure, _i4.UserModel>>);
 
   @override
-  _i3.Future<_i4.Either<_i5.UserFailure, _i6.UserModel>> updateMe(
-    _i6.UserModel? user,
+  _i3.Future<_i5.Either<_i6.UserFailure, _i4.UserModel>> updateMe(
+    _i4.UserModel? user,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#updateMe, [user]),
             returnValue:
-                _i3.Future<_i4.Either<_i5.UserFailure, _i6.UserModel>>.value(
-                  _i7.dummyValue<_i4.Either<_i5.UserFailure, _i6.UserModel>>(
+                _i3.Future<_i5.Either<_i6.UserFailure, _i4.UserModel>>.value(
+                  _i7.dummyValue<_i5.Either<_i6.UserFailure, _i4.UserModel>>(
                     this,
                     Invocation.method(#updateMe, [user]),
                   ),
                 ),
           )
-          as _i3.Future<_i4.Either<_i5.UserFailure, _i6.UserModel>>);
+          as _i3.Future<_i5.Either<_i6.UserFailure, _i4.UserModel>>);
 
   @override
-  _i3.Future<_i4.Either<_i5.UserFailure, _i6.UserModel>> updateAvatar(
+  _i3.Future<_i5.Either<_i6.UserFailure, _i4.UserModel>> updateAvatar(
     String? imagePath,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#updateAvatar, [imagePath]),
             returnValue:
-                _i3.Future<_i4.Either<_i5.UserFailure, _i6.UserModel>>.value(
-                  _i7.dummyValue<_i4.Either<_i5.UserFailure, _i6.UserModel>>(
+                _i3.Future<_i5.Either<_i6.UserFailure, _i4.UserModel>>.value(
+                  _i7.dummyValue<_i5.Either<_i6.UserFailure, _i4.UserModel>>(
                     this,
                     Invocation.method(#updateAvatar, [imagePath]),
                   ),
                 ),
           )
-          as _i3.Future<_i4.Either<_i5.UserFailure, _i6.UserModel>>);
+          as _i3.Future<_i5.Either<_i6.UserFailure, _i4.UserModel>>);
 }
