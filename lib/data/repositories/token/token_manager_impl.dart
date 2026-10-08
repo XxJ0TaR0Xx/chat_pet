@@ -56,7 +56,9 @@ class TokenManagerImpl implements TokenManager {
   }
 
   @override
-  FutureOr<dynamic> onDispose() async {
+  @disposeMethod
+  FutureOr<dynamic> dispose() async {
+    if (_disposed) return;
     _ensureNotDisposed();
     talk.info('Disposing');
 
