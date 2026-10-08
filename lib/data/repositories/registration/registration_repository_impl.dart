@@ -1,12 +1,11 @@
-import 'package:chat_pet/domain/custom_talker/custom_talker.dart';
 import 'package:chat_pet/data/mappers/user/user_mapper.dart';
 import 'package:chat_pet/data/models/user/user_dto.dart';
+import 'package:chat_pet/domain/custom_talker/custom_talker.dart';
 import 'package:chat_pet/domain/failures/auth_failures/auth_failure.dart';
 import 'package:chat_pet/domain/interfaces/registration/registration_repository.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:dio/dio.dart';
-// ignore: implementation_imports
-import 'package:fpdart/src/either.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: RegistrationRepository)

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:chat_pet/domain/custom_talker/custom_talker.dart';
 import 'package:chat_pet/data/common/services/web_socket/chat_web_socket.dart';
 import 'package:chat_pet/data/mappers/chat/chat_mapper.dart';
 import 'package:chat_pet/data/mappers/chat/chat_socket_event_mapper.dart';
@@ -8,6 +7,7 @@ import 'package:chat_pet/data/mappers/messages/message_mapper.dart';
 import 'package:chat_pet/data/models/chat/chat_dto.dart';
 import 'package:chat_pet/data/models/message/message_dto.dart';
 import 'package:chat_pet/data/models/message/message_response_dto.dart';
+import 'package:chat_pet/domain/custom_talker/custom_talker.dart';
 import 'package:chat_pet/domain/failures/chat_failure/chat_failure.dart';
 import 'package:chat_pet/domain/interfaces/chats/chat_repository.dart';
 import 'package:chat_pet/domain/interfaces/token/token_manager.dart';
@@ -16,8 +16,7 @@ import 'package:chat_pet/domain/models/chat/chat_socket_event.dart';
 import 'package:chat_pet/domain/models/messages/message_model.dart';
 import 'package:chat_pet/domain/models/messages/message_model_response.dart';
 import 'package:dio/dio.dart';
-// ignore: implementation_imports
-import 'package:fpdart/src/either.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 
 @LazySingleton(as: ChatRepository)

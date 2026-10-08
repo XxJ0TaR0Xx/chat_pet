@@ -11,8 +11,7 @@ import 'package:chat_pet/domain/models/contacts/contact_model_request.dart';
 import 'package:chat_pet/domain/models/notifications/notification_socket_event.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:dio/dio.dart';
-import 'package:fpdart/src/either.dart';
-import 'package:fpdart/src/unit.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:injectable/injectable.dart';
 
 @Injectable(as: ContactsRepository)
