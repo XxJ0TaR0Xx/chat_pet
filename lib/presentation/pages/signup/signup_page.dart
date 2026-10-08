@@ -1,4 +1,3 @@
-import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
 import 'package:chat_pet/presentation/pages/signup/cubit/signup_cubit.dart';
 import 'package:chat_pet/presentation/route/app_routes.dart';
 import 'package:chat_pet/presentation/ui_kit/molecule/snack_bar/custom_snack_bar.dart';
@@ -83,7 +82,6 @@ class _SignupPageState extends State<SignupPage> {
                     }
 
                     if (state is SignupStateLoaded) {
-                      context.read<UserCubit>().setUser(state.user);
                       GoRouter.of(context).go(AppRoutes.chats);
                     }
                   },

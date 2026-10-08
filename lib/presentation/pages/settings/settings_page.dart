@@ -39,7 +39,6 @@ class SettingsPage extends StatelessWidget {
               },
               builder: (context, state) {
                 return state.when(
-                  initial: SizedBox.shrink,
                   loading: LoadingWidget.new,
                   error: (errorMessage) => Column(
                     children: [
@@ -49,11 +48,6 @@ class SettingsPage extends StatelessWidget {
                         style: context.uiKitTheme?.carosTextTheme.bold.copyWith(color: Colors.white),
                         textAlign: TextAlign.center,
                       ).paddingHorizontal(SpacingFoundation.horizontalSpacing16),
-                      SpacingFoundation.verticalSpace16,
-                      UiKitButton.primary(
-                        text: S.of(context).Repeat,
-                        onTap: () => context.read<SettingCubit>().initialize(),
-                      ),
                       const Spacer(),
                     ],
                   ),
