@@ -3,6 +3,7 @@ import 'package:chat_pet/presentation/cubits/contact_request/contact_requests_cu
 import 'package:chat_pet/presentation/pages/chats/cubit/chat_cubit.dart';
 import 'package:chat_pet/presentation/pages/contacts/cubit/contacts_cubit.dart';
 import 'package:chat_pet/presentation/pages/home/widgets/bottom_navigation_icon.dart';
+import 'package:chat_pet/presentation/pages/home/widgets/incoming_message_listener.dart';
 import 'package:chat_pet/presentation/pages/settings/cubit/setting_cubit.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class HomeScope extends StatelessWidget {
         BlocProvider(create: (_) => getIt.get<SettingCubit>()),
         BlocProvider(create: (_) => getIt.get<ChatCubit>()),
         BlocProvider(create: (_) => getIt.get<ContactsCubit>()),
+        BlocProvider(create: (_) => getIt<ContactModelRequestsCubit>()),
       ],
       child: child,
     );
@@ -43,14 +45,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late final ContactRequestsCubit _cubit;
-
-  @override
-  void initState() {
-    super.initState();
-    _cubit = getIt.get<ContactRequestsCubit>();
-  }
-
   void _onTabSelected(int index) {
     widget.navigationShell.goBranch(
       index,
@@ -64,23 +58,29 @@ class _HomePageState extends State<HomePage> {
     final currentIndex = widget.navigationShell.currentIndex;
 
     return HomeScope(
-      child: Scaffold(
-        backgroundColor: theme?.colorScheme.darkNeutral,
-        bottomNavigationBar: DecoratedBox(
-          decoration: BoxDecoration(
-            color: theme?.colorScheme.surfaceBase,
-          ),
-          child: BlocBuilder<ContactRequestsCubit, ContactRequestState>(
-            bloc: _cubit,
-            builder: (context, state) =>
+      child: IncomingMessageListener(
+        child: Scaffold(
+          backgroundColor: theme?.colorScheme.darkNeutral,
+          bottomNavigationBar: DecoratedBox(
+            decoration: BoxDecoration(
+              color: theme?.colorScheme.surfaceBase,
+            ),
+            child:
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    BottomNavigationIcon(
-                      icon: AppIcons.message,
-                      title: S.of(context).Message,
-                      isActive: currentIndex == 0,
-                      onTap: () => _onTabSelected(0),
+                    BlocBuilder<ChatCubit, ChatState>(
+                      builder: (context, state) {
+                        final showBadge = state is ChatStateLoaded ? state.models.any((chat) => chat.unreadCount > 0) : false;
+
+                        return BottomNavigationIcon(
+                          icon: AppIcons.message,
+                          title: S.of(context).Message,
+                          isActive: currentIndex == 0,
+                          showBadge: showBadge,
+                          onTap: () => _onTabSelected(0),
+                        );
+                      },
                     ),
                     BottomNavigationIcon(
                       icon: AppIcons.calls,
@@ -88,12 +88,14 @@ class _HomePageState extends State<HomePage> {
                       isActive: currentIndex == 1,
                       onTap: () => _onTabSelected(1),
                     ),
-                    BottomNavigationIcon(
-                      icon: AppIcons.contacts,
-                      title: S.of(context).Contacts,
-                      isActive: currentIndex == 2,
-                      onTap: () => _onTabSelected(2),
-                      showBadge: state.hasPending,
+                    BlocBuilder<ContactModelRequestsCubit, ContactModelRequestState>(
+                      builder: (context, state) => BottomNavigationIcon(
+                        icon: AppIcons.contacts,
+                        title: S.of(context).Contacts,
+                        isActive: currentIndex == 2,
+                        onTap: () => _onTabSelected(2),
+                        showBadge: state.hasPending,
+                      ),
                     ),
                     BottomNavigationIcon(
                       icon: AppIcons.settings,
@@ -109,8 +111,8 @@ class _HomePageState extends State<HomePage> {
                   bottom: SpacingFoundation.verticalSpacing24,
                 ),
           ),
+          body: widget.navigationShell,
         ),
-        body: widget.navigationShell,
       ),
     );
   }

@@ -85,10 +85,11 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                 AutoSizeText(
                   S.of(context).ConnectFriendsEasilyQuickly,
                   maxLines: 4,
+                  minFontSize: 50.w.floorToDouble(),
                   wrapWords: false,
                   style: theme?.carosTextTheme.medium.copyWith(
-                    fontSize: 68.w,
                     color: ColorsFoundation.lightSurface,
+                    fontSize: 68.w,
                   ),
                 ),
                 SpacingFoundation.verticalSpace16,
@@ -130,7 +131,7 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                   spacing: SpacingFoundation.horizontalSpacing4,
                   children: [
                     Text(
-                      'Нет аккаута?',
+                      S.of(context).NoAccount,
                       style: theme?.circularStdTextTheme.medium.copyWith(
                         color: ColorsFoundation.mutedText,
                         fontSize: 13.w,

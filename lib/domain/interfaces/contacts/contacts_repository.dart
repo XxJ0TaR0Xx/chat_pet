@@ -1,5 +1,5 @@
 import 'package:chat_pet/domain/failures/contacts_failure/contacts_failure.dart';
-import 'package:chat_pet/domain/models/contacts/contact_request.dart';
+import 'package:chat_pet/domain/models/contacts/contact_model_request.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:fpdart/fpdart.dart';
 
@@ -16,7 +16,7 @@ abstract interface class ContactsRepository {
 
   Future<Either<ContactsFailure, Unit>> deleteContacts(String contactId);
 
-  Future<Either<ContactsFailure, List<ContactRequest>>> incomingRequest();
+  Future<Either<ContactsFailure, List<ContactModelRequest>>> incomingRequest();
 
-  Stream<ContactRequest> get incomingRequestStream;
+  Stream<ContactModelRequest> get incomingRequestStream;
 }

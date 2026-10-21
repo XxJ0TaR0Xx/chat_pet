@@ -5,6 +5,8 @@ import 'package:chat_pet/domain/failures/auth_failures/auth_failure.dart';
 import 'package:fpdart/fpdart.dart';
 
 abstract interface class AuthRepository implements Logoutable {
+  Stream<bool> get isAuthorized;
+
   FutureOr<void> init();
 
   Future<Either<AuthFailure, void>> login({

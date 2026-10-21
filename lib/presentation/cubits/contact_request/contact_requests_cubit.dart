@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:chat_pet/data/common/custom_talker/custom_talker.dart';
-import 'package:chat_pet/domain/models/contacts/contact_request.dart';
+import 'package:chat_pet/domain/custom_talker/custom_talker.dart';
+import 'package:chat_pet/domain/models/contacts/contact_model_request.dart';
 import 'package:chat_pet/domain/usecases/contacts/accept_request_use_case.dart';
 import 'package:chat_pet/domain/usecases/contacts/incoming_request_stream_use_case.dart';
 import 'package:chat_pet/domain/usecases/contacts/incoming_requests_use_case.dart';
@@ -14,13 +14,13 @@ part 'contact_requests_state.dart';
 part 'contact_requests_cubit.freezed.dart';
 
 @lazySingleton
-class ContactRequestsCubit extends Cubit<ContactRequestState> {
-  ContactRequestsCubit(
+class ContactModelRequestsCubit extends Cubit<ContactModelRequestState> {
+  ContactModelRequestsCubit(
     this._incomingRequestsUseCase,
     this._acceptRequestUseCase,
     this._rejectRequestUseCase,
     this._incomingRequestStreamUseCase,
-  ) : super(ContactRequestState()) {
+  ) : super(const ContactModelRequestState()) {
     _init();
     _listen();
   }
@@ -29,12 +29,12 @@ class ContactRequestsCubit extends Cubit<ContactRequestState> {
   final RejectRequestUseCase _rejectRequestUseCase;
   final IncomingRequestStreamUseCase _incomingRequestStreamUseCase;
 
-  StreamSubscription<ContactRequest>? _sub;
+  StreamSubscription<ContactModelRequest>? _sub;
 
   Future<void> acceptRequest(String requestId) async {
     final result = await _acceptRequestUseCase(requestId: requestId);
     result.fold(
-      (failure) => talk.error('ContactRequestsCubit acceptRequest error: ${failure.message}'),
+      (failure) => talk.error('ContactModelRequestsCubit acceptRequest error: ${failure.message}'),
       (_) => _dismiss(requestId),
     );
   }
@@ -42,7 +42,7 @@ class ContactRequestsCubit extends Cubit<ContactRequestState> {
   Future<void> rejectRequest(String requestId) async {
     final result = await _rejectRequestUseCase(requestId: requestId);
     result.fold(
-      (failure) => talk.error('ContactRequestsCubit rejectRequest error: ${failure.message}'),
+      (failure) => talk.error('ContactModelRequestsCubit rejectRequest error: ${failure.message}'),
       (_) => _dismiss(requestId),
     );
   }
@@ -58,7 +58,7 @@ class ContactRequestsCubit extends Cubit<ContactRequestState> {
   void _init() {
     _incomingRequestsUseCase.call().then(
       (result) => result.fold(
-        (failure) => talk.error('ContactRequestsCubit _init error: ${failure.message} StackTrace: ${failure.stackTrace}'),
+        (failure) => talk.error('ContactModelRequestsCubit _init error: ${failure.message} StackTrace: ${failure.stackTrace}'),
         (requests) => emit(state.copyWith(request: requests)),
       ),
     );
@@ -67,7 +67,7 @@ class ContactRequestsCubit extends Cubit<ContactRequestState> {
   void _listen() {
     _sub = _incomingRequestStreamUseCase.call().listen(
       (request) => emit(state.copyWith(request: [...state.request, request])),
-      onError: (e) => talk.error('ContactRequestsCubit _listen error: $e'),
+      onError: (e) => talk.error('ContactModelRequestsCubit _listen error: $e'),
     );
   }
 

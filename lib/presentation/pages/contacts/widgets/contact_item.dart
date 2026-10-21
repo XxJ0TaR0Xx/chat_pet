@@ -13,9 +13,11 @@ abstract class ContactItem extends StatelessWidget {
   factory ContactItem.my({
     required UserModel user,
     ValueChanged<String>? onDeleteUser,
+    ValueChanged<String>? onTap,
   }) => _MyContactsItem(
     user: user,
     onDeleteUser: onDeleteUser,
+    onTap: onTap,
   );
 
   factory ContactItem.other({
@@ -36,21 +38,29 @@ class _MyContactsItem extends ContactItem {
   const _MyContactsItem({
     required super.user,
     required super.onDeleteUser,
+    this.onTap,
   });
+
+  final ValueChanged<String>? onTap;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _CommonContactPart(user: user),
-        const Spacer(),
-        InkWell(
-          onTap: () => onDeleteUser?.call(user.id),
-          child: Icon(
-            Icons.delete,
-            color: ColorsFoundation.error.withValues(alpha: 0.5),
+        Expanded(
+          child: InkWell(
+            onTap: onTap == null ? null : () => onTap!(user.id),
+            child: _CommonContactPart(user: user),
           ),
         ),
+        if (onDeleteUser != null)
+          InkWell(
+            onTap: () => onDeleteUser?.call(user.id),
+            child: Icon(
+              Icons.delete,
+              color: ColorsFoundation.error.withValues(alpha: 0.5),
+            ),
+          ),
       ],
     );
   }
@@ -109,7 +119,6 @@ class _CommonContactPart extends StatelessWidget {
     return Row(
       children: [
         AvatarWidget(
-          codeForGen: '123123',
           size: 52.w,
           url: user.avatarUrl,
         ),

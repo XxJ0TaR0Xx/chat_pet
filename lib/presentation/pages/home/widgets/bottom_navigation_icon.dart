@@ -35,7 +35,7 @@ class BottomNavigationIcon extends StatelessWidget {
                   child: Container(
                     width: 10,
                     height: 10,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: ColorsFoundation.orange,
                     ),

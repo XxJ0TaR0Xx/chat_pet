@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:chat_pet/app.dart';
 import 'package:chat_pet/core/injectable/injectable.dart';
 import 'package:chat_pet/core/localization/l10n.dart';
+import 'package:chat_pet/domain/models/chat/chat_model.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/presentation/cubits/contact_request/contact_requests_cubit.dart';
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
@@ -29,7 +30,7 @@ const _fakeUser = UserModel(id: 'u1', userTag: '@tester', name: 'Test', lastName
   ChatCubit,
   ContactsCubit,
   SettingCubit,
-  ContactRequestsCubit,
+  ContactModelRequestsCubit,
 ])
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +40,7 @@ void main() {
   late MockChatCubit mockChatCubit;
   late MockContactsCubit mockContactsCubit;
   late MockSettingCubit mockSettingCubit;
-  late MockContactRequestsCubit mockContactRequestsCubit;
+  late MockContactModelRequestsCubit mockContactModelRequestsCubit;
   late StreamController<LoginState> loginStateController;
 
   setUp(() {
@@ -48,17 +49,17 @@ void main() {
     mockChatCubit = MockChatCubit();
     mockContactsCubit = MockContactsCubit();
     mockSettingCubit = MockSettingCubit();
-    mockContactRequestsCubit = MockContactRequestsCubit();
+    mockContactModelRequestsCubit = MockContactModelRequestsCubit();
 
     loginStateController = StreamController<LoginState>.broadcast();
 
-    when(mockUserCubit.state).thenReturn(const UserState.error('unauthenticated'));
+    when(mockUserCubit.state).thenReturn(const UserState(isLoading: false));
     when(mockUserCubit.stream).thenAnswer((_) => const Stream.empty());
 
     when(mockLoginCubit.state).thenReturn(const LoginState.initial());
     when(mockLoginCubit.stream).thenAnswer((_) => loginStateController.stream);
 
-    when(mockChatCubit.state).thenReturn(const ChatState.loaded(_fakeUser));
+    when(mockChatCubit.state).thenReturn(const ChatState.loaded(<ChatModel>[]));
     when(mockChatCubit.stream).thenAnswer((_) => const Stream.empty());
 
     when(mockContactsCubit.state).thenReturn(const ContactsState.loaded(<String, List<UserModel>>{}));
@@ -67,15 +68,15 @@ void main() {
     when(mockSettingCubit.state).thenReturn(const SettingState.loaded(_fakeUser));
     when(mockSettingCubit.stream).thenAnswer((_) => const Stream.empty());
 
-    when(mockContactRequestsCubit.state).thenReturn(const ContactRequestState());
-    when(mockContactRequestsCubit.stream).thenAnswer((_) => const Stream.empty());
+    when(mockContactModelRequestsCubit.state).thenReturn(const ContactModelRequestState());
+    when(mockContactModelRequestsCubit.stream).thenAnswer((_) => const Stream.empty());
 
     getIt.registerFactory<UserCubit>(() => mockUserCubit);
     getIt.registerFactory<LoginCubit>(() => mockLoginCubit);
     getIt.registerFactory<ChatCubit>(() => mockChatCubit);
     getIt.registerFactory<ContactsCubit>(() => mockContactsCubit);
     getIt.registerFactory<SettingCubit>(() => mockSettingCubit);
-    getIt.registerFactory<ContactRequestsCubit>(() => mockContactRequestsCubit);
+    getIt.registerFactory<ContactModelRequestsCubit>(() => mockContactModelRequestsCubit);
   });
 
   tearDown(() async {
@@ -120,7 +121,7 @@ void main() {
     loginStateController.add(const LoginState.loading());
     await tester.pump();
 
-    when(mockUserCubit.state).thenReturn(const UserState.loaded(_fakeUser));
+    when(mockUserCubit.state).thenReturn(const UserState(user: _fakeUser, isLoading: false));
     loginStateController.add(const LoginState.loaded());
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));

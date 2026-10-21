@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:chat_pet/core/localization/l10n.dart';
-import 'package:chat_pet/data/common/custom_talker/custom_talker.dart';
+import 'package:chat_pet/domain/custom_talker/custom_talker.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/domain/usecases/auth/logout_use_case.dart';
-import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
+import 'package:chat_pet/domain/usecases/user/watch_current_user_use_case.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -14,52 +14,43 @@ part 'setting_cubit.freezed.dart';
 
 @injectable
 class SettingCubit extends Cubit<SettingState> {
-  SettingCubit(LogoutUseCase logoutUseCase, UserCubit userCubit)
-    : _logoutUseCase = logoutUseCase,
-      _userCubit = userCubit,
-      super(const SettingState.initial()) {
-    initialize();
-    _userSub = userCubit.stream.listen((userState) {
-      if (userState is UserStateLoaded) initialize();
-    });
+  SettingCubit(
+    this._logoutUseCase,
+    this._watchCurrentUserUseCase,
+  ) : super(const SettingState.loading()) {
+    _userSub = _watchCurrentUserUseCase.call().listen(_updateUser);
   }
 
   final LogoutUseCase _logoutUseCase;
-  final UserCubit _userCubit;
-  late final StreamSubscription<UserState> _userSub;
-
-  void initialize() {
-    emit(const SettingState.loading());
-    final user = _userCubit.currentUser;
-
-    if (user != null) {
-      emit(SettingState.loaded(user));
-    } else {
-      emit(SettingState.error(S.current.ErrorMsg(S.current.CouldntFindTheUser)));
-    }
-  }
+  final WatchCurrentUserUseCase _watchCurrentUserUseCase;
+  late final StreamSubscription<UserModel?> _userSub;
 
   @override
-  Future<void> close() {
-    _userSub.cancel();
+  Future<void> close() async {
+    await _userSub.cancel();
     return super.close();
   }
 
   Future<void> logout() async {
-    final user = _userCubit.currentUser;
-    if (user == null) {
-      emit(SettingState.error(S.current.CouldntFindTheUser));
-      return;
-    }
+    final state = this.state;
+    if (state is! SettingStateLoaded) return;
 
     emit(const SettingState.loading());
 
     try {
       await _logoutUseCase.call();
-      _userCubit.clearUser();
     } catch (e, st) {
       talk.error('Logout error: $e: StackTrace: $st');
-      emit(SettingState.loaded(user, transientError: S.current.SomethingWentWrong));
+      emit(SettingState.loaded(state.userModel, transientError: S.current.SomethingWentWrong));
     }
+  }
+
+  void _updateUser(UserModel? user) {
+    if (user == null) {
+      emit(const SettingState.loading());
+      return;
+    }
+
+    emit(SettingState.loaded(user));
   }
 }

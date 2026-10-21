@@ -1,5 +1,4 @@
-import 'package:chat_pet/data/common/custom_talker/custom_talker.dart';
-import 'package:chat_pet/presentation/cubits/user/user_cubit.dart';
+import 'package:chat_pet/domain/custom_talker/custom_talker.dart';
 import 'package:chat_pet/presentation/pages/login/cubit/login_cubit.dart';
 import 'package:chat_pet/presentation/pages/start/widgets/or_row_widget.dart';
 import 'package:chat_pet/presentation/pages/start/widgets/social_links_widget.dart';
@@ -69,12 +68,11 @@ class _LoginPageState extends State<LoginPage> {
                     if (state is LoginStateError) {
                       CustomSnackBar(
                         context,
-                        text: 'Ошибка: ${state.errorMessage}',
+                        text: S.of(context).ErrorMsg(state.errorMessage),
                       ).showErrorMessage();
                     }
                     if (state is LoginStateLoaded) {
                       talk.info('Успешный логин - переходим на главную страницу');
-                      context.read<UserCubit>().getMe();
                       GoRouter.of(context).go(AppRoutes.chats);
                     }
                   },
@@ -145,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                           label: S.of(context).YourEmail,
                           validator: (text) {
                             if (text == null || text.trim().isEmpty) {
-                              return 'Это поле не может быть пустым';
+                              return S.of(context).ThisFieldCannotBeEmpty;
                             }
 
                             return null;
@@ -165,11 +163,11 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           validator: (text) {
                             if (text == null || text.trim().isEmpty) {
-                              return 'Это поле не может быть пустым';
+                              return S.of(context).ThisFieldCannotBeEmpty;
                             }
 
                             if (text.trim().length < 6) {
-                              return 'Минимальная длина пароля 6 символов';
+                              return S.of(context).PasswordMinLength;
                             }
 
                             return null;

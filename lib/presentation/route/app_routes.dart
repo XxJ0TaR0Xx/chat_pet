@@ -14,6 +14,7 @@ abstract final class AppRoutes {
   static const String profileSegment = 'profile';
   static const String chatSegment = ':id';
   static const String newContacts = 'new-contacts';
+  static const String selectContactSegment = 'select';
 
   // Full paths — used for navigation (push/go/redirect)
   static const String login = '$start/$loginSegment';
@@ -21,5 +22,6 @@ abstract final class AppRoutes {
   static const String settingsProfile = '$settings/$profileSegment';
   static const String chatId = '$chats/$chatSegment';
   static const String findNewContacts = '$contacts/$newContacts';
+  static const String selectContact = '$contacts/$selectContactSegment';
   static const String settingsProfileMap = '$settings/$profileSegment/$map';
 }

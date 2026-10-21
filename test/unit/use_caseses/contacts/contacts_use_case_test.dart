@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:chat_pet/domain/failures/contacts_failure/contacts_failure.dart';
 import 'package:chat_pet/domain/interfaces/contacts/contacts_repository.dart';
-import 'package:chat_pet/domain/models/contacts/contact_request.dart';
+import 'package:chat_pet/domain/models/contacts/contact_model_request.dart';
 import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/domain/usecases/contacts/accept_request_use_case.dart';
 import 'package:chat_pet/domain/usecases/contacts/delete_contact_use_case.dart';
@@ -25,7 +25,7 @@ void main() {
   provideDummy<Either<ContactsFailure, UserModel>>(const Right(userModel));
   provideDummy<Either<ContactsFailure, Unit>>(const Right(unit));
   provideDummy<Either<ContactsFailure, List<UserModel>>>(const Right([]));
-  provideDummy<Either<ContactsFailure, List<ContactRequest>>>(const Right([]));
+  provideDummy<Either<ContactsFailure, List<ContactModelRequest>>>(const Right([]));
 
   late MockContactsRepository mockContactsRepository;
 
@@ -149,11 +149,11 @@ void main() {
 
   group('Get Contacts Use Case', () {
     late IncomingRequestStreamUseCase incomingRequestStreamUseCase;
-    late StreamController<ContactRequest> controller;
+    late StreamController<ContactModelRequest> controller;
 
     setUp(() {
       incomingRequestStreamUseCase = IncomingRequestStreamUseCase(mockContactsRepository);
-      controller = StreamController<ContactRequest>.broadcast();
+      controller = StreamController<ContactModelRequest>.broadcast();
       when(mockContactsRepository.incomingRequestStream).thenAnswer((_) => controller.stream);
     });
 
@@ -162,7 +162,7 @@ void main() {
     test(
       'Success: returned stream from repo',
       () async {
-        const tRequest = ContactRequest(
+        const tRequest = ContactModelRequest(
           id: 'id',
           sender: UserModel(id: 'id', userTag: 'userTag'),
         );

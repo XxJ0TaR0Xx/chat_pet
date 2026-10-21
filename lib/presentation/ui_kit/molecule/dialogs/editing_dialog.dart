@@ -21,6 +21,20 @@ Future<void> editingDialog(
 
   await UiKitDialog(
     title: S.of(context).Editing,
+    buttons: [
+      ButtonDialogContent.regular(
+        title: S.of(context).Cancel,
+        onTap: () => GoRouter.of(context).pop(),
+      ),
+      ButtonDialogContent.primary(
+        title: S.of(context).Save,
+        onTap: () {
+          if (formKey.currentState?.validate() ?? false) {
+            onTap?.call(controller.text.trim());
+          }
+        },
+      ),
+    ],
     content: [
       Row(
         children: [
@@ -34,24 +48,6 @@ Future<void> editingDialog(
                 keyboardType: isNumber ? TextInputType.phone : TextInputType.text,
                 validator: (text) => isNumber ? FormValidators.phoneValidate(text) : FormValidators.requiredValue(text),
               ),
-            ),
-          ),
-        ],
-      ),
-      Row(
-        spacing: SpacingFoundation.horizontalSpacing12,
-        children: [
-          Expanded(
-            child: UiKitButton(text: S.of(context).Cancel, onTap: () => GoRouter.of(context).pop()),
-          ),
-          Expanded(
-            child: UiKitButton.primary(
-              text: S.of(context).Save,
-              onTap: () {
-                if (formKey.currentState?.validate() ?? false) {
-                  onTap?.call(controller.text.trim());
-                }
-              },
             ),
           ),
         ],

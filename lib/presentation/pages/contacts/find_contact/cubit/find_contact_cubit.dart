@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:chat_pet/core/localization/l10n.dart';
@@ -8,6 +7,7 @@ import 'package:chat_pet/domain/models/user/user_model.dart';
 import 'package:chat_pet/domain/usecases/contacts/delete_contact_use_case.dart';
 import 'package:chat_pet/domain/usecases/contacts/search_contacts_use_case.dart';
 import 'package:chat_pet/domain/usecases/contacts/send_request_use_case.dart';
+import 'package:chat_pet/presentation/utils/failure_localization/failure_localization.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -20,7 +20,7 @@ class FindContactCubit extends Cubit<FindContactState> {
     this._searchUsersUseCase,
     this._sendRequestUseCase,
     this._deleteContactUseCase,
-  ) : super(_Loaded([]));
+  ) : super(const _Loaded([]));
 
   final SearchContactsUseCase _searchUsersUseCase;
   final SendRequestUseCase _sendRequestUseCase;
@@ -34,7 +34,7 @@ class FindContactCubit extends Cubit<FindContactState> {
     final q = query.trim();
 
     if (q.isEmpty) {
-      emit(_Loaded([]));
+      emit(const _Loaded([]));
 
       return;
     }
@@ -44,7 +44,7 @@ class FindContactCubit extends Cubit<FindContactState> {
 
       final result = await _searchUsersUseCase(userTag: q);
       result.fold(
-        (failure) => emit(_Error(S.current.ErrorMsg(failure.message))),
+        (failure) => emit(_Error(failure.localize(S.current))),
         (contacts) {
           _lastContacts.clear();
           _lastContacts.addAll(contacts);
@@ -58,12 +58,10 @@ class FindContactCubit extends Cubit<FindContactState> {
     final response = await _sendRequestUseCase.call(userId: userId);
 
     response.fold(
-      (failure) => emit(_Error(S.current.ErrorMsg(failure.message))),
+      (failure) => emit(_Error(failure.localize(S.current))),
       (_) {
         final index = _lastContacts.indexWhere((contact) => contact.id == userId);
-        log('_lastContacts[index].friendshipStatus 1 ${_lastContacts[index].friendshipStatus}');
         _lastContacts[index] = _lastContacts[index].copyWith(friendshipStatus: FriendEnum.pendingSent);
-        log('_lastContacts[index].friendshipStatus 2 ${_lastContacts[index].friendshipStatus}');
 
         emit(_Loaded([..._lastContacts]));
       },
@@ -74,7 +72,7 @@ class FindContactCubit extends Cubit<FindContactState> {
     final response = await _deleteContactUseCase.call(contactId: contactId);
 
     response.fold(
-      (failure) => emit(_Error(S.current.ErrorMsg(failure.message))),
+      (failure) => emit(_Error(failure.localize(S.current))),
       (_) => {},
     );
   }

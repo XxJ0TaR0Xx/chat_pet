@@ -33,7 +33,7 @@ class ChatPetIcon {
       _iconsMap[icon]!,
       width: size,
       height: size,
-      colorFilter: icon == AppIcons.apple && isWhiteBackground ? ColorFilter.mode(Colors.black, BlendMode.srcIn) : null,
+      colorFilter: icon == AppIcons.apple && isWhiteBackground ? const ColorFilter.mode(Colors.black, BlendMode.srcIn) : null,
       fit: BoxFit.fill,
     );
   }

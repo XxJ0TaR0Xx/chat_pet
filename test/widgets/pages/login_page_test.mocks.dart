@@ -6,7 +6,6 @@
 import 'dart:async' as _i4;
 
 import 'package:bloc/bloc.dart' as _i5;
-import 'package:chat_pet/domain/models/user/user_model.dart' as _i6;
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart' as _i3;
 import 'package:chat_pet/presentation/pages/login/cubit/login_cubit.dart'
     as _i2;
@@ -148,21 +147,9 @@ class MockUserCubit extends _i1.Mock implements _i3.UserCubit {
           as bool);
 
   @override
-  void setUser(_i6.UserModel? user) => super.noSuchMethod(
-    Invocation.method(#setUser, [user]),
-    returnValueForMissingStub: null,
-  );
-
-  @override
-  void clearUser() => super.noSuchMethod(
-    Invocation.method(#clearUser, []),
-    returnValueForMissingStub: null,
-  );
-
-  @override
-  _i4.Future<void> getMe() =>
+  _i4.Future<void> close() =>
       (super.noSuchMethod(
-            Invocation.method(#getMe, []),
+            Invocation.method(#close, []),
             returnValue: _i4.Future<void>.value(),
             returnValueForMissingStub: _i4.Future<void>.value(),
           )
@@ -191,13 +178,4 @@ class MockUserCubit extends _i1.Mock implements _i3.UserCubit {
     Invocation.method(#onError, [error, stackTrace]),
     returnValueForMissingStub: null,
   );
-
-  @override
-  _i4.Future<void> close() =>
-      (super.noSuchMethod(
-            Invocation.method(#close, []),
-            returnValue: _i4.Future<void>.value(),
-            returnValueForMissingStub: _i4.Future<void>.value(),
-          )
-          as _i4.Future<void>);
 }

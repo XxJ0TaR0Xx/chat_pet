@@ -1,9 +1,8 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'auth_request.freezed.dart';
-part 'auth_request.g.dart';
 
-@Freezed(toJson: true)
+@freezed
 abstract class AuthRequest with _$AuthRequest {
   const factory AuthRequest({
     required String email,

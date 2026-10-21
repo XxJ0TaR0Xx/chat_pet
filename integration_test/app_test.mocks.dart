@@ -5,12 +5,14 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i8;
 
-import 'package:bloc/bloc.dart' as _i10;
-import 'package:chat_pet/domain/models/user/user_model.dart' as _i9;
+import 'package:bloc/bloc.dart' as _i9;
+import 'package:chat_pet/domain/models/chat/chat_model.dart' as _i11;
 import 'package:chat_pet/presentation/cubits/contact_request/contact_requests_cubit.dart'
     as _i7;
 import 'package:chat_pet/presentation/cubits/user/user_cubit.dart' as _i2;
 import 'package:chat_pet/presentation/pages/chats/cubit/chat_cubit.dart' as _i4;
+import 'package:chat_pet/presentation/pages/chats/cubit/incoming_chat_message.dart'
+    as _i10;
 import 'package:chat_pet/presentation/pages/contacts/cubit/contacts_cubit.dart'
     as _i5;
 import 'package:chat_pet/presentation/pages/login/cubit/login_cubit.dart'
@@ -59,9 +61,9 @@ class _FakeSettingState_4 extends _i1.SmartFake implements _i6.SettingState {
     : super(parent, parentInvocation);
 }
 
-class _FakeContactRequestState_5 extends _i1.SmartFake
-    implements _i7.ContactRequestState {
-  _FakeContactRequestState_5(Object parent, Invocation parentInvocation)
+class _FakeContactModelRequestState_5 extends _i1.SmartFake
+    implements _i7.ContactModelRequestState {
+  _FakeContactModelRequestState_5(Object parent, Invocation parentInvocation)
     : super(parent, parentInvocation);
 }
 
@@ -95,21 +97,9 @@ class MockUserCubit extends _i1.Mock implements _i2.UserCubit {
           as bool);
 
   @override
-  void setUser(_i9.UserModel? user) => super.noSuchMethod(
-    Invocation.method(#setUser, [user]),
-    returnValueForMissingStub: null,
-  );
-
-  @override
-  void clearUser() => super.noSuchMethod(
-    Invocation.method(#clearUser, []),
-    returnValueForMissingStub: null,
-  );
-
-  @override
-  _i8.Future<void> getMe() =>
+  _i8.Future<void> close() =>
       (super.noSuchMethod(
-            Invocation.method(#getMe, []),
+            Invocation.method(#close, []),
             returnValue: _i8.Future<void>.value(),
             returnValueForMissingStub: _i8.Future<void>.value(),
           )
@@ -122,7 +112,7 @@ class MockUserCubit extends _i1.Mock implements _i2.UserCubit {
   );
 
   @override
-  void onChange(_i10.Change<_i2.UserState>? change) => super.noSuchMethod(
+  void onChange(_i9.Change<_i2.UserState>? change) => super.noSuchMethod(
     Invocation.method(#onChange, [change]),
     returnValueForMissingStub: null,
   );
@@ -138,15 +128,6 @@ class MockUserCubit extends _i1.Mock implements _i2.UserCubit {
     Invocation.method(#onError, [error, stackTrace]),
     returnValueForMissingStub: null,
   );
-
-  @override
-  _i8.Future<void> close() =>
-      (super.noSuchMethod(
-            Invocation.method(#close, []),
-            returnValue: _i8.Future<void>.value(),
-            returnValueForMissingStub: _i8.Future<void>.value(),
-          )
-          as _i8.Future<void>);
 }
 
 /// A class which mocks [LoginCubit].
@@ -203,7 +184,7 @@ class MockLoginCubit extends _i1.Mock implements _i3.LoginCubit {
   );
 
   @override
-  void onChange(_i10.Change<_i3.LoginState>? change) => super.noSuchMethod(
+  void onChange(_i9.Change<_i3.LoginState>? change) => super.noSuchMethod(
     Invocation.method(#onChange, [change]),
     returnValueForMissingStub: null,
   );
@@ -239,6 +220,14 @@ class MockChatCubit extends _i1.Mock implements _i4.ChatCubit {
   }
 
   @override
+  _i8.Stream<_i10.IncomingChatMessage> get incomingMessages =>
+      (super.noSuchMethod(
+            Invocation.getter(#incomingMessages),
+            returnValue: _i8.Stream<_i10.IncomingChatMessage>.empty(),
+          )
+          as _i8.Stream<_i10.IncomingChatMessage>);
+
+  @override
   _i4.ChatState get state =>
       (super.noSuchMethod(
             Invocation.getter(#state),
@@ -260,13 +249,27 @@ class MockChatCubit extends _i1.Mock implements _i4.ChatCubit {
           as bool);
 
   @override
-  _i8.Future<void> getCharts() =>
+  _i8.Future<void> getChats() =>
       (super.noSuchMethod(
-            Invocation.method(#getCharts, []),
+            Invocation.method(#getChats, []),
             returnValue: _i8.Future<void>.value(),
             returnValueForMissingStub: _i8.Future<void>.value(),
           )
           as _i8.Future<void>);
+
+  @override
+  _i8.Future<_i11.ChatModel?> createChat(String? friendId) =>
+      (super.noSuchMethod(
+            Invocation.method(#createChat, [friendId]),
+            returnValue: _i8.Future<_i11.ChatModel?>.value(),
+          )
+          as _i8.Future<_i11.ChatModel?>);
+
+  @override
+  void clearUncheckedMessageCount(String? chatId) => super.noSuchMethod(
+    Invocation.method(#clearUncheckedMessageCount, [chatId]),
+    returnValueForMissingStub: null,
+  );
 
   @override
   _i8.Future<void> close() =>
@@ -284,7 +287,7 @@ class MockChatCubit extends _i1.Mock implements _i4.ChatCubit {
   );
 
   @override
-  void onChange(_i10.Change<_i4.ChatState>? change) => super.noSuchMethod(
+  void onChange(_i9.Change<_i4.ChatState>? change) => super.noSuchMethod(
     Invocation.method(#onChange, [change]),
     returnValueForMissingStub: null,
   );
@@ -368,7 +371,7 @@ class MockContactsCubit extends _i1.Mock implements _i5.ContactsCubit {
   );
 
   @override
-  void onChange(_i10.Change<_i5.ContactsState>? change) => super.noSuchMethod(
+  void onChange(_i9.Change<_i5.ContactsState>? change) => super.noSuchMethod(
     Invocation.method(#onChange, [change]),
     returnValueForMissingStub: null,
   );
@@ -425,12 +428,6 @@ class MockSettingCubit extends _i1.Mock implements _i6.SettingCubit {
           as bool);
 
   @override
-  void initialize() => super.noSuchMethod(
-    Invocation.method(#initialize, []),
-    returnValueForMissingStub: null,
-  );
-
-  @override
   _i8.Future<void> close() =>
       (super.noSuchMethod(
             Invocation.method(#close, []),
@@ -455,7 +452,7 @@ class MockSettingCubit extends _i1.Mock implements _i6.SettingCubit {
   );
 
   @override
-  void onChange(_i10.Change<_i6.SettingState>? change) => super.noSuchMethod(
+  void onChange(_i9.Change<_i6.SettingState>? change) => super.noSuchMethod(
     Invocation.method(#onChange, [change]),
     returnValueForMissingStub: null,
   );
@@ -473,33 +470,33 @@ class MockSettingCubit extends _i1.Mock implements _i6.SettingCubit {
   );
 }
 
-/// A class which mocks [ContactRequestsCubit].
+/// A class which mocks [ContactModelRequestsCubit].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockContactRequestsCubit extends _i1.Mock
-    implements _i7.ContactRequestsCubit {
-  MockContactRequestsCubit() {
+class MockContactModelRequestsCubit extends _i1.Mock
+    implements _i7.ContactModelRequestsCubit {
+  MockContactModelRequestsCubit() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i7.ContactRequestState get state =>
+  _i7.ContactModelRequestState get state =>
       (super.noSuchMethod(
             Invocation.getter(#state),
-            returnValue: _FakeContactRequestState_5(
+            returnValue: _FakeContactModelRequestState_5(
               this,
               Invocation.getter(#state),
             ),
           )
-          as _i7.ContactRequestState);
+          as _i7.ContactModelRequestState);
 
   @override
-  _i8.Stream<_i7.ContactRequestState> get stream =>
+  _i8.Stream<_i7.ContactModelRequestState> get stream =>
       (super.noSuchMethod(
             Invocation.getter(#stream),
-            returnValue: _i8.Stream<_i7.ContactRequestState>.empty(),
+            returnValue: _i8.Stream<_i7.ContactModelRequestState>.empty(),
           )
-          as _i8.Stream<_i7.ContactRequestState>);
+          as _i8.Stream<_i7.ContactModelRequestState>);
 
   @override
   bool get isClosed =>
@@ -534,13 +531,13 @@ class MockContactRequestsCubit extends _i1.Mock
           as _i8.Future<void>);
 
   @override
-  void emit(_i7.ContactRequestState? state) => super.noSuchMethod(
+  void emit(_i7.ContactModelRequestState? state) => super.noSuchMethod(
     Invocation.method(#emit, [state]),
     returnValueForMissingStub: null,
   );
 
   @override
-  void onChange(_i10.Change<_i7.ContactRequestState>? change) =>
+  void onChange(_i9.Change<_i7.ContactModelRequestState>? change) =>
       super.noSuchMethod(
         Invocation.method(#onChange, [change]),
         returnValueForMissingStub: null,

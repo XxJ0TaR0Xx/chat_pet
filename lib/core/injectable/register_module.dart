@@ -1,5 +1,5 @@
 import 'package:chat_pet/core/config/api_config.dart';
-import 'package:chat_pet/data/common/services/dio_configuration.dart';
+import 'package:chat_pet/data/network/dio_configuration.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
@@ -10,6 +10,6 @@ abstract class RegisterModule {
   FlutterSecureStorage get secureStorage => const FlutterSecureStorage();
 
   @Named('basicDio')
-  @injectable
+  @lazySingleton
   Dio get dio => DioConfiguration.createBasic(baseUrl: ApiConfig.current.baseUrl);
 }

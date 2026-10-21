@@ -1,4 +1,5 @@
 import 'package:chat_pet/core/common/failures/failure.dart';
+import 'package:chat_pet/core/utils/http_error/dio_error_detail_extension.dart';
 import 'package:dio/dio.dart';
 
 abstract class UserFailure extends Failure {
@@ -10,7 +11,7 @@ abstract class UserFailure extends Failure {
     }
 
     final statusCode = e.response?.statusCode;
-    final detail = e.response?.data?['detail'] as String?;
+    final detail = e.detailMessage;
 
     switch (statusCode) {
       case 400:

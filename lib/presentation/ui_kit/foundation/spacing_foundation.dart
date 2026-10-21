@@ -61,6 +61,8 @@ class SpacingFoundation {
 
   static double get verticalSpacing40 => 40;
 
+  static double get messageBubbleMaxWidth => 0.7 * 1.sw;
+
   static Widget get none => zero.heightBox;
 
   static Widget get horizontalSpace2 => horizontalSpacing2.horizontalSpace;

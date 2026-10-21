@@ -16,13 +16,11 @@ class UiKitThemes {
       ),
     ),
     scaffoldBackgroundColor: ColorsFoundation.lightSurface,
-    dropdownMenuTheme: DropdownMenuThemeData(
-      textStyle: const TextStyle(
+    dropdownMenuTheme: const DropdownMenuThemeData(
+      textStyle: TextStyle(
         fontFamily: 'Unbounded',
         fontSize: 16,
         fontWeight: FontWeight.w300,
-        // color: Color(0xffffffff),
-        // color: Color(0xFF000000),
         package: 'shuffle_uikit',
       ),
     ),

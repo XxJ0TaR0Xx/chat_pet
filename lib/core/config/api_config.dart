@@ -8,6 +8,7 @@ class ApiConfig {
 
   factory ApiConfig.dev({
     String serverHost = '192.168.0.116',
+    // String serverHost = '10.0.2.2',
     int serverPort = 8000,
   }) => ApiConfig._(
     serverHost: serverHost,

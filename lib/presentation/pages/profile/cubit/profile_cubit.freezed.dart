@@ -55,13 +55,12 @@ extension ProfileStatePatterns on ProfileState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Loaded value)?  loaded,TResult Function( _Error value)?  error,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( ProfileLoading value)?  loading,TResult Function( ProfileLoaded value)?  loaded,TResult Function( ProfileError value)?  error,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial(_that);case _Loading() when loading != null:
-return loading(_that);case _Loaded() when loaded != null:
-return loaded(_that);case _Error() when error != null:
+case ProfileLoading() when loading != null:
+return loading(_that);case ProfileLoaded() when loaded != null:
+return loaded(_that);case ProfileError() when error != null:
 return error(_that);case _:
   return orElse();
 
@@ -80,13 +79,12 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Loaded value)  loaded,required TResult Function( _Error value)  error,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( ProfileLoading value)  loading,required TResult Function( ProfileLoaded value)  loaded,required TResult Function( ProfileError value)  error,}){
 final _that = this;
 switch (_that) {
-case _Initial():
-return initial(_that);case _Loading():
-return loading(_that);case _Loaded():
-return loaded(_that);case _Error():
+case ProfileLoading():
+return loading(_that);case ProfileLoaded():
+return loaded(_that);case ProfileError():
 return error(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -104,13 +102,12 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Loaded value)?  loaded,TResult? Function( _Error value)?  error,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( ProfileLoading value)?  loading,TResult? Function( ProfileLoaded value)?  loaded,TResult? Function( ProfileError value)?  error,}){
 final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial(_that);case _Loading() when loading != null:
-return loading(_that);case _Loaded() when loaded != null:
-return loaded(_that);case _Error() when error != null:
+case ProfileLoading() when loading != null:
+return loading(_that);case ProfileLoaded() when loaded != null:
+return loaded(_that);case ProfileError() when error != null:
 return error(_that);case _:
   return null;
 
@@ -128,12 +125,11 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( UserModel userModel)?  loaded,TResult Function( String errorMessage)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  loading,TResult Function( UserModel originalUser,  UserModel draftUser,  bool isSaving)?  loaded,TResult Function( String errorMessage)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial();case _Loading() when loading != null:
-return loading();case _Loaded() when loaded != null:
-return loaded(_that.userModel);case _Error() when error != null:
+case ProfileLoading() when loading != null:
+return loading();case ProfileLoaded() when loaded != null:
+return loaded(_that.originalUser,_that.draftUser,_that.isSaving);case ProfileError() when error != null:
 return error(_that.errorMessage);case _:
   return orElse();
 
@@ -152,12 +148,11 @@ return error(_that.errorMessage);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( UserModel userModel)  loaded,required TResult Function( String errorMessage)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  loading,required TResult Function( UserModel originalUser,  UserModel draftUser,  bool isSaving)  loaded,required TResult Function( String errorMessage)  error,}) {final _that = this;
 switch (_that) {
-case _Initial():
-return initial();case _Loading():
-return loading();case _Loaded():
-return loaded(_that.userModel);case _Error():
+case ProfileLoading():
+return loading();case ProfileLoaded():
+return loaded(_that.originalUser,_that.draftUser,_that.isSaving);case ProfileError():
 return error(_that.errorMessage);case _:
   throw StateError('Unexpected subclass');
 
@@ -175,12 +170,11 @@ return error(_that.errorMessage);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( UserModel userModel)?  loaded,TResult? Function( String errorMessage)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  loading,TResult? Function( UserModel originalUser,  UserModel draftUser,  bool isSaving)?  loaded,TResult? Function( String errorMessage)?  error,}) {final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial();case _Loading() when loading != null:
-return loading();case _Loaded() when loaded != null:
-return loaded(_that.userModel);case _Error() when error != null:
+case ProfileLoading() when loading != null:
+return loading();case ProfileLoaded() when loaded != null:
+return loaded(_that.originalUser,_that.draftUser,_that.isSaving);case ProfileError() when error != null:
 return error(_that.errorMessage);case _:
   return null;
 
@@ -192,8 +186,8 @@ return error(_that.errorMessage);case _:
 /// @nodoc
 
 
-class _Initial implements ProfileState {
-  const _Initial();
+class ProfileLoading implements ProfileState {
+  const ProfileLoading();
   
 
 
@@ -203,39 +197,7 @@ class _Initial implements ProfileState {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial);
-}
-
-
-@override
-int get hashCode => runtimeType.hashCode;
-
-@override
-String toString() {
-  return 'ProfileState.initial()';
-}
-
-
-}
-
-
-
-
-/// @nodoc
-
-
-class _Loading implements ProfileState {
-  const _Loading();
-  
-
-
-
-
-
-
-@override
-bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading);
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileLoading);
 }
 
 
@@ -256,63 +218,67 @@ String toString() {
 /// @nodoc
 
 
-class _Loaded implements ProfileState {
-  const _Loaded(this.userModel);
+class ProfileLoaded implements ProfileState {
+  const ProfileLoaded({required this.originalUser, required this.draftUser, this.isSaving = false});
   
 
- final  UserModel userModel;
+ final  UserModel originalUser;
+ final  UserModel draftUser;
+@JsonKey() final  bool isSaving;
 
 /// Create a copy of ProfileState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$LoadedCopyWith<_Loaded> get copyWith => __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+$ProfileLoadedCopyWith<ProfileLoaded> get copyWith => _$ProfileLoadedCopyWithImpl<ProfileLoaded>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loaded&&(identical(other.userModel, userModel) || other.userModel == userModel));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileLoaded&&(identical(other.originalUser, originalUser) || other.originalUser == originalUser)&&(identical(other.draftUser, draftUser) || other.draftUser == draftUser)&&(identical(other.isSaving, isSaving) || other.isSaving == isSaving));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,userModel);
+int get hashCode => Object.hash(runtimeType,originalUser,draftUser,isSaving);
 
 @override
 String toString() {
-  return 'ProfileState.loaded(userModel: $userModel)';
+  return 'ProfileState.loaded(originalUser: $originalUser, draftUser: $draftUser, isSaving: $isSaving)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$LoadedCopyWith<$Res> implements $ProfileStateCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) _then) = __$LoadedCopyWithImpl;
+abstract mixin class $ProfileLoadedCopyWith<$Res> implements $ProfileStateCopyWith<$Res> {
+  factory $ProfileLoadedCopyWith(ProfileLoaded value, $Res Function(ProfileLoaded) _then) = _$ProfileLoadedCopyWithImpl;
 @useResult
 $Res call({
- UserModel userModel
+ UserModel originalUser, UserModel draftUser, bool isSaving
 });
 
 
-$UserModelCopyWith<$Res> get userModel;
+$UserModelCopyWith<$Res> get originalUser;$UserModelCopyWith<$Res> get draftUser;
 
 }
 /// @nodoc
-class __$LoadedCopyWithImpl<$Res>
-    implements _$LoadedCopyWith<$Res> {
-  __$LoadedCopyWithImpl(this._self, this._then);
+class _$ProfileLoadedCopyWithImpl<$Res>
+    implements $ProfileLoadedCopyWith<$Res> {
+  _$ProfileLoadedCopyWithImpl(this._self, this._then);
 
-  final _Loaded _self;
-  final $Res Function(_Loaded) _then;
+  final ProfileLoaded _self;
+  final $Res Function(ProfileLoaded) _then;
 
 /// Create a copy of ProfileState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? userModel = null,}) {
-  return _then(_Loaded(
-null == userModel ? _self.userModel : userModel // ignore: cast_nullable_to_non_nullable
-as UserModel,
+@pragma('vm:prefer-inline') $Res call({Object? originalUser = null,Object? draftUser = null,Object? isSaving = null,}) {
+  return _then(ProfileLoaded(
+originalUser: null == originalUser ? _self.originalUser : originalUser // ignore: cast_nullable_to_non_nullable
+as UserModel,draftUser: null == draftUser ? _self.draftUser : draftUser // ignore: cast_nullable_to_non_nullable
+as UserModel,isSaving: null == isSaving ? _self.isSaving : isSaving // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
@@ -320,10 +286,19 @@ as UserModel,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$UserModelCopyWith<$Res> get userModel {
+$UserModelCopyWith<$Res> get originalUser {
   
-  return $UserModelCopyWith<$Res>(_self.userModel, (value) {
-    return _then(_self.copyWith(userModel: value));
+  return $UserModelCopyWith<$Res>(_self.originalUser, (value) {
+    return _then(_self.copyWith(originalUser: value));
+  });
+}/// Create a copy of ProfileState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$UserModelCopyWith<$Res> get draftUser {
+  
+  return $UserModelCopyWith<$Res>(_self.draftUser, (value) {
+    return _then(_self.copyWith(draftUser: value));
   });
 }
 }
@@ -331,8 +306,8 @@ $UserModelCopyWith<$Res> get userModel {
 /// @nodoc
 
 
-class _Error implements ProfileState {
-  const _Error(this.errorMessage);
+class ProfileError implements ProfileState {
+  const ProfileError(this.errorMessage);
   
 
  final  String errorMessage;
@@ -341,13 +316,13 @@ class _Error implements ProfileState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$ErrorCopyWith<_Error> get copyWith => __$ErrorCopyWithImpl<_Error>(this, _$identity);
+$ProfileErrorCopyWith<ProfileError> get copyWith => _$ProfileErrorCopyWithImpl<ProfileError>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Error&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProfileError&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
@@ -363,8 +338,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class _$ErrorCopyWith<$Res> implements $ProfileStateCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) _then) = __$ErrorCopyWithImpl;
+abstract mixin class $ProfileErrorCopyWith<$Res> implements $ProfileStateCopyWith<$Res> {
+  factory $ProfileErrorCopyWith(ProfileError value, $Res Function(ProfileError) _then) = _$ProfileErrorCopyWithImpl;
 @useResult
 $Res call({
  String errorMessage
@@ -375,17 +350,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res>
-    implements _$ErrorCopyWith<$Res> {
-  __$ErrorCopyWithImpl(this._self, this._then);
+class _$ProfileErrorCopyWithImpl<$Res>
+    implements $ProfileErrorCopyWith<$Res> {
+  _$ProfileErrorCopyWithImpl(this._self, this._then);
 
-  final _Error _self;
-  final $Res Function(_Error) _then;
+  final ProfileError _self;
+  final $Res Function(ProfileError) _then;
 
 /// Create a copy of ProfileState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? errorMessage = null,}) {
-  return _then(_Error(
+  return _then(ProfileError(
 null == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
 as String,
   ));

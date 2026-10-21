@@ -2,8 +2,8 @@ part of 'chat_cubit.dart';
 
 @freezed
 class ChatState with _$ChatState {
-  const factory ChatState.initial() = _Initial;
-  const factory ChatState.loading() = _Loading;
-  const factory ChatState.loaded(UserModel userModel) = _Loaded;
-  const factory ChatState.error(String error) = _Error;
+  const factory ChatState.initial() = ChatStateInitial;
+  const factory ChatState.loading() = ChatStateLoading;
+  const factory ChatState.loaded(List<ChatModel> models) = ChatStateLoaded;
+  const factory ChatState.error(String error) = ChatStateError;
 }
