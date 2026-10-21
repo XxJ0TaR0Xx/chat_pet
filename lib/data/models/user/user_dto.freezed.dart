@@ -1,0 +1,307 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+
+part of 'user_dto.dart';
+
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
+
+// dart format off
+T _$identity<T>(T value) => value;
+
+/// @nodoc
+mixin _$UserDto {
+
+ String get id;@JsonKey(name: 'user_tag') String get userTag;@JsonKey(name: 'avatar_url') String? get avatarUrl; String? get email;@JsonKey(name: 'username') String? get name; String? get address;@JsonKey(name: 'last_name') String? get lastName;@JsonKey(name: 'phone_number') String? get number; String? get authProvider;@JsonKey(name: 'created_at') DateTime? get createdAt;@JsonKey(name: 'friendship_status') String? get friendshipStatus;
+/// Create a copy of UserDto
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$UserDtoCopyWith<UserDto> get copyWith => _$UserDtoCopyWithImpl<UserDto>(this as UserDto, _$identity);
+
+  /// Serializes this UserDto to a JSON map.
+  Map<String, dynamic> toJson();
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserDto&&(identical(other.id, id) || other.id == id)&&(identical(other.userTag, userTag) || other.userTag == userTag)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.email, email) || other.email == email)&&(identical(other.name, name) || other.name == name)&&(identical(other.address, address) || other.address == address)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.number, number) || other.number == number)&&(identical(other.authProvider, authProvider) || other.authProvider == authProvider)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.friendshipStatus, friendshipStatus) || other.friendshipStatus == friendshipStatus));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,userTag,avatarUrl,email,name,address,lastName,number,authProvider,createdAt,friendshipStatus);
+
+@override
+String toString() {
+  return 'UserDto(id: $id, userTag: $userTag, avatarUrl: $avatarUrl, email: $email, name: $name, address: $address, lastName: $lastName, number: $number, authProvider: $authProvider, createdAt: $createdAt, friendshipStatus: $friendshipStatus)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $UserDtoCopyWith<$Res>  {
+  factory $UserDtoCopyWith(UserDto value, $Res Function(UserDto) _then) = _$UserDtoCopyWithImpl;
+@useResult
+$Res call({
+ String id,@JsonKey(name: 'user_tag') String userTag,@JsonKey(name: 'avatar_url') String? avatarUrl, String? email,@JsonKey(name: 'username') String? name, String? address,@JsonKey(name: 'last_name') String? lastName,@JsonKey(name: 'phone_number') String? number, String? authProvider,@JsonKey(name: 'created_at') DateTime? createdAt,@JsonKey(name: 'friendship_status') String? friendshipStatus
+});
+
+
+
+
+}
+/// @nodoc
+class _$UserDtoCopyWithImpl<$Res>
+    implements $UserDtoCopyWith<$Res> {
+  _$UserDtoCopyWithImpl(this._self, this._then);
+
+  final UserDto _self;
+  final $Res Function(UserDto) _then;
+
+/// Create a copy of UserDto
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userTag = null,Object? avatarUrl = freezed,Object? email = freezed,Object? name = freezed,Object? address = freezed,Object? lastName = freezed,Object? number = freezed,Object? authProvider = freezed,Object? createdAt = freezed,Object? friendshipStatus = freezed,}) {
+  return _then(_self.copyWith(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,userTag: null == userTag ? _self.userTag : userTag // ignore: cast_nullable_to_non_nullable
+as String,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
+as String?,email: freezed == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String?,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String?,address: freezed == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
+as String?,lastName: freezed == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
+as String?,number: freezed == number ? _self.number : number // ignore: cast_nullable_to_non_nullable
+as String?,authProvider: freezed == authProvider ? _self.authProvider : authProvider // ignore: cast_nullable_to_non_nullable
+as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,friendshipStatus: freezed == friendshipStatus ? _self.friendshipStatus : friendshipStatus // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+}
+
+
+/// Adds pattern-matching-related methods to [UserDto].
+extension UserDtoPatterns on UserDto {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _UserDto value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case _UserDto() when $default != null:
+return $default(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _UserDto value)  $default,){
+final _that = this;
+switch (_that) {
+case _UserDto():
+return $default(_that);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _UserDto value)?  $default,){
+final _that = this;
+switch (_that) {
+case _UserDto() when $default != null:
+return $default(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'user_tag')  String userTag, @JsonKey(name: 'avatar_url')  String? avatarUrl,  String? email, @JsonKey(name: 'username')  String? name,  String? address, @JsonKey(name: 'last_name')  String? lastName, @JsonKey(name: 'phone_number')  String? number,  String? authProvider, @JsonKey(name: 'created_at')  DateTime? createdAt, @JsonKey(name: 'friendship_status')  String? friendshipStatus)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case _UserDto() when $default != null:
+return $default(_that.id,_that.userTag,_that.avatarUrl,_that.email,_that.name,_that.address,_that.lastName,_that.number,_that.authProvider,_that.createdAt,_that.friendshipStatus);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'user_tag')  String userTag, @JsonKey(name: 'avatar_url')  String? avatarUrl,  String? email, @JsonKey(name: 'username')  String? name,  String? address, @JsonKey(name: 'last_name')  String? lastName, @JsonKey(name: 'phone_number')  String? number,  String? authProvider, @JsonKey(name: 'created_at')  DateTime? createdAt, @JsonKey(name: 'friendship_status')  String? friendshipStatus)  $default,) {final _that = this;
+switch (_that) {
+case _UserDto():
+return $default(_that.id,_that.userTag,_that.avatarUrl,_that.email,_that.name,_that.address,_that.lastName,_that.number,_that.authProvider,_that.createdAt,_that.friendshipStatus);case _:
+  throw StateError('Unexpected subclass');
+
+}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'user_tag')  String userTag, @JsonKey(name: 'avatar_url')  String? avatarUrl,  String? email, @JsonKey(name: 'username')  String? name,  String? address, @JsonKey(name: 'last_name')  String? lastName, @JsonKey(name: 'phone_number')  String? number,  String? authProvider, @JsonKey(name: 'created_at')  DateTime? createdAt, @JsonKey(name: 'friendship_status')  String? friendshipStatus)?  $default,) {final _that = this;
+switch (_that) {
+case _UserDto() when $default != null:
+return $default(_that.id,_that.userTag,_that.avatarUrl,_that.email,_that.name,_that.address,_that.lastName,_that.number,_that.authProvider,_that.createdAt,_that.friendshipStatus);case _:
+  return null;
+
+}
+}
+
+}
+
+/// @nodoc
+@JsonSerializable()
+
+class _UserDto extends UserDto {
+  const _UserDto({required this.id, @JsonKey(name: 'user_tag') required this.userTag, @JsonKey(name: 'avatar_url') this.avatarUrl, this.email, @JsonKey(name: 'username') this.name, this.address, @JsonKey(name: 'last_name') this.lastName, @JsonKey(name: 'phone_number') this.number, this.authProvider, @JsonKey(name: 'created_at') this.createdAt, @JsonKey(name: 'friendship_status') this.friendshipStatus}): super._();
+  factory _UserDto.fromJson(Map<String, dynamic> json) => _$UserDtoFromJson(json);
+
+@override final  String id;
+@override@JsonKey(name: 'user_tag') final  String userTag;
+@override@JsonKey(name: 'avatar_url') final  String? avatarUrl;
+@override final  String? email;
+@override@JsonKey(name: 'username') final  String? name;
+@override final  String? address;
+@override@JsonKey(name: 'last_name') final  String? lastName;
+@override@JsonKey(name: 'phone_number') final  String? number;
+@override final  String? authProvider;
+@override@JsonKey(name: 'created_at') final  DateTime? createdAt;
+@override@JsonKey(name: 'friendship_status') final  String? friendshipStatus;
+
+/// Create a copy of UserDto
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$UserDtoCopyWith<_UserDto> get copyWith => __$UserDtoCopyWithImpl<_UserDto>(this, _$identity);
+
+@override
+Map<String, dynamic> toJson() {
+  return _$UserDtoToJson(this, );
+}
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserDto&&(identical(other.id, id) || other.id == id)&&(identical(other.userTag, userTag) || other.userTag == userTag)&&(identical(other.avatarUrl, avatarUrl) || other.avatarUrl == avatarUrl)&&(identical(other.email, email) || other.email == email)&&(identical(other.name, name) || other.name == name)&&(identical(other.address, address) || other.address == address)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.number, number) || other.number == number)&&(identical(other.authProvider, authProvider) || other.authProvider == authProvider)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.friendshipStatus, friendshipStatus) || other.friendshipStatus == friendshipStatus));
+}
+
+@JsonKey(includeFromJson: false, includeToJson: false)
+@override
+int get hashCode => Object.hash(runtimeType,id,userTag,avatarUrl,email,name,address,lastName,number,authProvider,createdAt,friendshipStatus);
+
+@override
+String toString() {
+  return 'UserDto(id: $id, userTag: $userTag, avatarUrl: $avatarUrl, email: $email, name: $name, address: $address, lastName: $lastName, number: $number, authProvider: $authProvider, createdAt: $createdAt, friendshipStatus: $friendshipStatus)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$UserDtoCopyWith<$Res> implements $UserDtoCopyWith<$Res> {
+  factory _$UserDtoCopyWith(_UserDto value, $Res Function(_UserDto) _then) = __$UserDtoCopyWithImpl;
+@override @useResult
+$Res call({
+ String id,@JsonKey(name: 'user_tag') String userTag,@JsonKey(name: 'avatar_url') String? avatarUrl, String? email,@JsonKey(name: 'username') String? name, String? address,@JsonKey(name: 'last_name') String? lastName,@JsonKey(name: 'phone_number') String? number, String? authProvider,@JsonKey(name: 'created_at') DateTime? createdAt,@JsonKey(name: 'friendship_status') String? friendshipStatus
+});
+
+
+
+
+}
+/// @nodoc
+class __$UserDtoCopyWithImpl<$Res>
+    implements _$UserDtoCopyWith<$Res> {
+  __$UserDtoCopyWithImpl(this._self, this._then);
+
+  final _UserDto _self;
+  final $Res Function(_UserDto) _then;
+
+/// Create a copy of UserDto
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userTag = null,Object? avatarUrl = freezed,Object? email = freezed,Object? name = freezed,Object? address = freezed,Object? lastName = freezed,Object? number = freezed,Object? authProvider = freezed,Object? createdAt = freezed,Object? friendshipStatus = freezed,}) {
+  return _then(_UserDto(
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as String,userTag: null == userTag ? _self.userTag : userTag // ignore: cast_nullable_to_non_nullable
+as String,avatarUrl: freezed == avatarUrl ? _self.avatarUrl : avatarUrl // ignore: cast_nullable_to_non_nullable
+as String?,email: freezed == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String?,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String?,address: freezed == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
+as String?,lastName: freezed == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
+as String?,number: freezed == number ? _self.number : number // ignore: cast_nullable_to_non_nullable
+as String?,authProvider: freezed == authProvider ? _self.authProvider : authProvider // ignore: cast_nullable_to_non_nullable
+as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,friendshipStatus: freezed == friendshipStatus ? _self.friendshipStatus : friendshipStatus // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
+}
+
+
+}
+
+// dart format on

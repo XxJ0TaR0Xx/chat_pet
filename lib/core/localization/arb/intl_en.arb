@@ -1,0 +1,171 @@
+{
+  "Account": "Account",
+  "AfterYouLogOut": "After you log out, you will need to log in to your account again for the app to work properly",
+  "AreYouSureYouWantToGetOut": "Are you sure you want to get out?",
+  "Calls": "Calls",
+  "Chat": "Chat",
+  "ChatHistoryThemeWallpapers": "Chat history,theme,wallpapers",
+  "Chatbox": "Chatbox",
+  "ConfirmPassword": "Confirm password",
+  "ConnectFriendsEasilyQuickly": "Connect friends easily quickly",
+  "Contacts": "Contacts",
+  "CreateAnAccount": "Create an account",
+  "Email": "Email",
+  "ExistingAccount": "Existing account",
+  "ForgotPassword": "Forgot password",
+  "GetChattingWithFriends": "Get chatting with friends",
+  "Help": "Help",
+  "HelpCenter": "Help center,contact us, privacy policy",
+  "InviteAFriend": "Invite a friend",
+  "LogIn": "Log in",
+  "LogInToChatbox": "Log in to Chatbox",
+  "LogOutOfYouAccount": "Log out of your account",
+  "Message": "Message",
+  "NetworkUsage": "Network usage, stogare usage",
+  "NewMessage": "New message",
+  "No": "No",
+  "NotFounded": "Not founded",
+  "Notifications": "Notifications",
+  "Or": "Or",
+  "OurChatAppIsThePerfectWay": "Our chat app is the perfect way to stay connected with friends and family.",
+  "Password": "Password",
+  "PrivacySecurityChange": "Privacy, security, change number",
+  "Repeat": "Repeat",
+  "Setting": "Setting",
+  "Settings": "Settings",
+  "SignUpWith": "Sign up with",
+  "SignUpWithEmail": "Sign up with email",
+  "SignUpWithMail": "Sign up with mail",
+  "SomethingWentWrong": "Something went wrong",
+  "StorageAndData": "Storage and data",
+  "WelcomeBackSignInUsing": "Welcome back sign in using",
+  "Yes": "Yes",
+  "YourEmail": "Your email",
+  "YourName": "Your name",
+  "ErrorMsg": "Error: {x}",
+  "CouldntFindTheUser": "Couldn't find the user, please try again",
+  "Editing": "Editing",
+  "Cancel": "Cancel",
+  "Save": "Save",
+  "EnterNewValue": "Enter new value",
+  "SelectYourAddress": "Select your address",
+  "ActiveNow": "Active now",
+  "ActiveNotNow": "Is't active now",
+  "UnderDevelopment": "Under development",
+  "MyContact": "My contact",
+  "NoOneWasFound": "No one was found",
+  "FindYourFirstFriends": "There's no one here yet, find your first friends",
+  "StartYourSearch": "Start your search",
+  "IncomingRequests": "Incoming requests",
+  "NoChatsYet": "No chats yet",
+  "NoChatsYetDescription": "Start a conversation with your friends and family",
+  "FindFriends": "Find friends",
+  "Selected": "Selected",
+  "Home": "Home",
+  "AreYouSureToDeleteThisMessage": "Are you sure you want to delete the selected message?",
+  "DeleteThisMessageForAll": "Delete this message for everyone?",
+  "JustNow": "just now",
+  "SecondsAgo": "{count, plural, one{{count} second ago} other{{count} seconds ago}}",
+  "@SecondsAgo": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "MinutesAgo": "{count, plural, one{{count} minute ago} other{{count} minutes ago}}",
+  "@MinutesAgo": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "HoursAgo": "{count, plural, one{{count} hour ago} other{{count} hours ago}}",
+  "@HoursAgo": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "DaysAgo": "{count, plural, one{{count} day ago} other{{count} days ago}}",
+  "@DaysAgo": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "MonthsAgo": "{count, plural, one{{count} month ago} other{{count} months ago}}",
+  "@MonthsAgo": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "YearsAgo": "{count, plural, one{{count} year ago} other{{count} years ago}}",
+  "@YearsAgo": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "callsAreComingSoon": "Calls are coming soon",
+  "NoAccount": "No account?",
+  "ThisFieldCannotBeEmpty": "This field cannot be empty",
+  "Today": "Today",
+  "Edited": "edited",
+  "Reply": "Reply",
+  "Forward": "Forward",
+  "Edit": "Edit",
+  "Copy": "Copy",
+  "Select": "Select",
+  "Delete": "Delete",
+  "EditingMessage": "Editing message",
+  "WriteYourMessage": "Write your message",
+  "DisplayName": "Display name",
+  "EmailAddress": "Email address",
+  "Address": "Address",
+  "PhoneNumber": "Phone number",
+  "CreatedAt": "Created at",
+  "MediaShared": "Media shared",
+  "ViewAll": "View all",
+  "AnErrorOccurred": "An error occurred: {error}",
+  "@AnErrorOccurred": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "DefaultUserStatus": "Never give up 💪",
+  "YourAddress": "Your address",
+  "AddressCannotBeEmpty": "Address cannot be empty",
+  "CouldntCreateChat": "Couldn't create chat",
+  "NotImplemented": "Not implemented",
+  "EnterEmail": "Enter email",
+  "EnterValidEmail": "Enter a valid email",
+  "EmailMustContainAt": "Email must contain @",
+  "InvalidDomain": "Invalid domain",
+  "PasswordMinLength": "Password must be at least 6 characters",
+  "PasswordsDoNotMatch": "Passwords do not match",
+  "InvalidPhoneNumber": "Invalid phone number",
+  "FailureUserNotFound": "User not found",
+  "FailureNoInternetConnection": "No internet connection",
+  "FailureServerError": "Server error, please try again later",
+  "FailureUnauthorized": "Authorization required",
+  "FailureForbidden": "Insufficient permissions",
+  "FailureValidation": "Please check the entered data",
+  "FailureUnknown": "Unknown error",
+  "FailureWrongCredentials": "Invalid email or password",
+  "FailureAccountDisabled": "Account disabled",
+  "FailureSessionExpired": "Session expired, please sign in again",
+  "FailureEmailAlreadyInUse": "Email is already in use",
+  "FailureTooManyRequests": "Too many requests, please try again later",
+  "FailureOperationNotAllowed": "Operation not allowed",
+  "FailureUserEmailTaken": "This email is already in use",
+  "FailureInvalidFileType": "Unsupported file format. Allowed: JPG, PNG, WEBP, GIF",
+  "FailureFileTooLarge": "File is too large. Maximum size is 5MB",
+  "FailureChatNotFound": "Chat not found",
+  "FailureContactAlreadyAdded": "This user is already in your contacts",
+  "FailureRequestAlreadySent": "Request already sent",
+  "FailureCannotAddYourself": "You can't add yourself",
+  "ReplyTo": "Reply to {name}",
+  "@ReplyTo": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "You": "You",
+  "Attachment": "Attachment",
+  "MessageDeleted": "Message deleted"
+}

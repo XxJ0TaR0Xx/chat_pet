@@ -4,7 +4,10 @@ publish_to: 'none'
 version: 0.1.0
 
 environment:
-  sdk: ">=3.6.0 <4.0.0"
+  sdk: ">=3.10.0 <4.0.0"
+
+# dependency_overrides: 
+#   dart_style: 3.1.2
 
 dependencies:
   flutter:
@@ -12,18 +15,92 @@ dependencies:
 
   #ui utils
   flutter_screenutil: ^5.9.3
-  awesome_extensions:
+  awesome_extensions: ^2.0.26
+  flutter_svg: ^2.0.17
+  auto_size_text: ^3.0.0
+  flutter_color_extractor: ^1.0.0+1
+
+  #bloc
+  flutter_bloc: ^9.1.1
+  bloc: ^9.0.0
+
+  skeletonizer: ^2.1.3
+  infinite_scroll_pagination: ^5.1.1
+
+  bouncy_effect: ^1.0.5
+  
+  #localization
+  intl: ^0.20.2
+  flutter_localization: ^0.3.3
+
+  #firebase
+  firebase_core: ^4.2.0
+  firebase_app_check: ^0.4.3
+
+  #env
+  flutter_dotenv: ^6.0.0
+  equatable: ^2.0.8
+  fpdart: ^1.2.0
+
+  #DI
+  get_it: ^8.3.0
+  injectable: ^2.5.2
+
+  image_picker: ^1.2.1
+  widget_tooltip: ^1.2.1
+
+  permission_handler: ^12.0.1
+  google_sign_in: ^7.2.0
+  
+  # Map
+  flutter_map: ^8.2.2
+  latlong2: ^0.9.1
+  geolocator: ^14.0.2
+
+  # Logger
+  talker_dio_logger: ^5.1.17
+  talker_bloc_logger: ^5.1.17
+  talker_logger: ^5.1.17
+
+  # Server Request 
+  dio: ^5.9.2
+  flutter_secure_storage: ^10.0.0
+  mask_text_input_formatter: ^2.9.0
+
+  # Annotations
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.11.0
+
+  # Route
+  go_router: ^17.2.3
+  web_socket_channel: ^3.0.3
+  mockito: ^5.6.4
+
+
+
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
+  build_runner: ^2.4.9
+  bloc_lint: ^0.4.1
+  intl_utils: ^2.8.12
+  injectable_generator: ^2.9.0
+  freezed: ^3.2.5
+  json_serializable: ^6.13.2
+  flutter_native_splash: ^2.4.7
+  flutter_launcher_icons: ^0.14.4
+  integration_test:
+    sdk: flutter
+
 
 flutter:
   assets:
-    - assets/images/
+    - general_configs.env
     - assets/fonts/
+    - assets/images/
 
   fonts:
     - family: Caros
@@ -32,4 +109,38 @@ flutter:
     - family: CircularStd
       fonts:
         - asset: assets/fonts/CircularStd-Black.otf
+    - family: ChatPetIcons
+      fonts:
+        - asset: assets/fonts/chat_pet_icons.otf
   uses-material-design: true
+  generate: true
+
+
+
+# extensions
+flutter_intl:
+  enabled: true
+  arb_dir: lib/core/localization/arb
+  output_dir: lib/core/localization
+
+
+# flutter_native_splash config
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/images/logo/chat_box_logo.png
+
+  android_12:
+    color: "#FFFFFF"
+    image: assets/images/logo/chat_box_icon_mark.png
+  
+  android: true
+  ios: true
+
+
+flutter_launcher_icons:
+  android: chat_pet
+  ios: true
+  image_path: assets/images/logo/chat_box_icon.png
+  min_sdk_android: 21 
+ 
+
