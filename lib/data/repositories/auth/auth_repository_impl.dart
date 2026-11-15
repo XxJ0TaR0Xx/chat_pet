@@ -67,8 +67,6 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final tokens = await _authRemoteRepository.login(AuthRequest(email: email, password: password));
 
-      talk.info('Login requested $tokens');
-
       await _authLocalRepository.writeTokens(tokens);
 
       _tokenCache.updateToken(tokens);

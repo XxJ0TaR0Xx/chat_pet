@@ -91,7 +91,7 @@ class SocketConnection {
     if (_disposed) return;
 
     _reconnectAttempts++;
-    if (_reconnectAttempts > 10) {
+    if (_reconnectAttempts > 5) {
       talk.error('[WS] Max reconnect attempts reached, stopping');
       return;
     }
