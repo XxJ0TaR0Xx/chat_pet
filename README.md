@@ -19,7 +19,7 @@ Flutter-мессенджер на Clean Architecture (Cubit, go_router, get_it/i
    ```bash
    cp general_configs.env.example general_configs.env
    ```
-4. Укажите адрес бэкенда в `lib/core/config/api_config.dart` (`serverHost`, `serverPort`).
+4. По умолчанию используется `https://chat-backend-9n4f.onrender.com` (WebSocket через WSS). Конфигурация находится в `lib/core/config/api_config.dart`: `ApiConfig.prod()` для сервера, `ApiConfig.dev(serverHost: ..., serverPort: ...)` для локальной разработки.
 5. Запустите:
    ```bash
    flutter run
