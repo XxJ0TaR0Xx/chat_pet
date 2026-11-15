@@ -1,4 +1,11 @@
 {
+  "SelectServer": "Выберите сервер",
+  "SelectServerDescription": "Выберите сервер для этой сессии. Для смены сервера перезапустите приложение.",
+  "ProductionServer": "Prod — основной сервер",
+  "DevelopmentServer": "Dev — сервер разработки",
+  "InitializingApplication": "Запускаем приложение…",
+  "ServerInitializationFailed": "Не удалось запустить приложение",
+  "RestartAfterInitializationFailure": "Ошибка инициализации. Перезапустите приложение, чтобы попробовать снова.",
   "Account": "Аккаунт",
   "AfterYouLogOut": "После того как вы выйдите, необходимо будет снова войти в аккаунт для корректной работы приложения",
   "AreYouSureYouWantToGetOut": "Вы уверены что хотите выйти?",

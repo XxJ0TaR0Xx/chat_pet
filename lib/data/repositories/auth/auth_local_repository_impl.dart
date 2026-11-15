@@ -1,3 +1,4 @@
+import 'package:chat_pet/core/config/api_config.dart';
 import 'package:chat_pet/core/storages/interfaces/secure_storage_service.dart';
 import 'package:chat_pet/domain/custom_talker/custom_talker.dart';
 import 'package:chat_pet/domain/interfaces/auth/auth_local_repository.dart';
@@ -8,9 +9,9 @@ import 'package:injectable/injectable.dart';
 class AuthLocalRepositoryImpl implements AuthLocalRepository {
   const AuthLocalRepositoryImpl(this._secureStorageService);
 
-  static const _accessToken = 'access_token';
+  static String get _accessToken => '${Uri.encodeComponent(ApiConfig.current.baseUrl)}:access_token';
 
-  static const _refreshToken = 'refresh_token';
+  static String get _refreshToken => '${Uri.encodeComponent(ApiConfig.current.baseUrl)}:refresh_token';
 
   final SecureStorageService _secureStorageService;
 

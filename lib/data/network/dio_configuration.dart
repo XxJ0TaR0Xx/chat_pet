@@ -12,7 +12,7 @@ abstract class DioConfiguration {
     Duration? timeout,
     bool logging = true,
   }) {
-    final timeout0 = timeout ?? const Duration(seconds: 10);
+    final timeout0 = timeout ?? const Duration(seconds: 30);
 
     final dio = Dio(
       BaseOptions(

@@ -27,6 +27,10 @@ class ChatRepositoryImpl implements ChatRepository {
   final TokenManager _tokenManager;
 
   ChatWebSocket? _activeSocket;
+  final _messages = StreamController<MessageModel>.broadcast();
+
+  @override
+  Stream<MessageModel> watchMessages() => _messages.stream;
 
   static const _chatPath = 'chats';
 
@@ -215,7 +219,16 @@ class ChatRepositoryImpl implements ChatRepository {
     final socket = ChatWebSocket(_tokenManager)..connect(chatId);
     _activeSocket = socket;
 
-    return socket.stream.map(chatSocketEventFromJson).where((event) => event != null).cast<ChatSocketEvent>();
+    return socket.stream
+        .map((json) {
+          final event = chatSocketEventFromJson(json);
+          if (event is IncomingMessageEvent && !_messages.isClosed) {
+            _messages.add(event.message);
+          }
+          return event;
+        })
+        .where((event) => event != null)
+        .cast<ChatSocketEvent>();
   }
 
   @override
@@ -223,6 +236,13 @@ class ChatRepositoryImpl implements ChatRepository {
     talk.info('Close chat connection');
     _activeSocket?.dispose();
     _activeSocket = null;
+  }
+
+  @disposeMethod
+  @override
+  Future<void> dispose() async {
+    disconnectFromChat();
+    await _messages.close();
   }
 
   @override

@@ -95,6 +95,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "DeleteThisMessageForAll": MessageLookupByLibrary.simpleMessage(
       "Удалить это сообщение для всех?",
     ),
+    "DevelopmentServer": MessageLookupByLibrary.simpleMessage(
+      "Dev — сервер разработки",
+    ),
     "DisplayName": MessageLookupByLibrary.simpleMessage("Отображаемое имя"),
     "Edit": MessageLookupByLibrary.simpleMessage("Изменить"),
     "Edited": MessageLookupByLibrary.simpleMessage("изменено"),
@@ -196,6 +199,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "IncomingRequests": MessageLookupByLibrary.simpleMessage(
       "Входящие запросы",
     ),
+    "InitializingApplication": MessageLookupByLibrary.simpleMessage(
+      "Запускаем приложение…",
+    ),
     "InvalidDomain": MessageLookupByLibrary.simpleMessage("Некорректный домен"),
     "InvalidPhoneNumber": MessageLookupByLibrary.simpleMessage(
       "Номер телефона неверен",
@@ -242,16 +248,29 @@ class MessageLookup extends MessageLookupByLibrary {
     "PrivacySecurityChange": MessageLookupByLibrary.simpleMessage(
       "Конфиденциальность, безопасность, смена номера",
     ),
+    "ProductionServer": MessageLookupByLibrary.simpleMessage(
+      "Prod — основной сервер",
+    ),
     "Repeat": MessageLookupByLibrary.simpleMessage("Повторить"),
     "Reply": MessageLookupByLibrary.simpleMessage("Ответить"),
     "ReplyTo": m6,
+    "RestartAfterInitializationFailure": MessageLookupByLibrary.simpleMessage(
+      "Ошибка инициализации. Перезапустите приложение, чтобы попробовать снова.",
+    ),
     "Save": MessageLookupByLibrary.simpleMessage("Сохранить"),
     "SecondsAgo": m7,
     "Select": MessageLookupByLibrary.simpleMessage("Выбрать"),
+    "SelectServer": MessageLookupByLibrary.simpleMessage("Выберите сервер"),
+    "SelectServerDescription": MessageLookupByLibrary.simpleMessage(
+      "Выберите сервер для этой сессии. Для смены сервера перезапустите приложение.",
+    ),
     "SelectYourAddress": MessageLookupByLibrary.simpleMessage(
       "Выберите ваш адресс",
     ),
     "Selected": MessageLookupByLibrary.simpleMessage("Выбрано"),
+    "ServerInitializationFailed": MessageLookupByLibrary.simpleMessage(
+      "Не удалось запустить приложение",
+    ),
     "Setting": MessageLookupByLibrary.simpleMessage("Настройки"),
     "Settings": MessageLookupByLibrary.simpleMessage("Settings"),
     "SignUpWith": MessageLookupByLibrary.simpleMessage("Sign up with"),
