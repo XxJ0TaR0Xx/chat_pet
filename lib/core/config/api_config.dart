@@ -4,11 +4,11 @@ class ApiConfig {
     required this.serverPort,
     required this.appName,
     required this.version,
+    this.useTls = false,
   });
 
   factory ApiConfig.dev({
     String serverHost = '192.168.0.116',
-    // String serverHost = '10.0.2.2',
     int serverPort = 8000,
   }) => ApiConfig._(
     serverHost: serverHost,
@@ -17,23 +17,35 @@ class ApiConfig {
     version: '1.0.0',
   );
 
+  factory ApiConfig.prod() => const ApiConfig._(
+    serverHost: 'chat-backend-9n4f.onrender.com',
+    serverPort: 443,
+    appName: 'ChatPet',
+    version: '1.0.0',
+    useTls: true,
+  );
+
   final String serverHost;
   final int serverPort;
   final String appName;
   final String version;
+  final bool useTls;
 
-  // static const String baseUrl = 'http://192.168.0.116:8000/';
+  String get baseUrl => Uri(
+    scheme: useTls ? 'https' : 'http',
+    host: serverHost,
+    port: serverPort,
+    path: '/',
+  ).toString();
 
-  String get baseUrl => 'http://$serverHost:$serverPort/';
+  String get wsUrl => Uri(
+    scheme: useTls ? 'wss' : 'ws',
+    host: serverHost,
+    port: serverPort,
+    path: '/',
+  ).toString();
 
-  String get wsUrl => 'ws://$serverHost:$serverPort/';
-
-  static final ApiConfig _current = _createDefaultConfig();
+  static final ApiConfig _current = ApiConfig.prod();
 
   static ApiConfig get current => _current;
-
-  //todo Prod
-  static ApiConfig _createDefaultConfig() {
-    return ApiConfig.dev();
-  }
 }

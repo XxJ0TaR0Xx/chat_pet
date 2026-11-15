@@ -2,6 +2,7 @@ import 'package:chat_pet/presentation/pages/signup/cubit/signup_cubit.dart';
 import 'package:chat_pet/presentation/route/app_routes.dart';
 import 'package:chat_pet/presentation/ui_kit/molecule/snack_bar/custom_snack_bar.dart';
 import 'package:chat_pet/presentation/ui_kit/ui_kit.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -20,10 +21,11 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  final nameController = TextEditingController(text: 'danila');
-  final emailController = TextEditingController(text: 'danila20032302@yadnex.ru');
-  final passwordController = TextEditingController(text: '20032302');
-  final confirmPasswordController = TextEditingController(text: '20032302');
+  final testField = kDebugMode ? 'test' : '';
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
   final GlobalKey<FormState> key = GlobalKey<FormState>();
 
@@ -38,6 +40,9 @@ class _SignupPageState extends State<SignupPage> {
   void initState() {
     super.initState();
     emailController.text = widget.email ?? '';
+    nameController.text = testField;
+    passwordController.text = testField;
+    confirmPasswordController.text = testField;
   }
 
   @override
