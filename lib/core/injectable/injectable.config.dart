@@ -57,6 +57,7 @@ import '../../domain/usecases/chats/get_messages_use_case.dart' as _i1050;
 import '../../domain/usecases/chats/read_messages_use_case.dart' as _i253;
 import '../../domain/usecases/chats/send_message_use_case.dart' as _i585;
 import '../../domain/usecases/chats/update_message_use_case.dart' as _i1032;
+import '../../domain/usecases/chats/watch_chat_messages_use_case.dart' as _i716;
 import '../../domain/usecases/contacts/accept_request_use_case.dart' as _i889;
 import '../../domain/usecases/contacts/delete_contact_use_case.dart' as _i845;
 import '../../domain/usecases/contacts/get_contacts_use_case.dart' as _i805;
@@ -137,6 +138,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i316.ChatRepository>(
       () => _i310.ChatRepositoryImpl(gh<_i361.Dio>(), gh<_i866.TokenManager>()),
+      dispose: (i) => i.dispose(),
     );
     gh.factory<_i113.ContactsRepository>(
       () => _i447.ContactsRepositoryImpl(
@@ -210,6 +212,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i317.WatchCurrentUserUseCase>(),
       ),
     );
+    gh.factory<_i716.WatchChatMessagesUseCase>(
+      () => _i716.WatchChatMessagesUseCase(gh<_i316.ChatRepository>()),
+    );
     gh.factory<_i629.LoginUseCase>(
       () => _i629.LoginUseCase(
         gh<_i508.AuthRepository>(),
@@ -249,6 +254,8 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i396.CreateChatUseCase>(),
         gh<_i730.DeleteChatUseCase>(),
         gh<_i136.NotificationRepository>(),
+        gh<_i716.WatchChatMessagesUseCase>(),
+        gh<_i53.OpenChatTracker>(),
       ),
     );
     gh.factory<_i538.MessageCubit>(
@@ -266,7 +273,7 @@ extension GetItInjectableX on _i174.GetIt {
         otherMembers: gh<List<_i1072.ChatMemberModel>>(),
       ),
     );
-    gh.lazySingleton<_i241.ContactModelRequestsCubit>(
+    gh.factory<_i241.ContactModelRequestsCubit>(
       () => _i241.ContactModelRequestsCubit(
         gh<_i1011.IncomingRequestsUseCase>(),
         gh<_i889.AcceptRequestUseCase>(),

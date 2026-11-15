@@ -54,6 +54,76 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
+  /// `Select server`
+  String get SelectServer {
+    return Intl.message(
+      'Select server',
+      name: 'SelectServer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose the server for this session. To change it, restart the app.`
+  String get SelectServerDescription {
+    return Intl.message(
+      'Choose the server for this session. To change it, restart the app.',
+      name: 'SelectServerDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Prod — production server`
+  String get ProductionServer {
+    return Intl.message(
+      'Prod — production server',
+      name: 'ProductionServer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dev — development server`
+  String get DevelopmentServer {
+    return Intl.message(
+      'Dev — development server',
+      name: 'DevelopmentServer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Starting the application…`
+  String get InitializingApplication {
+    return Intl.message(
+      'Starting the application…',
+      name: 'InitializingApplication',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unable to start the application`
+  String get ServerInitializationFailed {
+    return Intl.message(
+      'Unable to start the application',
+      name: 'ServerInitializationFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Initialization failed. Restart the app to try again.`
+  String get RestartAfterInitializationFailure {
+    return Intl.message(
+      'Initialization failed. Restart the app to try again.',
+      name: 'RestartAfterInitializationFailure',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Account`
   String get Account {
     return Intl.message('Account', name: 'Account', desc: '', args: []);

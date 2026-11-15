@@ -45,7 +45,17 @@ class ApiConfig {
     path: '/',
   ).toString();
 
-  static final ApiConfig _current = ApiConfig.prod();
+  static ApiConfig _current = ApiConfig.prod();
+  static bool _selected = false;
 
   static ApiConfig get current => _current;
+
+  /// Must be called before creating dependencies or network clients.
+  static void select(ApiConfig config) {
+    if (_selected) {
+      throw StateError('Restart the app to select a different server.');
+    }
+    _current = config;
+    _selected = true;
+  }
 }
