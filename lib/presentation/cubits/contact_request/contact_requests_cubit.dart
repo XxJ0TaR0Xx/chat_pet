@@ -13,7 +13,7 @@ import 'package:injectable/injectable.dart';
 part 'contact_requests_state.dart';
 part 'contact_requests_cubit.freezed.dart';
 
-@lazySingleton
+@injectable
 class ContactModelRequestsCubit extends Cubit<ContactModelRequestState> {
   ContactModelRequestsCubit(
     this._incomingRequestsUseCase,
@@ -21,8 +21,8 @@ class ContactModelRequestsCubit extends Cubit<ContactModelRequestState> {
     this._rejectRequestUseCase,
     this._incomingRequestStreamUseCase,
   ) : super(const ContactModelRequestState()) {
-    _init();
     _listen();
+    unawaited(refresh());
   }
   final IncomingRequestsUseCase _incomingRequestsUseCase;
   final AcceptRequestUseCase _acceptRequestUseCase;
@@ -30,6 +30,8 @@ class ContactModelRequestsCubit extends Cubit<ContactModelRequestState> {
   final IncomingRequestStreamUseCase _incomingRequestStreamUseCase;
 
   StreamSubscription<ContactModelRequest>? _sub;
+  final Set<String> _dismissedIds = {};
+  int _loadVersion = 0;
 
   Future<void> acceptRequest(String requestId) async {
     final result = await _acceptRequestUseCase(requestId: requestId);
@@ -48,6 +50,8 @@ class ContactModelRequestsCubit extends Cubit<ContactModelRequestState> {
   }
 
   void _dismiss(String requestId) {
+    if (isClosed) return;
+    _dismissedIds.add(requestId);
     emit(
       state.copyWith(
         request: state.request.where((r) => r.id != requestId).toList(),
@@ -55,18 +59,34 @@ class ContactModelRequestsCubit extends Cubit<ContactModelRequestState> {
     );
   }
 
-  void _init() {
-    _incomingRequestsUseCase.call().then(
-      (result) => result.fold(
-        (failure) => talk.error('ContactModelRequestsCubit _init error: ${failure.message} StackTrace: ${failure.stackTrace}'),
-        (requests) => emit(state.copyWith(request: requests)),
-      ),
+  Future<void> refresh() async {
+    if (isClosed) return;
+    final version = ++_loadVersion;
+    final knownIds = state.request.map((request) => request.id).toSet();
+    final result = await _incomingRequestsUseCase();
+    if (isClosed || version != _loadVersion) return;
+    result.fold(
+      (failure) => talk.error('ContactModelRequestsCubit refresh error: ${failure.message}'),
+      (requests) {
+        // Keep pushes received while HTTP was in flight, without duplicates.
+        final byId = {
+          for (final request in requests)
+            if (!_dismissedIds.contains(request.id)) request.id: request,
+          for (final request in state.request)
+            if (!knownIds.contains(request.id) && !_dismissedIds.contains(request.id)) request.id: request,
+        };
+        emit(state.copyWith(request: byId.values.toList()));
+      },
     );
   }
 
   void _listen() {
     _sub = _incomingRequestStreamUseCase.call().listen(
-      (request) => emit(state.copyWith(request: [...state.request, request])),
+      (request) {
+        if (isClosed || _dismissedIds.contains(request.id)) return;
+        final requests = {for (final item in state.request) item.id: item, request.id: request};
+        emit(state.copyWith(request: requests.values.toList()));
+      },
       onError: (e) => talk.error('ContactModelRequestsCubit _listen error: $e'),
     );
   }

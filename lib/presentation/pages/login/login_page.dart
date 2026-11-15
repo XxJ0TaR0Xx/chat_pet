@@ -19,8 +19,8 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   late final LoginCubit cubit;
   final GlobalKey<FormState> key = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController(text: 'danila20032302@yandex.com');
-  final TextEditingController _passwordController = TextEditingController(text: '20032302');
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   bool obscureTextPassword = true;
 

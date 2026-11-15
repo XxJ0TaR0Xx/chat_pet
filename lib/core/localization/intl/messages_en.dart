@@ -95,6 +95,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "DeleteThisMessageForAll": MessageLookupByLibrary.simpleMessage(
       "Delete this message for everyone?",
     ),
+    "DevelopmentServer": MessageLookupByLibrary.simpleMessage(
+      "Dev — development server",
+    ),
     "DisplayName": MessageLookupByLibrary.simpleMessage("Display name"),
     "Edit": MessageLookupByLibrary.simpleMessage("Edit"),
     "Edited": MessageLookupByLibrary.simpleMessage("edited"),
@@ -188,6 +191,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "IncomingRequests": MessageLookupByLibrary.simpleMessage(
       "Incoming requests",
     ),
+    "InitializingApplication": MessageLookupByLibrary.simpleMessage(
+      "Starting the application…",
+    ),
     "InvalidDomain": MessageLookupByLibrary.simpleMessage("Invalid domain"),
     "InvalidPhoneNumber": MessageLookupByLibrary.simpleMessage(
       "Invalid phone number",
@@ -234,16 +240,29 @@ class MessageLookup extends MessageLookupByLibrary {
     "PrivacySecurityChange": MessageLookupByLibrary.simpleMessage(
       "Privacy, security, change number",
     ),
+    "ProductionServer": MessageLookupByLibrary.simpleMessage(
+      "Prod — production server",
+    ),
     "Repeat": MessageLookupByLibrary.simpleMessage("Repeat"),
     "Reply": MessageLookupByLibrary.simpleMessage("Reply"),
     "ReplyTo": m6,
+    "RestartAfterInitializationFailure": MessageLookupByLibrary.simpleMessage(
+      "Initialization failed. Restart the app to try again.",
+    ),
     "Save": MessageLookupByLibrary.simpleMessage("Save"),
     "SecondsAgo": m7,
     "Select": MessageLookupByLibrary.simpleMessage("Select"),
+    "SelectServer": MessageLookupByLibrary.simpleMessage("Select server"),
+    "SelectServerDescription": MessageLookupByLibrary.simpleMessage(
+      "Choose the server for this session. To change it, restart the app.",
+    ),
     "SelectYourAddress": MessageLookupByLibrary.simpleMessage(
       "Select your address",
     ),
     "Selected": MessageLookupByLibrary.simpleMessage("Selected"),
+    "ServerInitializationFailed": MessageLookupByLibrary.simpleMessage(
+      "Unable to start the application",
+    ),
     "Setting": MessageLookupByLibrary.simpleMessage("Setting"),
     "Settings": MessageLookupByLibrary.simpleMessage("Settings"),
     "SignUpWith": MessageLookupByLibrary.simpleMessage("Sign up with"),

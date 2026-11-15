@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:chat_pet/core/injectable/injectable.dart';
 import 'package:chat_pet/presentation/cubits/contact_request/contact_requests_cubit.dart';
 import 'package:chat_pet/presentation/pages/chats/cubit/chat_cubit.dart';
@@ -93,7 +95,10 @@ class _HomePageState extends State<HomePage> {
                         icon: AppIcons.contacts,
                         title: S.of(context).Contacts,
                         isActive: currentIndex == 2,
-                        onTap: () => _onTabSelected(2),
+                        onTap: () {
+                          unawaited(context.read<ContactModelRequestsCubit>().refresh());
+                          _onTabSelected(2);
+                        },
                         showBadge: state.hasPending,
                       ),
                     ),

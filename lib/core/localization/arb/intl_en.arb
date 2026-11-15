@@ -1,4 +1,11 @@
 {
+  "SelectServer": "Select server",
+  "SelectServerDescription": "Choose the server for this session. To change it, restart the app.",
+  "ProductionServer": "Prod — production server",
+  "DevelopmentServer": "Dev — development server",
+  "InitializingApplication": "Starting the application…",
+  "ServerInitializationFailed": "Unable to start the application",
+  "RestartAfterInitializationFailure": "Initialization failed. Restart the app to try again.",
   "Account": "Account",
   "AfterYouLogOut": "After you log out, you will need to log in to your account again for the app to work properly",
   "AreYouSureYouWantToGetOut": "Are you sure you want to get out?",

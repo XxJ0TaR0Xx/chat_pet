@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:chat_pet/core/injectable/injectable.dart';
 import 'package:chat_pet/core/localization/l10n.dart';
 import 'package:chat_pet/domain/interfaces/notifications/notification_repository.dart';
 import 'package:chat_pet/domain/models/chat/chat_model.dart';
@@ -10,6 +9,7 @@ import 'package:chat_pet/domain/models/notifications/notification_socket_event.d
 import 'package:chat_pet/domain/usecases/chats/create_chat_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/delete_chat_use_case.dart';
 import 'package:chat_pet/domain/usecases/chats/get_chats_use_case.dart';
+import 'package:chat_pet/domain/usecases/chats/watch_chat_messages_use_case.dart';
 import 'package:chat_pet/presentation/pages/chats/cubit/incoming_chat_message.dart';
 import 'package:chat_pet/presentation/utils/chat_session/open_chat_tracker.dart';
 import 'package:chat_pet/presentation/utils/failure_localization/failure_localization.dart';
@@ -26,9 +26,12 @@ class ChatCubit extends Cubit<ChatState> {
     this._createChatUseCase,
     this._deleteChatUseCase,
     this._notificationRepository,
+    WatchChatMessagesUseCase watchChatMessages,
+    this._openChatTracker,
   ) : super(const ChatState.initial()) {
-    getChats();
     _listenNotifications();
+    _messagesSubscription = watchChatMessages().listen((message) => _handleMessage(message, notifyIncoming: false));
+    unawaited(getChats());
   }
 
   final GetChatsUseCase _getChatsUseCase;
@@ -37,6 +40,10 @@ class ChatCubit extends Cubit<ChatState> {
 
   final NotificationRepository _notificationRepository;
   StreamSubscription<NotificationSocketEvent>? _notificationsSubscription;
+  StreamSubscription<MessageModel>? _messagesSubscription;
+  final OpenChatTracker _openChatTracker;
+  final _pendingMessages = <({MessageModel message, bool notifyIncoming})>[];
+  int _loadGeneration = 0;
 
   final List<ChatModel> _cacheChats = List.empty(growable: true);
 
@@ -47,16 +54,25 @@ class ChatCubit extends Cubit<ChatState> {
   Stream<IncomingChatMessage> get incomingMessages => _incomingMessageController.stream;
 
   Future<void> getChats() async {
+    if (isClosed) return;
+    final generation = ++_loadGeneration;
     emit(const ChatState.loading());
 
     final result = await _getChatsUseCase.call();
-    await Future.delayed(const Duration(seconds: 5));
+    if (isClosed || generation != _loadGeneration) return;
 
     result.fold(
-      (failure) => emit(ChatState.error(failure.localize(S.current))),
+      (failure) {
+        _pendingMessages.clear();
+        emit(ChatState.error(failure.localize(S.current)));
+      },
       (result) {
         _cacheChats.clear();
         _cacheChats.addAll(result);
+        for (final pending in _pendingMessages) {
+          _updateLastMessageInChat(pending.message, notifyIncoming: pending.notifyIncoming);
+        }
+        _pendingMessages.clear();
 
         emit(ChatState.loaded(List.of(_cacheChats)));
       },
@@ -65,6 +81,7 @@ class ChatCubit extends Cubit<ChatState> {
 
   Future<ChatModel?> createChat(String friendId) async {
     final result = await _createChatUseCase(membersIds: [friendId]);
+    if (isClosed) return null;
 
     ChatModel? chatModel;
 
@@ -93,9 +110,10 @@ class ChatCubit extends Cubit<ChatState> {
   }
 
   void _handleNotification(NotificationSocketEvent event) {
+    if (isClosed) return;
     switch (event) {
       case NewMessageNSEvent(:final message):
-        _updateLastMessageInChat(message);
+        _handleMessage(message, notifyIncoming: true);
       case MessageEditedNSEvent(:final id, :final chatId, :final content):
         _applyEditedMessage(chatId: chatId, messageId: id, content: content);
       case LastMessageChangedNSEvent(:final chatId, :final lastMessage, :final unreadCount):
@@ -105,23 +123,39 @@ class ChatCubit extends Cubit<ChatState> {
     }
   }
 
-  void _updateLastMessageInChat(MessageModel messageModel) {
+  void _handleMessage(MessageModel message, {required bool notifyIncoming}) {
+    if (isClosed) return;
+    if (state is ChatStateLoading) {
+      _pendingMessages.add((message: message, notifyIncoming: notifyIncoming));
+      return;
+    }
+    _updateLastMessageInChat(message, notifyIncoming: notifyIncoming);
+  }
+
+  void _updateLastMessageInChat(MessageModel messageModel, {required bool notifyIncoming}) {
     final index = _cacheChats.indexWhere((chat) => chat.id == messageModel.chatId);
     if (index == -1) return;
     if (_cacheChats[index].lastMessage?.id == messageModel.id) return;
+    final previousMessage = _cacheChats[index].lastMessage;
+    if (previousMessage != null && previousMessage.createAt.isAfter(messageModel.createAt)) return;
 
     int draftUnreadCount = _cacheChats[index].unreadCount;
-    final chatOpenNow = getIt<OpenChatTracker>().openChatId.value != messageModel.chatId;
+    final chatIsOpen = _openChatTracker.openChatId.value == messageModel.chatId;
 
-    if (chatOpenNow) draftUnreadCount++;
+    if (notifyIncoming && !chatIsOpen) draftUnreadCount++;
 
-    _cacheChats[index] = _cacheChats[index].copyWith(
-      lastMessage: messageModel,
-      unreadCount: draftUnreadCount,
-    );
+    final updatedChat = _cacheChats
+        .removeAt(index)
+        .copyWith(
+          lastMessage: messageModel,
+          unreadCount: draftUnreadCount,
+        );
+    _cacheChats.insert(0, updatedChat);
 
     if (state is ChatStateLoaded) emit(ChatState.loaded(List.of(_cacheChats)));
-    _incomingMessageController.add(IncomingChatMessage(chat: _cacheChats[index], message: messageModel));
+    if (notifyIncoming && !chatIsOpen) {
+      _incomingMessageController.add(IncomingChatMessage(chat: updatedChat, message: messageModel));
+    }
   }
 
   void _applyEditedMessage({required String chatId, required String messageId, required String content}) {
@@ -153,9 +187,11 @@ class ChatCubit extends Cubit<ChatState> {
   }
 
   @override
-  Future<void> close() {
-    _notificationsSubscription?.cancel();
-    unawaited(_incomingMessageController.close());
-    return super.close();
+  Future<void> close() async {
+    await super.close();
+    await _notificationsSubscription?.cancel();
+    await _messagesSubscription?.cancel();
+    _pendingMessages.clear();
+    await _incomingMessageController.close();
   }
 }

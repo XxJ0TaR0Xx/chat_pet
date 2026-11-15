@@ -55,7 +55,12 @@ class _ContactsPageState extends State<ContactsPage> {
       child: Scaffold(
         backgroundColor: _isSearching ? null : theme?.colorScheme.darkNeutral,
         body: RefreshIndicator(
-          onRefresh: _cubit.refresh,
+          onRefresh: () async {
+            await Future.wait([
+              _cubit.refresh(),
+              context.read<ContactModelRequestsCubit>().refresh(),
+            ]);
+          },
           child: SafeArea(
             child: _isSearching
                 ? _SearchBody(

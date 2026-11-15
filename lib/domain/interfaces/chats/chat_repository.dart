@@ -1,3 +1,4 @@
+import 'package:chat_pet/core/common/disposable.dart';
 import 'package:chat_pet/domain/failures/chat_failure/chat_failure.dart';
 import 'package:chat_pet/domain/models/chat/chat_model.dart';
 import 'package:chat_pet/domain/models/chat/chat_socket_event.dart';
@@ -5,7 +6,10 @@ import 'package:chat_pet/domain/models/messages/message_model.dart';
 import 'package:chat_pet/domain/models/messages/message_model_response.dart';
 import 'package:fpdart/fpdart.dart';
 
-abstract interface class ChatRepository {
+abstract interface class ChatRepository implements Disposable {
+  /// Confirmed messages received through the active chat connection.
+  Stream<MessageModel> watchMessages();
+
   Future<Either<ChatFailure, List<ChatModel>>> getChats({
     int? offset,
     int limit = 50,
