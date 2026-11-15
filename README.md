@@ -6,7 +6,7 @@
 
 ## Скачать APK
 
-[Скачать APK]()
+[Скачать APK](https://github.com/XxJ0TaR0Xx/chat_pet/releases/tag/v0.1.0)
 
 Ссылка будет добавлена после сборки и публикации APK.
 
