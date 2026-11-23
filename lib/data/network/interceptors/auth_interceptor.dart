@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:chat_pet/core/auth/interface/token_provide.dart';
 import 'package:chat_pet/domain/custom_talker/custom_talker.dart';
 import 'package:chat_pet/domain/interfaces/auth/auth_repository.dart';
@@ -22,8 +20,6 @@ class AuthInterceptor extends QueuedInterceptor {
 
   @override
   Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    log('_tokenProvider.accessToken ${_tokenProvider.accessToken}');
-
     if (_tokenProvider.accessToken case final accessToken?) {
       _setToken(options, accessToken);
 
