@@ -57,6 +57,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "После того как вы выйдите, необходимо будет снова войти в аккаунт для корректной работы приложения",
     ),
     "AnErrorOccurred": m0,
+    "AreYouSureDeleteTheChat": MessageLookupByLibrary.simpleMessage(
+      "Вы уверены что хотите удалить чат ?",
+    ),
     "AreYouSureToDeleteThisMessage": MessageLookupByLibrary.simpleMessage(
       "Вы уверены что хотите удалить выбранное сообщение?",
     ),

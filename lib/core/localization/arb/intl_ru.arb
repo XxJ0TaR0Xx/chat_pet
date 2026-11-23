@@ -174,5 +174,6 @@
   },
   "You": "Вы",
   "Attachment": "Вложение",
-  "MessageDeleted": "Сообщение удалено"
+  "MessageDeleted": "Сообщение удалено",
+  "AreYouSureDeleteTheChat": "Вы уверены что хотите удалить чат ?"
 }

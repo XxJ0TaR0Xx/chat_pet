@@ -174,5 +174,6 @@
   },
   "You": "You",
   "Attachment": "Attachment",
-  "MessageDeleted": "Message deleted"
+  "MessageDeleted": "Message deleted",
+  "AreYouSureDeleteTheChat": "Are you sure you want to delete the chat?"
 }

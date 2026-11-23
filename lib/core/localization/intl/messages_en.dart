@@ -57,6 +57,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "After you log out, you will need to log in to your account again for the app to work properly",
     ),
     "AnErrorOccurred": m0,
+    "AreYouSureDeleteTheChat": MessageLookupByLibrary.simpleMessage(
+      "Are you sure you want to delete the chat?",
+    ),
     "AreYouSureToDeleteThisMessage": MessageLookupByLibrary.simpleMessage(
       "Are you sure you want to delete the selected message?",
     ),

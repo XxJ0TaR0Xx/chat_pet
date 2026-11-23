@@ -1195,6 +1195,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Are you sure you want to delete the chat?`
+  String get AreYouSureDeleteTheChat {
+    return Intl.message(
+      'Are you sure you want to delete the chat?',
+      name: 'AreYouSureDeleteTheChat',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
