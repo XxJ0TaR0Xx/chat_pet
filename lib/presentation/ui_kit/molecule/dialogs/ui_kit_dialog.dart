@@ -40,7 +40,7 @@ class UiKitDialog {
           children: [
             Text(
               title ?? S.of(context).SomethingWentWrong,
-              style: titleStyle ?? theme?.carosTextTheme.boldTitle,
+              style: titleStyle ?? theme?.carosTextTheme.title,
               textAlign: TextAlign.center,
             ),
             if (content != null) ...content!,

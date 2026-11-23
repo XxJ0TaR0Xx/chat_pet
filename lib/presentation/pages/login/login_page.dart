@@ -141,6 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                         UiKitTextField(
                           controller: _emailController,
                           label: S.of(context).YourEmail,
+                          keyboardType: TextInputType.emailAddress,
                           validator: (text) {
                             if (text == null || text.trim().isEmpty) {
                               return S.of(context).ThisFieldCannotBeEmpty;

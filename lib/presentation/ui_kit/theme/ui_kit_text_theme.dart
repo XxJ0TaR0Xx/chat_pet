@@ -49,6 +49,12 @@ class CarosTextTheme extends UiKitTextTheme {
     color: foregroundColor,
   );
 
+  TextStyle get title => TextStyle(
+    fontFamily: 'Caros',
+    fontSize: 24.w,
+    color: foregroundColor,
+  );
+
   TextStyle get boldTitle => TextStyle(
     fontFamily: 'Caros',
     fontSize: 24.w,
