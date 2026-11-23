@@ -61,97 +61,110 @@ class _StartPageState extends State<StartPage> with SingleTickerProviderStateMix
                 },
               ),
             ),
-            Column(
-              children: [
-                SpacingFoundation.verticalSpace16,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ChatPetIcon.icon(
-                      AppIcons.chatBox,
-                      color: Colors.white,
-                      size: 16.w,
-                    ),
-                    SpacingFoundation.horizontalSpace6,
-                    Text(
-                      S.of(context).Chatbox,
-                      style: theme?.circularStdTextTheme.medium.copyWith(
-                        color: ColorsFoundation.lightSurface,
-                      ),
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                AutoSizeText(
-                  S.of(context).ConnectFriendsEasilyQuickly,
-                  maxLines: 4,
-                  minFontSize: 50.w.floorToDouble(),
-                  wrapWords: false,
-                  style: theme?.carosTextTheme.medium.copyWith(
-                    color: ColorsFoundation.lightSurface,
-                    fontSize: 68.w,
-                  ),
-                ),
-                SpacingFoundation.verticalSpace16,
-                Text(
-                  S.of(context).OurChatAppIsThePerfectWay,
-                  style: theme?.circularStdTextTheme.medium.copyWith(
-                    letterSpacing: 1.5,
-                    fontSize: 18.w,
-                    height: 1.5,
-                    color: ColorsFoundation.mutedText,
-                    shadows: [
-                      const Shadow(offset: Offset(-1, -1)),
-                      const Shadow(offset: Offset(1, -1)),
-                      const Shadow(offset: Offset(1, 1)),
-                      const Shadow(offset: Offset(-1, 1)),
-                    ],
-                  ),
-                ),
-                SpacingFoundation.verticalSpace16,
-                const SocialLinksWidget(
-                  isWhiteBackground: false,
-                ),
-                SpacingFoundation.verticalSpace30,
-                const OrRowWidget(),
-                SpacingFoundation.verticalSpace30,
-                Row(
-                  children: [
-                    Expanded(
-                      child: UiKitButton(
-                        text: S.of(context).LogIn,
-                        onTap: () => GoRouter.of(context).push(AppRoutes.login),
-                      ),
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  spacing: SpacingFoundation.horizontalSpacing4,
-                  children: [
-                    Text(
-                      S.of(context).NoAccount,
-                      style: theme?.circularStdTextTheme.medium.copyWith(
-                        color: ColorsFoundation.mutedText,
-                        fontSize: 13.w,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () => GoRouter.of(context).push(AppRoutes.signUp),
-                      child: Text(
-                        S.of(context).SignUpWithEmail,
-                        style: theme?.circularStdTextTheme.medium.copyWith(
-                          color: ColorsFoundation.surfaceBase,
-                          fontSize: 13.w,
+            LayoutBuilder(
+              builder: (context, constraints) => SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: SpacingFoundation.verticalSpacing16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            ChatPetIcon.icon(
+                              AppIcons.chatBox,
+                              color: Colors.white,
+                              size: 16.w,
+                            ),
+                            SpacingFoundation.horizontalSpace6,
+                            Text(
+                              S.of(context).Chatbox,
+                              style: theme?.circularStdTextTheme.medium.copyWith(
+                                color: ColorsFoundation.lightSurface,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: SpacingFoundation.verticalSpacing24),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            AutoSizeText(
+                              S.of(context).ConnectFriendsEasilyQuickly,
+                              maxLines: 4,
+                              minFontSize: 50.w.floorToDouble(),
+                              wrapWords: false,
+                              style: theme?.carosTextTheme.medium.copyWith(
+                                color: ColorsFoundation.lightSurface,
+                                fontSize: 68.w,
+                              ),
+                            ),
+                            SpacingFoundation.verticalSpace16,
+                            Text(
+                              S.of(context).OurChatAppIsThePerfectWay,
+                              style: theme?.circularStdTextTheme.medium.copyWith(
+                                letterSpacing: 1.5,
+                                fontSize: 18.w,
+                                height: 1.5,
+                                color: ColorsFoundation.mutedText,
+                                shadows: [
+                                  const Shadow(offset: Offset(-1, -1)),
+                                  const Shadow(offset: Offset(1, -1)),
+                                  const Shadow(offset: Offset(1, 1)),
+                                  const Shadow(offset: Offset(-1, 1)),
+                                ],
+                              ),
+                            ),
+                            SpacingFoundation.verticalSpace16,
+                            const SocialLinksWidget(
+                              isWhiteBackground: false,
+                            ),
+                            SpacingFoundation.verticalSpace30,
+                            const OrRowWidget(),
+                            SpacingFoundation.verticalSpace30,
+                            UiKitButton(
+                              text: S.of(context).LogIn,
+                              onTap: () => GoRouter.of(context).push(AppRoutes.login),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: SpacingFoundation.verticalSpacing24),
+                        child: Wrap(
+                          alignment: WrapAlignment.center,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: SpacingFoundation.horizontalSpacing4,
+                          children: [
+                            Text(
+                              S.of(context).NoAccount,
+                              style: theme?.circularStdTextTheme.medium.copyWith(
+                                color: ColorsFoundation.mutedText,
+                                fontSize: 13.w,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () => GoRouter.of(context).push(AppRoutes.signUp),
+                              child: Text(
+                                S.of(context).SignUpWithEmail,
+                                style: theme?.circularStdTextTheme.medium.copyWith(
+                                  color: ColorsFoundation.surfaceBase,
+                                  fontSize: 13.w,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ).paddingHorizontal(SpacingFoundation.horizontalSpacing24),
                 ),
-                const Spacer(),
-              ],
-            ).paddingHorizontal(SpacingFoundation.horizontalSpacing24),
+              ),
+            ),
           ],
         ),
       ),
