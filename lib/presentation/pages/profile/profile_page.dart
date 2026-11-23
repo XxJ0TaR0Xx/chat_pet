@@ -36,6 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> onImagePick() async {
     final image = await _getImage();
+    if (!mounted) return;
     if (image != null) {
       await cubit.updateUserImage(image);
     } else {
@@ -119,11 +120,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                     InkWell(
                                       borderRadius: BorderRadius.circular(41.w),
                                       onTap: onImagePick,
-                                      child: CircleAvatar(
-                                        radius: 41.w,
-                                        backgroundImage: originalUser.avatarUrl != null && originalUser.avatarUrl!.isNotEmpty
-                                            ? NetworkImage(originalUser.avatarUrl!)
-                                            : const AssetImage('assets/images/orig.png'),
+                                      child: AvatarWidget(
+                                        size: 82.w,
+                                        url: originalUser.avatarUrl,
                                       ),
                                     ),
                                     Text(

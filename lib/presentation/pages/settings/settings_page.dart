@@ -57,11 +57,9 @@ class SettingsPage extends StatelessWidget {
                       SpacingFoundation.verticalSpace24,
                       Row(
                         children: [
-                          CircleAvatar(
-                            radius: 30.w,
-                            backgroundImage: userModel.avatarUrl != null
-                                ? NetworkImage(userModel.avatarUrl!)
-                                : const AssetImage('assets/images/orig.png'),
+                          AvatarWidget(
+                            size: 60.w,
+                            url: userModel.avatarUrl,
                           ),
                           SpacingFoundation.horizontalSpace24,
                           Column(

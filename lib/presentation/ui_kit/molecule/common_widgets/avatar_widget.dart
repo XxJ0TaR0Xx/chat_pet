@@ -17,7 +17,8 @@ class AvatarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = context.uiKitTheme;
     final color = theme?.colorScheme.green;
-    final hasUrl = url != null && url!.isNotEmpty;
+    final imageUrl = url?.trim();
+    final hasUrl = imageUrl != null && imageUrl.isNotEmpty;
 
     return SizedBox(
       width: size ?? 50.w,
@@ -27,7 +28,9 @@ class AvatarWidget extends StatelessWidget {
           CircleAvatar(
             radius: size ?? 50.w,
             backgroundColor: theme?.colorScheme.grayForegroundColor.withValues(alpha: 0.5),
-            backgroundImage: hasUrl ? NetworkImage(url!) : null,
+            backgroundImage: const AssetImage('assets/images/orig.png'),
+            foregroundImage: hasUrl ? NetworkImage(imageUrl) : null,
+            onForegroundImageError: hasUrl ? (_, __) {} : null,
           ),
           if (isOnline)
             Align(
