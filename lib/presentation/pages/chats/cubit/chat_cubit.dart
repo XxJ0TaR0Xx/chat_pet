@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:chat_pet/core/localization/l10n.dart';
+import 'package:chat_pet/domain/failures/chat_failure/chat_failure.dart';
 import 'package:chat_pet/domain/interfaces/notifications/notification_repository.dart';
 import 'package:chat_pet/domain/models/chat/chat_model.dart';
 import 'package:chat_pet/domain/models/messages/message_model.dart';
@@ -13,6 +14,7 @@ import 'package:chat_pet/domain/usecases/chats/watch_chat_messages_use_case.dart
 import 'package:chat_pet/presentation/pages/chats/cubit/incoming_chat_message.dart';
 import 'package:chat_pet/presentation/utils/chat_session/open_chat_tracker.dart';
 import 'package:chat_pet/presentation/utils/failure_localization/failure_localization.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -46,6 +48,7 @@ class ChatCubit extends Cubit<ChatState> {
   int _loadGeneration = 0;
 
   final List<ChatModel> _cacheChats = List.empty(growable: true);
+  final _pendingChatCreations = <String, Future<ChatModel?>>{};
 
   final _incomingMessageController = StreamController<IncomingChatMessage>.broadcast();
 
@@ -79,7 +82,25 @@ class ChatCubit extends Cubit<ChatState> {
     );
   }
 
-  Future<ChatModel?> createChat(String friendId) async {
+  Future<ChatModel?> createChat(String friendId) {
+    if (isClosed) return Future.value();
+
+    final existing = _cacheChats
+        .where(
+          (chat) => !chat.isGroup && chat.members.any((member) => member.id == friendId),
+        )
+        .firstOrNull;
+    if (existing != null) return Future.value(existing);
+
+    return _pendingChatCreations.putIfAbsent(
+      friendId,
+      () => _createChat(friendId).whenComplete(() {
+        _pendingChatCreations.remove(friendId);
+      }),
+    );
+  }
+
+  Future<ChatModel?> _createChat(String friendId) async {
     final result = await _createChatUseCase(membersIds: [friendId]);
     if (isClosed) return null;
 
@@ -88,8 +109,10 @@ class ChatCubit extends Cubit<ChatState> {
     result.fold(
       (failure) => emit(ChatState.error(failure.localize(S.current))),
       (chat) {
-        _cacheChats.insert(0, chat);
-        emit(ChatState.loaded(List.of(_cacheChats)));
+        if (!_cacheChats.any((cached) => cached.id == chat.id)) {
+          _cacheChats.insert(0, chat);
+          emit(ChatState.loaded(List.of(_cacheChats)));
+        }
         chatModel = chat;
       },
     );
@@ -107,6 +130,20 @@ class ChatCubit extends Cubit<ChatState> {
 
   void _listenNotifications() {
     _notificationsSubscription = _notificationRepository.events.listen(_handleNotification);
+  }
+
+  Future<Either<ChatFailure, void>> deleteChat(String chatId) async {
+    final result = await _deleteChatUseCase.call(chatId: chatId);
+
+    result.fold(
+      (_) {},
+      (_) {
+        _cacheChats.removeWhere((chat) => chat.id == chatId);
+        if (state is ChatStateLoaded) emit(ChatState.loaded(List.of(_cacheChats)));
+      },
+    );
+
+    return result;
   }
 
   void _handleNotification(NotificationSocketEvent event) {

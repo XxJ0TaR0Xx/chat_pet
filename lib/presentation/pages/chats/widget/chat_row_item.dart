@@ -5,24 +5,26 @@ import 'package:flutter/material.dart';
 class ChatRowItem extends StatelessWidget {
   const ChatRowItem({
     required this.name,
-    required this.date,
     required this.uncheckMessage,
+    this.date,
     this.lastMessage,
     this.secondName,
     this.avatarUrl,
     this.padding,
     this.onTap,
+    this.onDelete,
     super.key,
   });
 
   final String name;
-  final DateTime date;
   final int uncheckMessage;
+  final DateTime? date;
   final String? lastMessage;
   final String? secondName;
   final String? avatarUrl;
   final EdgeInsets? padding;
   final VoidCallback? onTap;
+  final Future<bool?> Function()? onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,12 @@ class ChatRowItem extends StatelessWidget {
       key: Key(name),
       dismissThresholds: const {
         DismissDirection.horizontal: 0.4,
+      },
+      confirmDismiss: (_) async {
+        final callback = onDelete;
+        if (callback == null) return false;
+
+        return callback();
       },
       child: Material(
         color: theme?.colorScheme.surfaceBase ?? ColorsFoundation.surfaceBase,
@@ -80,11 +88,11 @@ class ChatRowItem extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
-                        date.timeAgo(),
-                        style: circularStyle,
-                      ),
-                      SpacingFoundation.verticalSpace8,
+                      if (date != null)
+                        Text(
+                          date!.timeAgo(),
+                          style: circularStyle,
+                        ).paddingOnly(bottom: SpacingFoundation.verticalSpacing8),
                       if (uncheckMessage > 0)
                         DecoratedBox(
                           decoration: const BoxDecoration(
